@@ -6,6 +6,9 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Blogs", "ShowBlogs", "Blog")</li>
+        <li>@Html.ActionLink("Create meeting", "ShowMeeting", "Meeting")</li>
+        <li>@Html.ActionLink("Calendar", "ShowCalendar", "Calendar")</li>
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
