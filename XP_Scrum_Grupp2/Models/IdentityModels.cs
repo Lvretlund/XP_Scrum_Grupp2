@@ -46,5 +46,11 @@ namespace XP_Scrum_Grupp2.Models
         {
             return new ApplicationDbContext();
         }
+
+        
+    }
+    public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
+
     }
 }
