@@ -9,7 +9,7 @@ namespace XP_Scrum_Grupp2.Controllers
     public class MeetingController : Controller
     {
         // GET: Meeting
-        public ActionResult ShowMeeting()
+        public ActionResult CreateMeeting()
         {
             return View();
         }
