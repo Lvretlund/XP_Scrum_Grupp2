@@ -18,8 +18,11 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<InformalBlog> InformalBlog { get; set; }
         public ICollection<ResearchBlog> ResearchBlog { get; set; }
         public ICollection<EducationBlog> EducationBlog { get; set; }
+        public bool Admin { get; set; }
+        public string Tjo { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
