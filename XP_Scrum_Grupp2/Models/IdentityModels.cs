@@ -17,6 +17,7 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<ResearchBlog> ResearchBlog { get; set; }
         public ICollection<EducationBlog> EducationBlog { get; set; }
         public bool Admin { get; set; }
+        public string hejsan { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
 

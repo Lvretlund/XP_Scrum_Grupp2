@@ -15,7 +15,7 @@ namespace XP_Scrum_Grupp2
 
         protected void Application_Start()
         {
-            Database.SetInitializer(new DataContextInitializer());
+            Database.SetInitializer(new UserInitializer());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
