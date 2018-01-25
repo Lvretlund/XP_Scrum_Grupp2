@@ -23,7 +23,7 @@ namespace XP_Scrum_Grupp2.Models
             context.Users.Add(new ApplicationUser
             {
                 Id = "1",
-                Forname = "Kai",
+                Firstname = "Kai",
                 Lastname = "Wistrand",
                 UserName = "kai.wistrand@oru.se",
                 Email = "kai.wistrand@oru.se",
