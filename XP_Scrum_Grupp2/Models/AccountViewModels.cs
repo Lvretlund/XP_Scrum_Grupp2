@@ -82,8 +82,8 @@ namespace XP_Scrum_Grupp2.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [Display(Name = "Forname")]
-        public string Forname { get; set; }
+        [Display(Name = "Firstname")]
+        public string Firstname { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]

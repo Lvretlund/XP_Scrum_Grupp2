@@ -19,7 +19,7 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<ResearchBlog> ResearchBlog { get; set; }
         public ICollection<EducationBlog> EducationBlog { get; set; }
         public bool Admin { get; set; }
-        public string Forname { get; set; }
+        public string Firstname { get; set; }
         public string Lastname { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
