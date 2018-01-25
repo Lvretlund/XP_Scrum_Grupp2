@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using XP_Scrum_Grupp2.Models;
 
+
+
 namespace XP_Scrum_Grupp2.Controllers
 {
     [Authorize]
@@ -151,7 +153,8 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Forname = model.Forname, Lastname = model.Lastname };
+                user.Admin = false;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -163,7 +166,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -368,7 +371,6 @@ namespace XP_Scrum_Grupp2.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                user.Admin = false;
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -7,7 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace XP_Scrum_Grupp2.Models
-{
+{   
+
+
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
@@ -17,7 +19,8 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<ResearchBlog> ResearchBlog { get; set; }
         public ICollection<EducationBlog> EducationBlog { get; set; }
         public bool Admin { get; set; }
-        public string Tjo { get; set; }
+        public string Forname { get; set; }
+        public string Lastname { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
 
@@ -33,15 +36,7 @@ namespace XP_Scrum_Grupp2.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Meeting> Meetings { get; set; }
-        public DbSet<ResearchBlog> ResearchBlogs { get; set; }
-        public DbSet<InformalBlog> InformalBlogs { get; set; }
-        public DbSet<FormalBlog> FormalBlogs { get; set; }
-        public DbSet<EducationBlog> EducationBlogs { get; set; }
-        public DbSet<Category> Categories { get; set; }
-
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("dataContext", throwIfV1Schema: false)
         {
         }
 
@@ -50,6 +45,14 @@ namespace XP_Scrum_Grupp2.Models
             return new ApplicationDbContext();
         }
 
+        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<ResearchBlog> ResearchBlogs { get; set; }
+        public DbSet<InformalBlog> InformalBlogs { get; set; }
+        public DbSet<FormalBlog> FormalBlogs { get; set; }
+        public DbSet<EducationBlog> EducationBlogs { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        
+        
         
     }
     public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>

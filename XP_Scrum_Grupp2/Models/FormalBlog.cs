@@ -12,7 +12,7 @@ namespace XP_Scrum_Grupp2.Models
         public ApplicationUser Author { get; set; }
         public Category CategoryItem { get; set; }
 
-        public DateTime Date { get; set; }
+        public  DateTime Date { get; set; }
 
         public byte File { get; set; }
 

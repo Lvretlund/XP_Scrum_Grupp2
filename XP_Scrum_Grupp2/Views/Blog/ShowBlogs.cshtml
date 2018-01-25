@@ -1,7 +1,45 @@
-﻿
+﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
+
 @{
     ViewBag.Title = "ShowBlogs";
 }
 
+
 <h2>ShowBlogs</h2>
+<br />
+@Html.Partial("CreatePartial");
+
+
+<table class="table">
+    <tr>
+        @*@foreach (var item in Model.FormalBlogs)
+    {
+        <th>
+            @Html.DisplayNameFor(modelItem => item.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => item.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => item.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => item.File)
+        </th>
+        <th></th>
+
+}*@
+    </tr>
+
+    @foreach (var item in Model.FormalBlogs)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName): @Html.DisplayFor(modelItem => item.Text) : @Html.DisplayFor(modelItem => item.Date);
+            </td>
+
+            <td></td>
+        </tr>
+    }
+</table>
 
