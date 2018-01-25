@@ -1,25 +1,36 @@
 ﻿@using Microsoft.AspNet.Identity
+@using XP_Scrum_Grupp2.Models
+
+
 @if (Request.IsAuthenticated)
 {
+        var db = new ApplicationDbContext();
+        var currentUser = User.Identity.Name;
+        var user = db.Users.Where(u => u.UserName == currentUser).SingleOrDefault();
+    
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Blogs", "ShowBlogs", "Blog")</li>
-        <li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>
-        <li>@Html.ActionLink("Calendar", "ShowCalendar", "Calendar")</li>
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    @if (user.Admin == true)
+    {
+        <li>@Html.ActionLink("Register new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    }
+    <li>@Html.ActionLink("Blogs", "ShowBlogs", "Blog")</li>
+    <li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>
+    <li>@Html.ActionLink("Calendar", "ShowCalendar", "Calendar")</li>
+    <li>
+        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+</ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

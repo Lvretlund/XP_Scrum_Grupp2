@@ -23,10 +23,12 @@ namespace XP_Scrum_Grupp2.Models
             context.Users.Add(new ApplicationUser
             {
                 Id = "1",
-                UserName = "kai@hotmail.com",
-                Email = "kai@hotmail.com",
-                PasswordHash = "ANN2a+ErNxzW8mljt8Emw33ZW1zGg74vzQnUYLy7XrfF1mz95YJLlZYoRm52/zz8vA==",
-                SecurityStamp = "a33b68b8-38f9-4ba1-a8d6-6abbe91d3da6",
+                Forname = "Kai",
+                Lastname = "Wistrand",
+                UserName = "kai.wistrand@oru.se",
+                Email = "kai.wistrand@oru.se",
+                PasswordHash = "AIjXrWn10uFH4NWoTL4oQYeI96rGYL8q409dV2llmCUuAlRpwXQBfPoVKcf9ykMs7w==",
+                SecurityStamp = "4d6b574f-f572-43c0-a53b-6e821dde3476",
                 Admin = true,
             });
             context.SaveChanges();
