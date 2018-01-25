@@ -368,6 +368,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                user.Admin = false;
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
