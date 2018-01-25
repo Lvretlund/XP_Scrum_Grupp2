@@ -26,7 +26,7 @@ namespace XP_Scrum_Grupp2.Controllers
                 db.SaveChanges();
             }
             ModelState.Clear();
-            return View("CreateMeeting");
+            return RedirectToAction("ShowCalendar", "Calendar");
         }
     }
 }
