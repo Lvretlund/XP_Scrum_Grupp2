@@ -153,7 +153,7 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Forname = model.Forname, Lastname = model.Lastname };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname };
                 user.Admin = false;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
