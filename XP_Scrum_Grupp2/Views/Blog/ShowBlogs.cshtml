@@ -7,35 +7,34 @@
 
 <h2>ShowBlogs</h2>
 <br />
-@Html.Partial("CreatePartial");
+@Html.Partial("CreatePartial")
 
 
 <table class="table">
-    <tr>
-        @*@foreach (var item in Model.FormalBlogs)
-    {
+    @*<tr>
+    
         <th>
-            @Html.DisplayNameFor(modelItem => item.User.UserName)
+            @Html.DisplayNameFor(modelItem => modelItem.)
         </th>
         <th>
-            @Html.DisplayNameFor(modelItem => item.Text)
+            @Html.DisplayNameFor(modelItem => modelItem.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(modelItem => item.Date)
+            @Html.DisplayNameFor(modelItem => modelItem.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(modelItem => item.File)
+            @Html.DisplayNameFor(modelItem => modelItem.File)
         </th>
         <th></th>
 
-}*@
-    </tr>
+
+    </tr>*@
 
     @foreach (var item in Model.FormalBlogs)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.User.UserName): @Html.DisplayFor(modelItem => item.Text) : @Html.DisplayFor(modelItem => item.Date);
+                @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): @Html.DisplayFor(modelItem => item.Text) : @Html.DisplayFor(modelItem => item.Date);
             </td>
 
             <td></td>
