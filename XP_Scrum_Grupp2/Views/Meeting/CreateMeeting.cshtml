@@ -6,10 +6,14 @@
 
 <h2>CreateMeeting</h2>
 
-@using (Html.BeginForm(FormMethod.Get))
+@using (Html.BeginForm("SearchPeople", "Meeting", FormMethod.Post))
 {
-    <input type="search" name="q" />
-    <button>Search</button>
+
+    <div>
+        <input type="text" id="txt" name="txt" />
+        <input type="submit" />
+    </div>
+
 }
 
     @if (Model.ApplicationUsers != null)
@@ -20,10 +24,14 @@
     <td>
         @Html.DisplayFor(modelItem => item.Firstname)
     </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Lastname)
+    </td>
 
 </tr>
         }
     }
+
 @using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
