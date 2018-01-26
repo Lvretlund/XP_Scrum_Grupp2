@@ -30,19 +30,13 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
-        public ActionResult SearchPeople(String Name)
+        [HttpPost]
+        public ActionResult SearchPeople(String txt)
         {
             var model = new MeetingPeopleViewModel();
-            model.ApplicationUsers = db.Users.Where(u => u.Firstname == Name).ToList();
-            if (model == null)
-            {
-                return View();
-            }
+            model.ApplicationUsers = db.Users.Where(u => (u.Firstname.Contains(txt) || u.Lastname.Contains(txt))).ToList();
 
-            else
-            {
-                return View(model);
-            }
+            return View("CreateMeeting", model);
         }
     }
 }
