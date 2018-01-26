@@ -202,6 +202,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\EducationBlog.cs" />
     <Compile Include="Models\FormalBlog.cs" />
+    <Compile Include="Models\MeetingPeopleViewModel.cs" />
     <Compile Include="Models\ResearchBlog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InformalBlog.cs" />

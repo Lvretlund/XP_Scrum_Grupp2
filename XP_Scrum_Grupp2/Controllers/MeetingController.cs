@@ -8,25 +8,41 @@ using XP_Scrum_Grupp2.Models;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
-    public class MeetingController : Controller
+    public class MeetingController : BaseController
     {
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
-            return View();
+            var model = new MeetingPeopleViewModel();
+            return View(model);
         }
 
         public ActionResult CreateAMeeting(Meeting meeting)
         {
             var userName = User.Identity.Name;
-            using (var db = new ApplicationDbContext()) {
-                var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
-                meeting.Creator = user;
-                db.Meetings.Add(meeting);
-                db.SaveChanges();
-            }
+
+            var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
+            meeting.Creator = user;
+            db.Meetings.Add(meeting);
+            db.SaveChanges();
+
             ModelState.Clear();
             return RedirectToAction("ShowCalendar", "Calendar");
+        }
+
+        public ActionResult SearchPeople(String Name)
+        {
+            var model = new MeetingPeopleViewModel();
+            model.ApplicationUsers = db.Users.Where(u => u.Firstname == Name).ToList();
+            if (model == null)
+            {
+                return View();
+            }
+
+            else
+            {
+                return View(model);
+            }
         }
     }
 }
