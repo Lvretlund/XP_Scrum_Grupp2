@@ -1,4 +1,4 @@
-﻿@model XP_Scrum_Grupp2.Models.Meeting
+﻿@model XP_Scrum_Grupp2.Models.MeetingPeopleViewModel
 
 @{
     ViewBag.Title = "CreateMeeting";
@@ -6,38 +6,76 @@
 
 <h2>CreateMeeting</h2>
 
+@using (Html.BeginForm(FormMethod.Get))
+{
+    <input type="search" name="q" />
+    <button>Search</button>
+}
+
+    @if (Model.ApplicationUsers != null)
+    {
+        foreach (var item in Model.ApplicationUsers)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Firstname)
+    </td>
+
+</tr>
+        }
+    }
 @using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Start, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Start, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.End, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.End, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.End, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Meeting.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Meeting.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Meeting.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Meeting.Start, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Meeting.Start, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Meeting.Start, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Meeting.End, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Meeting.End, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Meeting.End, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-6'>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
                 </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
 
 }
 
