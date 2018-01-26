@@ -4,33 +4,7 @@
     ViewBag.Title = "CreateMeeting";
 }
 
-<h2>CreateMeeting</h2>
-
-@using (Html.BeginForm("SearchPeople", "Meeting", FormMethod.Post))
-{
-
-    <div>
-        <input type="text" id="txt" name="txt" />
-        <input type="submit" />
-    </div>
-
-}
-
-    @if (Model.ApplicationUsers != null)
-    {
-        foreach (var item in Model.ApplicationUsers)
-        {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Firstname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Lastname)
-    </td>
-
-</tr>
-        }
-    }
+<h2>Create Meeting</h2>
 
 @using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -87,3 +61,31 @@
 
 }
 
+
+<h3>Search people:</h3>
+<br />
+@using (Html.BeginForm("SearchPeople", "Meeting", FormMethod.Post))
+{
+
+    <div>
+        <input type="text" id="txt" name="txt" />
+        <input type="submit" value="Search" />
+    </div>
+
+}
+<br />
+@if (Model.ApplicationUsers != null)
+{
+    foreach (var item in Model.ApplicationUsers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+
+        </tr>
+    }
+}
