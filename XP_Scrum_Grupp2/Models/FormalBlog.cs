@@ -14,7 +14,7 @@ namespace XP_Scrum_Grupp2.Models
 
         public  DateTime Date { get; set; }
 
-        public byte File { get; set; }
+        public byte[] File { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.IO;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
@@ -23,17 +24,27 @@ namespace XP_Scrum_Grupp2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(PostIndexViewModel model)
+        public ActionResult Create(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             FormalBlog newPost = new FormalBlog();
             var userName = User.Identity.Name;
 
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
-           
-            
-            newPost.User = author;
+
+
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    model.Filename = upload.FileName;
+                    model.ContentType = upload.ContentType;
+
+                    using (var reader = new BinaryReader(upload.InputStream))
+                    {
+                        model.File = reader.ReadBytes(upload.ContentLength);
+                    }
+                }
+
+                newPost.Author = author;
             newPost.Text = model.Text;
-            //newPost.Date = model.Date;
             newPost.Date = DateTime.Now;
 
             db.FormalBlogs.Add(newPost);
@@ -50,9 +61,11 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public string Text { get; set; }
-        public byte File { get; set; }
+        public byte[] File { get; set; }
         public DateTime Date { get; set; }
         public string Author_Id { get; set; }
+        public string ContentType { get; internal set; }
+        public string Filename { get; internal set; }
     }
 
    
