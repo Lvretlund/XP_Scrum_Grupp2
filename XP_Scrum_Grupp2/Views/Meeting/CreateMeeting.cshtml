@@ -69,11 +69,13 @@
 
     <div>
         <input type="text" id="txt" name="txt" />
-        <input type="submit" value="Search" />
+        <input type="submit" name="search" value="Search" />
     </div>
 
 }
 <br />
+
+
 @if (Model.ApplicationUsers != null)
 {
     foreach (var item in Model.ApplicationUsers)
@@ -85,7 +87,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Lastname)
             </td>
-
+            <td>
+                <input type="button" value="Add" onclick="location.href='@Url.Action("AddPersons", "Meeting" , new { id = item.Id })'" />
+            </td>
         </tr>
+        <br />
     }
+    @Html.Raw(TempData["msg"])
+
 }
+

@@ -14,11 +14,12 @@
         @Html.AntiForgeryToken()
 
 <ul class="nav navbar-nav navbar-right">
-    @if (User.Identity.IsAuthenticated)
+
+    @if (user != null)
     {
-    if (user.Admin == true)
-    {
-        <li>@Html.ActionLink("Register new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        if (user.Admin == true)
+        {
+            <li>@Html.ActionLink("Register new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         }
     }
     <li>@Html.ActionLink("Blogs", "ShowBlogs", "Blog")</li>
