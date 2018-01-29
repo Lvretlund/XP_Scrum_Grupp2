@@ -33,14 +33,14 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
-        public void AddPersons(ApplicationUser item, string add)
+        public void AddPersons(ApplicationUser item)
         {
             //var person = db.Users.Where(u => u.Id == item.Id).SingleOrDefault();
             persons.Add(item);
         }
 
         [HttpPost]
-        public ActionResult SearchPeople(string txt, string search)
+        public ActionResult SearchPeople(string txt)
         {
             var model = new MeetingPeopleViewModel();
             model.ApplicationUsers = db.Users.Where(u => (u.Firstname.Contains(txt) || u.Lastname.Contains(txt))).ToList();

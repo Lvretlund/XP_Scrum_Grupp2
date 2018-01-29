@@ -75,7 +75,7 @@
 }
 <br />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddPersons", "Meeting"))
 {
 
     if (Model.ApplicationUsers != null)
@@ -90,7 +90,7 @@
                     @Html.DisplayFor(modelItem => item.Lastname)
                 </td>
                 <td>
-                    <input type="submit" name="add" value="Add" onclick="location.href='@Html.Action("AddPersons", "Meeting", new { user = item })'">
+                    <input type="submit" value="Add">
                 </td>
 
             </tr>
