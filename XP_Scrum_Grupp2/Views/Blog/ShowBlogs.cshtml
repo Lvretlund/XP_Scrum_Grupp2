@@ -7,7 +7,7 @@
 
 <h2>FormalBlog</h2>
 <br />
-@Html.Partial("CreatePartial")
+@Html.Partial("CreatePartial", Model.NewFormalBlog)
 
 
 <table class="table">
@@ -29,14 +29,15 @@
 
 
     </tr>*@
-
-    @foreach (var item in Model.FormalBlogs)
+    
+    @foreach(var item in Model.FormalBlogs)
     {
     <tr>
         <td>
             <p>  @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
             <p>
                 @Html.DisplayFor(modelItem => item.Text)
+                
             </p>
 
             
