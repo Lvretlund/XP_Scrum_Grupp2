@@ -43,9 +43,13 @@ namespace XP_Scrum_Grupp2.Controllers
                     }
                 }
 
-                newPost.Author = author;
+            newPost.Author = author;
             newPost.Text = model.Text;
             newPost.Date = DateTime.Now;
+            newPost.ContentType = model.ContentType;
+            newPost.Filename = model.Filename;
+            newPost.File = model.File;
+            
 
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
@@ -53,7 +57,10 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowBlogs", "Blog" );
         }
 
-
+        public ActionResult Download(string filename)
+        {
+            return View();
+        }
     }
 
     public class PostIndexViewModel 
@@ -66,6 +73,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Author_Id { get; set; }
         public string ContentType { get; internal set; }
         public string Filename { get; internal set; }
+        
     }
 
    

@@ -18,5 +18,7 @@ namespace XP_Scrum_Grupp2.Models
 
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
+        public string ContentType { get;  set; }
+        public string Filename { get;  set; }
     }
 }
