@@ -34,12 +34,13 @@
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname):
-            @Html.DisplayFor(modelItem => item.Date):
-            @Html.DisplayFor(modelItem => item.Text) :
+            <p>  @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
+            <p>
+                @Html.DisplayFor(modelItem => item.Text)
+            </p>
 
             
-            <a href="Download?file=@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+            <a href="Download?file=@item.Filename" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
         </td>
    

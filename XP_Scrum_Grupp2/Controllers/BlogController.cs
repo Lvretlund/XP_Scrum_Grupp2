@@ -72,7 +72,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var response = new FileContentResult(fileBytes, "application/octet-stream")
             {
 
-                FileDownloadName = theFile.Filename
+                FileDownloadName =   theFile.Filename
             };
             return response;
 
