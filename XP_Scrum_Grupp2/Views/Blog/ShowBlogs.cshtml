@@ -5,7 +5,7 @@
 }
 
 
-<h2>ShowBlogs</h2>
+<h2>FormalBlog</h2>
 <br />
 @Html.Partial("CreatePartial")
 
@@ -34,7 +34,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): @Html.DisplayFor(modelItem => item.Text) : @Html.DisplayFor(modelItem => item.Date);
+                @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): @Html.DisplayFor(modelItem => item.Date): @Html.DisplayFor(modelItem => item.Text) :  <input type="button" value=" @Html.DisplayFor(modelItem => item.Filename)" class="btn btn-default" onclick="Download" />  
             </td>
 
             <td></td>

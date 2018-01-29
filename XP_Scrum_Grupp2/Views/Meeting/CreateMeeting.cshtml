@@ -69,23 +69,32 @@
 
     <div>
         <input type="text" id="txt" name="txt" />
-        <input type="submit" value="Search" />
+        <input type="submit" name="search" value="Search" />
     </div>
 
 }
 <br />
-@if (Model.ApplicationUsers != null)
-{
-    foreach (var item in Model.ApplicationUsers)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
 
-        </tr>
+@using (Html.BeginForm("AddPersons", "Meeting"))
+{
+
+    if (Model.ApplicationUsers != null)
+    {
+        foreach (var item in Model.ApplicationUsers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    <input type="submit" value="Add">
+                </td>
+
+            </tr>
+            <br />
+        }
     }
 }

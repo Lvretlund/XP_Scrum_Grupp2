@@ -10,6 +10,7 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
+        public List<ApplicationUser> persons = new List<ApplicationUser>();
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
@@ -23,15 +24,23 @@ namespace XP_Scrum_Grupp2.Controllers
 
             var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
             meeting.Creator = user;
+            meeting.Invited = persons;
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
             ModelState.Clear();
+            persons.Clear();
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
+        public void AddPersons(ApplicationUser item)
+        {
+            //var person = db.Users.Where(u => u.Id == item.Id).SingleOrDefault();
+            persons.Add(item);
+        }
+
         [HttpPost]
-        public ActionResult SearchPeople(String txt)
+        public ActionResult SearchPeople(string txt)
         {
             var model = new MeetingPeopleViewModel();
             model.ApplicationUsers = db.Users.Where(u => (u.Firstname.Contains(txt) || u.Lastname.Contains(txt))).ToList();
