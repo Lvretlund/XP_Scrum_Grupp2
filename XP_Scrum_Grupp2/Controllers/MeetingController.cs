@@ -33,10 +33,11 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
-        public void AddPersons(ApplicationUser item)
+        public void AddPersons(string id)
         {
-            //var person = db.Users.Where(u => u.Id == item.Id).SingleOrDefault();
-            persons.Add(item);
+            var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
+            persons.Add(person);
+
         }
 
         [HttpPost]

@@ -75,26 +75,25 @@
 }
 <br />
 
-@using (Html.BeginForm("AddPersons", "Meeting"))
+
+@if (Model.ApplicationUsers != null)
 {
-
-    if (Model.ApplicationUsers != null)
+    foreach (var item in Model.ApplicationUsers)
     {
-        foreach (var item in Model.ApplicationUsers)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lastname)
-                </td>
-                <td>
-                    <input type="submit" value="Add">
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                <input type="button" value="Add" onclick="location.href='@Url.Action("AddPersons", "Meeting" , new { id = item.Id })'" />
+            </td>
 
-            </tr>
-            <br />
-        }
+        </tr>
+        <br />
     }
+
 }
+
