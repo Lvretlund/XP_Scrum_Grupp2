@@ -22,8 +22,6 @@ namespace XP_Scrum_Grupp2.Controllers
                 FormalBlogs = posts
             };
             return View(postIndex);
-
-
         }
 
         [HttpPost]
@@ -87,6 +85,9 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
+        public Category Category { get; set; } = new Category();
+        public ICollection<Category> Categories { get; set; } 
+        public byte[] File { get; set; }
         //public string Text { get; set; }
         //public byte[] File { get; set; }
         //public DateTime Date { get; set; }
