@@ -6,7 +6,7 @@
 
 <h2>Create Meeting</h2>
 
-@using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model.Meeting }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -88,7 +88,7 @@
                 @Html.DisplayFor(modelItem => item.Lastname)
             </td>
             <td>
-                <input type="button" value="Add" onclick="location.href='@Url.Action("AddPersons", "Meeting" , new { id = item.Id })'" />
+                @Html.ActionLink("Add Person", "AddPersons", new { pId = item.Id }, new { id = "myLink" })
             </td>
         </tr>
         <br />
@@ -97,3 +97,23 @@
 
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    $("#myLink").click(function (e) {
+
+        e.preventDefault();
+        $.ajax({
+
+            url: $(this).attr("href"), // comma here instead of semicolon
+            success: function () {
+                alert("Value Added");  // or any other indication if you want to show
+            }
+
+        });
+
+    });
+    </script>
+
+}
