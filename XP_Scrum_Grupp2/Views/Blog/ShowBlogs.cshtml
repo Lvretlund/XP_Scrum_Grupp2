@@ -7,35 +7,25 @@
 
 <h2>FormalBlog</h2>
 <br />
-@Html.Partial("CreatePartial")
+@Html.Partial("CreatePartial", Model)
 
 
 <table class="table">
-    @*<tr>
-    
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.File)
-        </th>
-        <th></th>
-
-
-    </tr>*@
 
     @foreach (var item in Model.FormalBlogs)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): @Html.DisplayFor(modelItem => item.Date): @Html.DisplayFor(modelItem => item.Text) :  <input type="button" value=" @Html.DisplayFor(modelItem => item.Filename)" class="btn btn-default" onclick="Download" />  
+                <p>  @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
+
+
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
             </td>
+
 
             <td></td>
         </tr>
