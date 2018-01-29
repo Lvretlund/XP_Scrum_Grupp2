@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
 
+
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
@@ -57,9 +58,25 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowBlogs", "Blog" );
         }
 
-        public ActionResult Download(string filename)
+
+        [HttpGet]
+        public ActionResult Download(string file)
         {
-            return View();
+            if (!System.IO.File.Exists(file))
+            {
+                return HttpNotFound();
+            }
+            FormalBlog theFile = new FormalBlog();
+
+            var fileBytes = System.IO.File.ReadAllBytes(file);
+            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+
+                FileDownloadName = theFile.Filename
+            };
+            return response;
+
+
         }
     }
 
@@ -75,9 +92,5 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Filename { get; internal set; }
         
     }
-
-   
-
-
 
 }

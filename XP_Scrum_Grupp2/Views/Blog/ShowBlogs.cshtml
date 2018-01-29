@@ -32,13 +32,20 @@
 
     @foreach (var item in Model.FormalBlogs)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): @Html.DisplayFor(modelItem => item.Date): @Html.DisplayFor(modelItem => item.Text) :  <input type="button" value=" @Html.DisplayFor(modelItem => item.Filename)" class="btn btn-default" onclick="Download" />  
-            </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname):
+            @Html.DisplayFor(modelItem => item.Date):
+            @Html.DisplayFor(modelItem => item.Text) :
 
-            <td></td>
-        </tr>
+            
+            <a href="Download?file=@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
+        </td>
+   
+
+        <td></td>
+    </tr>
     }
 </table>
 
