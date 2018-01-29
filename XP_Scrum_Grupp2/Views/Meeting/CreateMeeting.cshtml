@@ -90,10 +90,10 @@
             <td>
                 <input type="button" value="Add" onclick="location.href='@Url.Action("AddPersons", "Meeting" , new { id = item.Id })'" />
             </td>
-
         </tr>
         <br />
     }
+    @Html.Raw(TempData["msg"])
 
 }
 

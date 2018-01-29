@@ -36,7 +36,15 @@ namespace XP_Scrum_Grupp2.Controllers
         public void AddPersons(string id)
         {
             var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
-            persons.Add(person);
+            if(!persons.Contains(person))
+            {
+                persons.Add(person);
+                
+            }
+            else
+            {
+                TempData["msg"] = "<script>alert('Person already in list');</script>";
+            }
 
         }
 
@@ -45,7 +53,7 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             var model = new MeetingPeopleViewModel();
             model.ApplicationUsers = db.Users.Where(u => (u.Firstname.Contains(txt) || u.Lastname.Contains(txt))).ToList();
-
+            
             return View("CreateMeeting", model);
         }
     }
