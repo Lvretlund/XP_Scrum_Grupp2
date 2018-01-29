@@ -11,43 +11,24 @@
 
 
 <table class="table">
-    @*<tr>
-    
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.File)
-        </th>
-        <th></th>
 
-
-    </tr>*@
-    
-    @foreach(var item in Model.FormalBlogs)
+    @foreach (var item in Model.FormalBlogs)
     {
-    <tr>
-        <td>
-            <p>  @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
-            <p>
-                @Html.DisplayFor(modelItem => item.Text)
-                
-            </p>
+        <tr>
+            <td>
+                <p>  @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
 
-            
-            <a href="Download?file=@item.Filename" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
-        </td>
-   
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
-        <td></td>
-    </tr>
+            </td>
+
+
+            <td></td>
+        </tr>
     }
 </table>
 
