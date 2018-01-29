@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.IO;
 
 
+
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
@@ -59,24 +60,22 @@ namespace XP_Scrum_Grupp2.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult Download(string file)
+       [HttpGet]
+        public ActionResult Download(int id)
         {
-            if (!System.IO.File.Exists(file))
+            var fileItem = db.FormalBlogs.Find(id);
+            if (fileItem?.File == null)
             {
                 return HttpNotFound();
             }
-            FormalBlog theFile = new FormalBlog();
 
-            var fileBytes = System.IO.File.ReadAllBytes(file);
-            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            var response = new FileContentResult(fileItem.File, fileItem.ContentType)
+
             {
-
-                FileDownloadName =   theFile.Filename
+                FileDownloadName = fileItem.Filename
             };
+            
             return response;
-
-
         }
     }
 

@@ -11,24 +11,6 @@
 
 
 <table class="table">
-    @*<tr>
-    
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(modelItem => modelItem.File)
-        </th>
-        <th></th>
-
-
-    </tr>*@
 
     @foreach (var item in Model.FormalBlogs)
     {
@@ -40,7 +22,7 @@
             </p>
 
             
-            <a href="Download?file=@item.Filename" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+            <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
         </td>
    
