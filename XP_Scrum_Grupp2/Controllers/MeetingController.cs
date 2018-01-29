@@ -39,11 +39,11 @@ namespace XP_Scrum_Grupp2.Controllers
             if(!persons.Contains(person))
             {
                 persons.Add(person);
-                
+                TempData["msg"] = "<script>alert('Person added to meeting');</script>";
             }
             else
             {
-                TempData["msg"] = "<script>alert('Person already in list');</script>";
+                TempData["msg"] = "<script>alert('Person already in meeting');</script>";
             }
 
         }
