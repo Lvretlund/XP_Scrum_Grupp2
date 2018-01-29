@@ -16,17 +16,19 @@ namespace XP_Scrum_Grupp2.Controllers
         // GET: Blog
         public ActionResult ShowBlogs()
         {
+            var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
             // var dates = db.FormalBlogs.Include(x => x.Date).ToList();
             var postIndex = new PostIndexViewModel
             {
-                FormalBlogs = posts
+                FormalBlogs = posts,
+                Categories = cat
             };
             return View(postIndex);
         }
 
         [HttpPost]
-        public ActionResult Create(FormalBlog model, HttpPostedFileBase upload)
+        public ActionResult Create(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             FormalBlog newPost = new FormalBlog();
             var userName = User.Identity.Name;
@@ -36,21 +38,21 @@ namespace XP_Scrum_Grupp2.Controllers
 
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    model.Filename = upload.FileName;
-                    model.ContentType = upload.ContentType;
+                    model.NewFormalBlog.Filename = upload.FileName;
+                    model.NewFormalBlog.ContentType = upload.ContentType;
 
                     using (var reader = new BinaryReader(upload.InputStream))
                     {
-                        model.File = reader.ReadBytes(upload.ContentLength);
+                        model.NewFormalBlog.File = reader.ReadBytes(upload.ContentLength);
                     }
                 }
 
             newPost.Author = author;
-            newPost.Text = model.Text;
+            newPost.Text = model.NewFormalBlog.Text;
             newPost.Date = DateTime.Now;
-            newPost.ContentType = model.ContentType;
-            newPost.Filename = model.Filename;
-            newPost.File = model.File;
+            newPost.ContentType = model.NewFormalBlog.ContentType;
+            newPost.Filename = model.NewFormalBlog.Filename;
+            newPost.File = model.NewFormalBlog.File;
             
 
             db.FormalBlogs.Add(newPost);
@@ -86,7 +88,6 @@ namespace XP_Scrum_Grupp2.Controllers
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
         public Category Category { get; set; } = new Category();
         public ICollection<Category> Categories { get; set; } 
-        public byte[] File { get; set; }
         //public string Text { get; set; }
         //public byte[] File { get; set; }
         //public DateTime Date { get; set; }
