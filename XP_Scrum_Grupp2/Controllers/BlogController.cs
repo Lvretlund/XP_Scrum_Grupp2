@@ -14,19 +14,21 @@ namespace XP_Scrum_Grupp2.Controllers
     public class BlogController : BaseController
     {
         // GET: Blog
-        public ActionResult ShowBlogs(string id)
+        public ActionResult ShowBlogs()
         {
-
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
-           // var dates = db.FormalBlogs.Include(x => x.Date).ToList();
-
-            return View(new PostIndexViewModel { Id = id, FormalBlogs = posts});
+            // var dates = db.FormalBlogs.Include(x => x.Date).ToList();
+            var postIndex = new PostIndexViewModel
+            {
+                FormalBlogs = posts
+            };
+            return View(postIndex);
 
 
         }
 
         [HttpPost]
-        public ActionResult Create(PostIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult Create(FormalBlog model, HttpPostedFileBase upload)
         {
             FormalBlog newPost = new FormalBlog();
             var userName = User.Identity.Name;
@@ -79,17 +81,18 @@ namespace XP_Scrum_Grupp2.Controllers
         }
     }
 
-    public class PostIndexViewModel 
+    public class PostIndexViewModel
     {
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
-        public string Text { get; set; }
-        public byte[] File { get; set; }
-        public DateTime Date { get; set; }
-        public string Author_Id { get; set; }
-        public string ContentType { get; internal set; }
-        public string Filename { get; internal set; }
-        
+        public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
+        //public string Text { get; set; }
+        //public byte[] File { get; set; }
+        //public DateTime Date { get; set; }
+        //public string Author_Id { get; set; }
+        //public string ContentType { get; internal set; }
+        //public string Filename { get; internal set; }
+
     }
 
 }
