@@ -90,12 +90,18 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.ContentType = model.NewFormalBlog.ContentType;
             newPost.Filename = model.NewFormalBlog.Filename;
             newPost.File = model.NewFormalBlog.File;
-            
-            newPost.CategoryN = model.NewCategory;
-
+            bool exists = db.Categories.Any(cus => cus.Type == model.NewCategory.Type);
+            if (!exists)
+            {
+                newPost.CategoryN = model.NewCategory;
+            }
+            else
+            {
+                var existingCat = db.Categories.Where(cat => cat.Type == model.NewCategory.Type).FirstOrDefault();
+                newPost.CategoryN = existingCat;
+            }
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
-
             return RedirectToAction("ShowBlogs", "Blog" );
         }
 
