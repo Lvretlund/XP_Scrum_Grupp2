@@ -90,6 +90,8 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.ContentType = model.NewFormalBlog.ContentType;
             newPost.Filename = model.NewFormalBlog.Filename;
             newPost.File = model.NewFormalBlog.File;
+            
+            newPost.CategoryN = model.CategoryN;
             Category cat = new Category
             {
                 Type = model.Category.Type,
@@ -129,6 +131,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<Category> Categories { get; set; }
         public IEnumerable<string> SelectedCategories { get; set; }
         public IEnumerable<SelectListItem> Cats { get; set; }
+        public Category CategoryN { get; set; }
     }
 
 }

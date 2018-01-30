@@ -16,6 +16,7 @@ namespace XP_Scrum_Grupp2.Models
         public string ContentType { get;  set; }
         public string Filename { get;  set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
+        public Category CategoryN { get; set; }
         //public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
 
 
