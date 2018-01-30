@@ -16,21 +16,22 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Choose category")
+        @Html.LabelFor(model => Model.NewCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Category.Type, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Category.Type, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.NewCategory.Type, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NewCategory.Type, "", new { @class = "text-danger" })
         </div>
     </div>
     <br>
+    <div class="form-group" id="listbox">
+        @Html.ListBoxFor(m => m.SelectedCategories, Model.Cats, new { size = 10, @class = "ListBoxClass" })
+        <br />
+        </div>
         <div class="col-md-10">
+            @Html.TextBox("itemText","",new { @class = "txtItem"})
             @Html.EditorFor(model => model.NewFormalBlog.File, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.NewFormalBlog.File, "", new { @class = "text-danger" })
         </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Categories, new { @class = "col-md-2 control-label" })
-   
-    </div>
     
 
     <div class="form-group">
@@ -40,9 +41,32 @@
         </div>
     </div>
 </div>
+    @*<select id="listboxname" name="listboxName" multiple="multiple">
+        @foreach(var item in Model.Categories)
+        {
+            <option value=@item.Id>@item.Type</option>
+        }
+    </select>*@
 }
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(function () {
+        $(".ListBoxClass option").click(function () {
+            if ($(this).is(':selected')) {
+                var selectedId = $(this).val();
+                var selectedText = $(this).text();
+                $('.txtItem').val(selectedText);
+
+                alert("hej");
+                //var _this = $(this);
+                //$("#txtItem")
+            } else {
+                alert("fail");
+            }
+        });
+    });
+    
+    </script>
 }
