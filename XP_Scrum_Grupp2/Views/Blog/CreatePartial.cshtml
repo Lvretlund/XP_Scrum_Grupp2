@@ -23,13 +23,13 @@
              @Html.EditorFor(model => model.NewCategory.Type, new { htmlAttributes = new { @class = "form-control" }, Model.SelectedCategories })
                 @Html.ValidationMessageFor(model => model.NewCategory.Type, "", new { @class = "text-danger" })
     <br />
-    @Html.ListBoxFor(m => m.SelectedCategories, Model.Cats, new { size = 10, @class = "ListBoxClass" })
+    @Html.ListBoxFor(m => m.SelectedCategories, Model.Cats, new { style = "width:140px;height:170px;", @class = "ListBoxClass" })
     <br />
     <br>
 
     @Html.EditorFor(model => model.NewFormalBlog.File, new { htmlAttributes = new { @class = "form-control" } })
     @Html.ValidationMessageFor(model => model.NewFormalBlog.File, "", new { @class = "text-danger" })
-   
+
      <input type="file" name="upload"/>
             <br />
         <input type="submit" value="Create post" class="btn btn-default" />
