@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => Model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => Model.NewCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Category.Type, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Category.Type, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.NewCategory.Type, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NewCategory.Type, "", new { @class = "text-danger" })
         </div>
     </div>
     <br>

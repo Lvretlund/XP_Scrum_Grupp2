@@ -91,15 +91,9 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.Filename = model.NewFormalBlog.Filename;
             newPost.File = model.NewFormalBlog.File;
             
-            newPost.CategoryN = model.CategoryN;
-            Category cat = new Category
-            {
-                Type = model.Category.Type,
-                IsSelected = true
-            };
-            
+            newPost.CategoryN = model.NewCategory;
+
             db.FormalBlogs.Add(newPost);
-            db.Categories.Add(cat);
             db.SaveChanges();
 
             return RedirectToAction("ShowBlogs", "Blog" );
@@ -127,7 +121,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
-        public Category Category { get; set; } = new Category();
+        public Category NewCategory { get; set; } = new Category();
         public ICollection<Category> Categories { get; set; }
         public IEnumerable<string> SelectedCategories { get; set; }
         public IEnumerable<SelectListItem> Cats { get; set; }
