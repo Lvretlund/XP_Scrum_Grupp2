@@ -21,43 +21,32 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Meeting.Start, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Meeting.Start, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Meeting.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
             @Html.ValidationMessageFor(m => m.Meeting.Start, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Meeting.End, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Meeting.End, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Meeting.End, new { @class = "form-control datepicker", @id = "datetimepicker2" })
             @Html.ValidationMessageFor(m => m.Meeting.End, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
+            $('#datetimepicker2').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
+        });
+    </script>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepicker1').datetimepicker();
-                });
-            </script>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
 
 }
 
@@ -100,20 +89,20 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-<script>
-    $("#myLink").click(function (e) {
+    <script>
+        $("#myLink").click(function (e) {
 
-        e.preventDefault();
-        $.ajax({
+            e.preventDefault();
+            $.ajax({
 
-            url: $(this).attr("href"), // comma here instead of semicolon
-            success: function () {
-                alert("Value Added");  // or any other indication if you want to show
-            }
+                url: $(this).attr("href"), // comma here instead of semicolon
+                success: function () {
+                    alert("Person added");  // or any other indication if you want to show
+                }
+
+            });
 
         });
-
-    });
     </script>
 
 }

@@ -10,7 +10,7 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
-        public List<ApplicationUser> persons = new List<ApplicationUser>();
+        
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
@@ -24,29 +24,28 @@ namespace XP_Scrum_Grupp2.Controllers
 
             var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
             meeting.Creator = user;
-            meeting.Invited = persons;
+            //meeting.Invited = persons;
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
             ModelState.Clear();
-            persons.Clear();
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
-        public void AddPersons(string pId)
-        {
-            var person = db.Users.Where(u => u.Id == pId).SingleOrDefault();
-            if(!persons.Contains(person))
-            {
-                persons.Add(person);
-                TempData["msg"] = "<script>alert('Person added to meeting');</script>";
-            }
-            else
-            {
-                TempData["msg"] = "<script>alert('Person already in meeting');</script>";
-            }
+        //public void AddPersons(string pId)
+        //{
+        //    var person = db.Users.Where(u => u.Id == pId).SingleOrDefault();
+        //    if(!persons.Contains(person))
+        //    {
+        //        persons.Add(person);
+        //        TempData["msg"] = "<script>alert('Person added to meeting');</script>";
+        //    }
+        //    else
+        //    {
+        //        TempData["msg"] = "<script>alert('Person already in meeting');</script>";
+        //    }
 
-        }
+        //}
 
         [HttpPost]
         public ActionResult SearchPeople(string txt)
