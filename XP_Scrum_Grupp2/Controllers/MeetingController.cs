@@ -33,9 +33,9 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowCalendar", "Calendar");
         }
 
-        public void AddPersons(string id)
+        public void AddPersons(string pId)
         {
-            var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
+            var person = db.Users.Where(u => u.Id == pId).SingleOrDefault();
             if(!persons.Contains(person))
             {
                 persons.Add(person);
@@ -58,3 +58,4 @@ namespace XP_Scrum_Grupp2.Controllers
         }
     }
 }
+
