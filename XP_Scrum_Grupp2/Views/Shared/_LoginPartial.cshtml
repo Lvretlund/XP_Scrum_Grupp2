@@ -22,11 +22,24 @@
             <li>@Html.ActionLink("Register new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         }
     }
-    <li>@Html.ActionLink("Blogs", "ShowBlogs", "Blog")</li>
-    <li>@Html.ActionLink("Informal blogs", "ShowInformalBlogs", "Blog")</li>
+ 
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Blogs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="~/Blog/ShowBlogs"> Formal blog</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="~/Blog/ShowInformalBlogs">Informal blog</a>
+
+        </div>
+    </li>
     <li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>
     <li>@Html.ActionLink("Calendar", "ShowCalendar", "Calendar")</li>
     <li>@Html.ActionLink("Education", "Index", "Education")</li>
+    <li>@Html.ActionLink("Research", "Index", "Research")</li>
+
     <li>
         @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
     </li>

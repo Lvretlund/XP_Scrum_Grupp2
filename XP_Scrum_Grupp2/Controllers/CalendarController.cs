@@ -15,18 +15,27 @@ namespace XP_Scrum_Grupp2.Controllers
             return View();
         }
 
-        //public ActionResult GetEvents(double Start, double End)
-        //{
-        //    var fromDate = ConvertFromUnixTimestamp(Start);
-        //    var toDate = ConvertFromUnixTimestamp(End);
+        public ActionResult GetMeetings()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                foreach(var item in db.Meetings)
+                {
+                    var fromDate = ConvertFromUnixTimestamp(item.Start.ToOADate());
+                    var toDate = ConvertFromUnixTimestamp(item.End.ToOADate());
+                }
 
-        //    //Get the events
-        //    //You may get from the repository also
-        //    var eventList = GetEvents();
+                var meetingList = db.Meetings.ToList();
 
-        //    var rows = eventList.ToArray();
-        //    return Json(rows, JsonRequestBehavior.AllowGet);
-        //}
+                var rows = meetingList.ToArray();
+                return Json(rows, JsonRequestBehavior.AllowGet);
+            }
+        }
+        private static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
+        }
 
         //private List<Events> GetEvents()
         //{
@@ -58,10 +67,6 @@ namespace XP_Scrum_Grupp2.Controllers
         //    return eventList;
         //}
 
-        //private static DateTime ConvertFromUnixTimestamp(double timestamp)
-        //{
-        //    var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        //    return origin.AddSeconds(timestamp);
-        //}
+
     }
 }

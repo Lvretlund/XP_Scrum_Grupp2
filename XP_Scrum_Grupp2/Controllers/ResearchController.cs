@@ -1,35 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using XP_Scrum_Grupp2.Models;
 using System.Data.Entity;
-
-//test
+using System.IO;
+using XP_Scrum_Grupp2.Models;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
-    public class EducationController : BaseController
+    public class ResearchController : BaseController
     {
+       
         // GET: Education
         public ActionResult Index(string id)
         {
-            
-            var posts = db.EducationBlogs.Include(x => x.Author).ToList();
-            var postIndex = new EducationIndexViewModel
+
+            var posts = db.ResearchBlogs.Include(x => x.Author).ToList();
+            var postIndex = new ResearchIndexViewModel
             {
-               EducationBlogs = posts,
-               
+                EducationBlogs = posts,
+
             };
             return View(postIndex);
         }
 
         [HttpPost]
-        public ActionResult Create(EducationIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult Create(ResearchIndexViewModel model, HttpPostedFileBase upload)
         {
-            EducationBlog newPost = new EducationBlog();
+            ResearchBlog newPost = new ResearchBlog();
             var userName = User.Identity.Name;
 
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
@@ -37,24 +36,24 @@ namespace XP_Scrum_Grupp2.Controllers
 
             if (upload != null && upload.ContentLength > 0)
             {
-                model.NewEducationBlog.Filename = upload.FileName;
-                model.NewEducationBlog.ContentType = upload.ContentType;
+                model.NewResearchBlog.Filename = upload.FileName;
+                model.NewResearchBlog.ContentType = upload.ContentType;
 
                 using (var reader = new BinaryReader(upload.InputStream))
                 {
-                    model.NewEducationBlog.File = reader.ReadBytes(upload.ContentLength);
+                    model.NewResearchBlog.File = reader.ReadBytes(upload.ContentLength);
                 }
             }
 
             newPost.Author = author;
-            newPost.Text = model.NewEducationBlog.Text;
+            newPost.Text = model.NewResearchBlog.Text;
             newPost.Date = DateTime.Now;
-            newPost.ContentType = model.NewEducationBlog.ContentType;
-            newPost.Filename = model.NewEducationBlog.Filename;
-            newPost.File = model.NewEducationBlog.File;
-           
-           
-            db.EducationBlogs.Add(newPost);
+            newPost.ContentType = model.NewResearchBlog.ContentType;
+            newPost.Filename = model.NewResearchBlog.Filename;
+            newPost.File = model.NewResearchBlog.File;
+
+
+            db.ResearchBlogs.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("Index", "Education");
         }
@@ -75,15 +74,15 @@ namespace XP_Scrum_Grupp2.Controllers
             return response;
         }
 
-       
+
 
     }
 
-    public class EducationIndexViewModel
+    public class ResearchIndexViewModel
     {
         public string Id { get; set; }
-        public ICollection<EducationBlog> EducationBlogs { get; set; }
-        public EducationBlog NewEducationBlog { get; set; } = new EducationBlog();
+        public ICollection<ResearchBlog> EducationBlogs { get; set; }
+        public ResearchBlog NewResearchBlog { get; set; } = new ResearchBlog();
 
     }
 }
