@@ -1,12 +1,6 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.EducationIndexViewModel
 
 
-<div class="jumbotron">
-    <img src="~/Content/logo1.png" height="150" width="450" />
-    <p class="lead">Education news feed</p>
-
-</div>
-<br />
 
 @using (Html.BeginForm("Create", "Education", new { formal = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

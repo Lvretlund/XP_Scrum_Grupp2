@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
 
+
+
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
@@ -27,10 +29,9 @@ namespace XP_Scrum_Grupp2.Controllers
             return items;
         }
 
-        //get
+        // GET: Blog
         public ActionResult ShowBlogs()
         {
-            ApplicationDbContext db = new ApplicationDbContext();
             var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
             var postIndex = new PostIndexViewModel
@@ -41,9 +42,19 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(postIndex);
         }
 
+        public ActionResult ShowInformalBlogs()
+        {
+            var posts = db.InformalBlogs.Include(x => x.Author).ToList();
+            var postIndex = new PictureIndexViewModel
+            {
+                InformalBlogs = posts
+            };
+            return View(postIndex);
+        }
+
         //post
         [HttpPost]
-        public ActionResult Create(PostIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
@@ -79,6 +90,7 @@ namespace XP_Scrum_Grupp2.Controllers
             }
             else
             {
+
                 newPost.CategoryN = model.NewCategory;
             }
             //else
@@ -91,6 +103,48 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowBlogs", "Blog");
         }
 
+        [HttpPost]
+        public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
+        {
+            InformalBlog newPost = new InformalBlog();
+            var userName = User.Identity.Name;
+
+            var author = db.Users.SingleOrDefault(x => x.UserName == userName);
+
+            if (upload != null && upload.ContentLength > 0)
+            {
+                model.NewInformalBlog.Filename = upload.FileName;
+                model.NewInformalBlog.ContentType = upload.ContentType;
+
+                using (var reader = new BinaryReader(upload.InputStream))
+                {
+                    model.NewInformalBlog.File = reader.ReadBytes(upload.ContentLength);
+                }
+            }
+
+            newPost.Author = author;
+            newPost.Text = model.NewInformalBlog.Text;
+            newPost.Date = DateTime.Now;
+            newPost.ContentType = model.NewInformalBlog.ContentType;
+            newPost.Filename = model.NewInformalBlog.Filename;
+            newPost.File = model.NewInformalBlog.File;
+
+
+            db.InformalBlogs.Add(newPost);
+            db.SaveChanges();
+
+            return RedirectToAction("ShowInformalBlogs", "Blog");
+        }
+
+        public ActionResult Image(int id)
+        {
+            var post = db.InformalBlogs.Single(x => x.Id == id);
+            if (post?.File == null)
+            {
+                return HttpNotFound();
+            }
+            return File(post.File, post.ContentType);
+        }
 
         [HttpGet]
         public ActionResult Download(int id)
@@ -100,14 +154,17 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 return HttpNotFound();
             }
+
             var response = new FileContentResult(fileItem.File, fileItem.ContentType)
+
             {
                 FileDownloadName = fileItem.Filename
             };
+
             return response;
         }
     }
-
+    
     public class PostIndexViewModel
     {
         public string Id { get; set; }
@@ -121,4 +178,10 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<Meeting> Meetings { get; set; } //testrad
     }
 
+    public class PictureIndexViewModel
+    {
+        public string Id { get; set; }
+        public ICollection<InformalBlog> InformalBlogs { get; set; }
+        public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
+    }
 }
