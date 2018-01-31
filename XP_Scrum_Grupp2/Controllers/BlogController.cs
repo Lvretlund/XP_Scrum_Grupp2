@@ -114,6 +114,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
         public Category NewCategory { get; set; } = new Category();
+        public ICollection<Category> Categories { get; set; }
         public List<SelectListItem> SelectedCategories { get; set; }
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
