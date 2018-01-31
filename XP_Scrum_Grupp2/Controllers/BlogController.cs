@@ -11,22 +11,7 @@ using System.Text;
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
-    {
-        [HttpPost]
-        public string Index(IEnumerable<string> selectedCats)
-        {
-            if (selectedCats == null)
-            {
-                return "No cities are selected";
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("You selected – " + string.Join(",", selectedCats));
-                return sb.ToString();
-            }
-        }
-        
+    { 
         public ActionResult ShowBlogs()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -54,7 +39,6 @@ namespace XP_Scrum_Grupp2.Controllers
             }
             var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
-            // var dates = db.FormalBlogs.Include(x => x.Date).ToList();
             var postIndex = new PostIndexViewModel
             {
                 FormalBlogs = posts,
