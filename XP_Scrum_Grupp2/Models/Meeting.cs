@@ -10,9 +10,7 @@ namespace XP_Scrum_Grupp2.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public ApplicationUser Creator { get; set; }
-        //public ICollection<DateTime> Dates { get; set; }
         public ICollection<ApplicationUser> Invited { get; set; }
-        //public DateTime ChosenDate { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool AllDay { get; set; }

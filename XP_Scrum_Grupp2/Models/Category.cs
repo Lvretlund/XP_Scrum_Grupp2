@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace XP_Scrum_Grupp2.Models
 {
@@ -9,6 +6,7 @@ namespace XP_Scrum_Grupp2.Models
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public bool IsSelected { get; set; }
         public ICollection<FormalBlog> FormalBlog { get; set; }
         
     }
