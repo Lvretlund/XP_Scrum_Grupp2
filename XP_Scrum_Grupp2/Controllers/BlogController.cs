@@ -13,16 +13,31 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
     {
+        private static List<SelectListItem> PopulateCategories()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (Category cate in db.Categories)
+            {
+                items.Add(new SelectListItem
+                {
+                    Text = cate.Type.ToString(),
+                    Value = cate.Id.ToString(),
+                    Selected = cate.IsSelected
+                });
+            }
+            return items;
+        }
+
         // GET: Blog
         public ActionResult ShowBlogs()
         {
             var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
-            // var dates = db.FormalBlogs.Include(x => x.Date).ToList();
             var postIndex = new PostIndexViewModel
             {
                 FormalBlogs = posts,
-                Categories = cat
+                SelectedCategories = PopulateCategories()
             };
             return View(postIndex);
         }
@@ -37,15 +52,13 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(postIndex);
         }
 
+        //post
         [HttpPost]
         public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
-            FormalBlog newPost = new FormalBlog();
             var userName = User.Identity.Name;
-
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
-
-
+            model.SelectedCategories = PopulateCategories();
             if (upload != null && upload.ContentLength > 0)
             {
                 model.NewFormalBlog.Filename = upload.FileName;
@@ -56,25 +69,39 @@ namespace XP_Scrum_Grupp2.Controllers
                     model.NewFormalBlog.File = reader.ReadBytes(upload.ContentLength);
                 }
             }
+            FormalBlog newPost = new FormalBlog
+            {
+                Author = author,
+                Text = model.NewFormalBlog.Text,
+                Date = DateTime.Now,
+                ContentType = model.NewFormalBlog.ContentType,
+                Filename = model.NewFormalBlog.Filename,
+                File = model.NewFormalBlog.File
+            };
 
-            newPost.Author = author;
-            newPost.Text = model.NewFormalBlog.Text;
-            newPost.Date = DateTime.Now;
-            newPost.ContentType = model.NewFormalBlog.ContentType;
-            newPost.Filename = model.NewFormalBlog.Filename;
-            newPost.File = model.NewFormalBlog.File;
+            if (model.NewCategory.Type == null)
+            {
+                IEnumerable<SelectListItem> selectedItems = model.SelectedCategories.Where(c => model.CategoryIds.Contains(int.Parse(c.Value))).ToList();
+                foreach (var selectedItem in selectedItems)
+                {
+                    selectedItem.Selected = true;
+                    newPost.CategoryN = db.Categories.Where(c => c.Type == selectedItem.Text).FirstOrDefault();
+                }
+            }
+            else
+            {
 
-
+                newPost.CategoryN = model.NewCategory;
+            }
+            //else
+            //{
+            //    var existingCat = db.Categories.Where(cat => cat.Type == model.NewCategory.Type).FirstOrDefault();
+            //    newPost.CategoryN = existingCat;
+            //}
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
-
             return RedirectToAction("ShowBlogs", "Blog");
         }
-
-        //public ActionResult CreateInformalPartial()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
@@ -112,7 +139,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public ActionResult Image(int id)
         {
             var post = db.InformalBlogs.Single(x => x.Id == id);
-            if(post?.File == null)
+            if (post?.File == null)
             {
                 return HttpNotFound();
             }
@@ -137,27 +164,24 @@ namespace XP_Scrum_Grupp2.Controllers
             return response;
         }
     }
-
-        public class PostIndexViewModel
-        {
-            public string Id { get; set; }
-            public ICollection<FormalBlog> FormalBlogs { get; set; }
-            public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
-            public Category Category { get; set; } = new Category();
-            public ICollection<Category> Categories { get; set; }
-            //public string Text { get; set; }
-            //public byte[] File { get; set; }
-            //public DateTime Date { get; set; }
-            //public string Author_Id { get; set; }
-            //public string ContentType { get; internal set; }
-            //public string Filename { get; internal set; }
-
-        }
-
-        public class PictureIndexViewModel
-        {
-            public string Id { get; set; }
-            public ICollection<InformalBlog> InformalBlogs { get; set; }
-            public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
-        }
+    
+    public class PostIndexViewModel
+    {
+        public string Id { get; set; }
+        public ICollection<FormalBlog> FormalBlogs { get; set; }
+        public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
+        public Category NewCategory { get; set; } = new Category();
+        public ICollection<Category> Categories { get; set; }
+        public List<SelectListItem> SelectedCategories { get; set; }
+        public int[] CategoryIds { get; set; }
+        public Category CategoryN { get; set; }
+        public ICollection<Meeting> Meetings { get; set; } //testrad
     }
+
+    public class PictureIndexViewModel
+    {
+        public string Id { get; set; }
+        public ICollection<InformalBlog> InformalBlogs { get; set; }
+        public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
+    }
+}
