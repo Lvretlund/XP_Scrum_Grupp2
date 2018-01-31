@@ -478,6 +478,7 @@
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\EducationNY\Index.cshtml" />
     <Content Include="Views\EducationNY\EducationNYPartial.cshtml" />
+    <Content Include="Views\Research\ResearchPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
