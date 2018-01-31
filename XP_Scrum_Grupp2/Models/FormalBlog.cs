@@ -17,8 +17,10 @@ namespace XP_Scrum_Grupp2.Models
         public Category CategoryN { get; set; }
 
 
+
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
-        
+
+        public Meeting Meetings { get; set; } //testdata
     }
 }
