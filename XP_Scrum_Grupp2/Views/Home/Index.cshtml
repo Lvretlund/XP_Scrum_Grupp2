@@ -1,31 +1,58 @@
-﻿@{
+﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
-    <img src="~/Content/logo1.png"  height="150" width="450"/>
-    <p class="lead">Ett informationssystem för lärare på Informatik</p>
+    <img src="~/Content/logo1.png" height="150" width="450" />
+    <p class="lead">Ett informationssystem för lärare inom Informatik</p>
 
 </div>
 
-@*<div class="row">
-    <div class="col-md-4">
-        <h2>Grupp2</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>*@
+
+<table class="table">
+
+    <h3> <b>Some of the latest posts in the formalblog below:</b></h3>
+    @foreach (var item in Model.FormalBlogs.Reverse().Take(3))
+    {
+        <tr>
+            <td>
+                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) wrote the @Html.DisplayFor(modelItem => item.Date) in the category: @Html.DisplayFor(modelItem => item.CategoryN.Type)</b></p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
+
+
+
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
+            </td>
+
+
+            <td></td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<hr style="height:2px;border:groove;color:#f00;background-color:#333;" />
+<br />
+
+<h3> <b>Recently added meetings</b></h3>
+<br />
+<table class="table">
+    @foreach (var item in Model.Meetings.Reverse().Take(3))
+    {
+        <tr>
+            <td>
+                <p>
+                    <b>  @Html.DisplayFor(modelItem => item.Title) </b> @*lägg till en actionlink så att användaren kan gå vidare till mötet*@ 
+                </p>
+            </td>
+            <td></td>
+        </tr>
+    }
+
+</table>
+
