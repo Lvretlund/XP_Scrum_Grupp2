@@ -198,7 +198,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
-    <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
@@ -473,8 +472,8 @@
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
     <Content Include="Views\Blog\ShowBlogs.cshtml" />
     <Content Include="Views\Blog\CreatePartial.cshtml" />
-    <Content Include="Views\Education\Index.cshtml" />
-    <Content Include="Views\Education\EducationPartial.cshtml" />
+    <Content Include="Views\Blog\ShowInformalBlogs.cshtml" />
+    <Content Include="Views\Blog\CreateInformalPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
