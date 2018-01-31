@@ -116,6 +116,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public IEnumerable<string> SelectedCategories { get; set; }
         public IEnumerable<SelectListItem> Cats { get; set; }
         public Category CategoryN { get; set; }
+        public ICollection<Meeting> Meetings { get; set; } //testrad
     }
 
 }
