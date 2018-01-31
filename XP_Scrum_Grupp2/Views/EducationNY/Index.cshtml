@@ -1,0 +1,31 @@
+﻿@model XP_Scrum_Grupp2.Controllers.EducationIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("EducationNYPartial", Model)
+
+<h2>Education feed</h2>
+
+<table class="table">
+
+    @foreach (var item in Model.EducationBlogs.Reverse())
+    {
+        <tr>
+            <td>
+                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</b></p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
+
+
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
+            </td>
+
+
+            <td></td>
+        </tr>
+    }
+</table>

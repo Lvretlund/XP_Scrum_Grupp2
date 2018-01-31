@@ -1,0 +1,40 @@
+﻿@model XP_Scrum_Grupp2.Controllers.EducationIndexViewModel
+
+
+<div class="jumbotron">
+    <img src="~/Content/logo1.png" height="150" width="450" />
+    <p class="lead">Education news feed</p>
+
+</div>
+<br />
+
+@using (Html.BeginForm("Create", "Education", new { formal = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Post something below!</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.Label("Text", new { htmlAttributes = new { @class = "control-label col-md-2" } })
+        <br />
+
+        @Html.EditorFor(model => model.NewEducationBlog.Text, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NewEducationBlog.Text, "", new { @class = "text-danger" })
+
+
+        @Html.EditorFor(model => model.NewEducationBlog.File, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NewEducationBlog.File, "", new { @class = "text-danger" })
+
+        <input type="file" name="upload" />
+        <br />
+        <input type="submit" value="Create post" class="btn btn-default" />
+    </div>
+
+    <br />
+    <br />
+    <hr style="height:2px;border:none;color:#333;background-color:#333;" />
+    <br />
+
+}
