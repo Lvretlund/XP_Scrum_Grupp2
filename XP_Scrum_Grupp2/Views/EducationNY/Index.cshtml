@@ -1,31 +1,56 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.EducationIndexViewModel
+@using Microsoft.AspNet.Identity
+@using XP_Scrum_Grupp2.Models
+
 
 @{
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("EducationNYPartial", Model)
 
-<h2>Education feed</h2>
 
-<table class="table">
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var currentUser = User.Identity.Name;
+    var user = db.Users.Where(u => u.UserName == currentUser).SingleOrDefault();
 
-    @foreach (var item in Model.EducationBlogs.Reverse())
+
+    @Html.AntiForgeryToken()
+
+
+
+    if (user != null)
     {
-        <tr>
-            <td>
-                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</b></p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </p>
-
-
-                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
-
-            </td>
-
-
-            <td></td>
-        </tr>
+        if (user.EducationAdmin == true)
+        {
+            @Html.Partial("EducationNYPartial", Model)
+        }
     }
-</table>
+
+}
+
+
+    <h2>Education feed</h2>
+
+    <table class="table">
+
+        @foreach (var item in Model.EducationBlogs.Reverse())
+        {
+            <tr>
+                <td>
+                    <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</b></p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </p>
+
+
+                    <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
+                </td>
+
+
+                <td></td>
+            </tr>
+        }
+    </table>
