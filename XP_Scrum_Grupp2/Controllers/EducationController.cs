@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 using System.Data.Entity;
 
-
+//test
 
 namespace XP_Scrum_Grupp2.Controllers
 {

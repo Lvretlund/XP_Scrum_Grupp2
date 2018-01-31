@@ -474,11 +474,11 @@
     <Content Include="Views\Blog\CreatePartial.cshtml" />
     <Content Include="Views\Blog\ShowInformalBlogs.cshtml" />
     <Content Include="Views\Blog\CreateInformalPartial.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Research\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
