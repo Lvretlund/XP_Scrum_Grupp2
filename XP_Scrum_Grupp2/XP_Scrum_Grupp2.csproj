@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="Controllers\ResearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -471,6 +472,9 @@
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
     <Content Include="Views\Blog\ShowBlogs.cshtml" />
     <Content Include="Views\Blog\CreatePartial.cshtml" />
+    <Content Include="Views\Blog\ShowInformalBlogs.cshtml" />
+    <Content Include="Views\Blog\CreateInformalPartial.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

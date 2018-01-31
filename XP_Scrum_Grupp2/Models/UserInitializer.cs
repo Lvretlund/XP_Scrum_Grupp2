@@ -30,6 +30,29 @@ namespace XP_Scrum_Grupp2.Models
                 SecurityStamp = "4d6b574f-f572-43c0-a53b-6e821dde3476",
                 Admin = true,
             });
+
+            context.Users.Add(new ApplicationUser
+            {
+                Firstname = "Ann-Sofie",
+                Lastname = "Hellberg",
+                UserName = "annsofie.hellberg@oru.se",
+                Email = "annsofie.hellberg@oru.se",
+                PasswordHash = "AKa0r4QBdjeUX2vzdgx6M5cYQ6OTjZevqwWBloFQ4NG5oLM25AOv2as1ayqqJ/tGUg==",
+                SecurityStamp = "1f822c96-a9c5-4940-9f16-b32413a9aed0",
+                EducationAdmin = true,
+            });
+            context.SaveChanges();
+
+            context.Users.Add(new ApplicationUser
+            {
+                Firstname = "Mathias",
+                Lastname = "Hataaka",
+                UserName = "mathias.hataaka@oru.se",
+                Email = "mathias.hataaka@oru.se",
+                PasswordHash = "AERuXg8ASZwSJk3McPYBdI+ZssffmQ/5sN74iCbozO+J/d4TDZIc+bX77wcuPlqTpA==",
+                SecurityStamp = "0ec056a8-6be6-4a59-bcbc-12e2c51e7516",
+                EducationAdmin = true,
+            });
             context.SaveChanges();
         }
     }
