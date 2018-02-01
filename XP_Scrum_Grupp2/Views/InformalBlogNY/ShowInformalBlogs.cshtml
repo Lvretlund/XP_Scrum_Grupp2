@@ -1,0 +1,29 @@
+﻿@model XP_Scrum_Grupp2.Controllers.PictureIndexViewModel
+
+@{
+    ViewBag.Title = "Informell blogg";
+}
+
+<h2>Informell blogg</h2>
+
+@Html.Partial("CreateInformalPartial", Model)
+
+<table class="table">
+    @foreach (var item in Model.InformalBlogs.Reverse())
+    {
+        <tr>
+            <td>
+                <p> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
+
+                <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
+
+            </td>
+
+
+            <td></td>
+        </tr>
+    }
+</table>
