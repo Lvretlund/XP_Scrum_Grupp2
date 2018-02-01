@@ -10,50 +10,43 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
-        
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
-            var model = new MeetingPeopleViewModel();
-            return View(model);
+            return View();
         }
 
         public ActionResult CreateAMeeting(Meeting meeting)
         {
             var userName = User.Identity.Name;
-
             var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
+            var model = new MeetingPeopleViewModel();
+
             meeting.Creator = user;
-            //meeting.Invited = persons;
+            meeting.Invited = new List<ApplicationUser>();
+            meeting.Invited.Add(user);
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
-            ModelState.Clear();
-            return RedirectToAction("ShowCalendar", "Calendar");
+            model.ApplicationUsers = db.Users.ToList();
+            model.Meeting = meeting;
+
+            return View("AddPeople", model);
         }
-
-        //public void AddPersons(string pId)
-        //{
-        //    var person = db.Users.Where(u => u.Id == pId).SingleOrDefault();
-        //    if(!persons.Contains(person))
-        //    {
-        //        persons.Add(person);
-        //        TempData["msg"] = "<script>alert('Person added to meeting');</script>";
-        //    }
-        //    else
-        //    {
-        //        TempData["msg"] = "<script>alert('Person already in meeting');</script>";
-        //    }
-
-        //}
-
-        [HttpPost]
-        public ActionResult SearchPeople(string txt)
+        public ActionResult AddPeople(string id, Meeting meeting)
         {
-            var model = new MeetingPeopleViewModel();
-            model.ApplicationUsers = db.Users.Where(u => (u.Firstname.Contains(txt) || u.Lastname.Contains(txt))).ToList();
-            
-            return View("CreateMeeting", model);
+            var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
+            MeetingPeopleViewModel model = new MeetingPeopleViewModel();
+
+            if(!meeting.Invited.Contains(person))
+            {
+                meeting.Invited.Add(person);
+                db.SaveChanges();
+            }
+
+            model.ApplicationUsers = db.Users.ToList();
+            model.Meeting = meeting;
+            return View("AddPeople", model);
         }
     }
 }

@@ -471,6 +471,7 @@
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
     <Content Include="Views\Blog\ShowBlogs.cshtml" />
     <Content Include="Views\Blog\CreatePartial.cshtml" />
+    <Content Include="Views\Meeting\AddPeople.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
