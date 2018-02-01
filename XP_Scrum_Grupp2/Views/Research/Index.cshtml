@@ -1,0 +1,61 @@
+﻿@model XP_Scrum_Grupp2.Controllers.ResearchIndexViewModel
+@using Microsoft.AspNet.Identity
+@using XP_Scrum_Grupp2.Models
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron">
+    <img src="~/Content/logo1.png" height="150" width="450" />
+    <p class="lead">Research news feed</p>
+
+</div>
+<br />
+
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var currentUser = User.Identity.Name;
+    var user = db.Users.Where(u => u.UserName == currentUser).SingleOrDefault();
+
+
+    @Html.AntiForgeryToken()
+
+    if (user != null)
+    {
+        if (user.ResearchAdmin == true)
+        {
+            @Html.Partial("ResearchPartial", Model)
+            <p>Detta ska synas för matthias</p>
+        }
+    }
+
+}
+
+
+
+<h2>Research feed</h2>
+
+<table class="table">
+    @foreach (var item in Model.ResearchBlog.Reverse())
+    {
+        <tr>
+            <td>
+                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</b></p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </p>
+
+
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
+            </td>
+
+
+            <td></td>
+        </tr>
+    }
+
+</table>

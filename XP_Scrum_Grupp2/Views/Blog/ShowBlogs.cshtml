@@ -5,14 +5,14 @@
 }
 
 
-<h2>FormalBlog</h2>
+<h2>Formell blogg</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
 
 
 <table class="table">
 
-    @foreach (var item in Model.FormalBlogs)
+    @foreach (var item in Model.FormalBlogs.Reverse())
     {
         <tr>
             <td>
@@ -23,6 +23,7 @@
 
 
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+
 
             </td>
 

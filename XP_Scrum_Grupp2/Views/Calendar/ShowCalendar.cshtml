@@ -1,6 +1,4 @@
-﻿
-@section scripts{
-
+﻿@section scripts{
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -19,100 +17,100 @@
                     prev: '<',
                     next: '>'
                 },
-                defaultView: 'agendaDay',
-                editable: true,
+                defaultView: 'month',
+                editable: false,
                 weekMode: 'liquid',
                 allDaySlot: false,
                 selectTable: true,
                 slotMinutes: 15,
-                events: [
-                    {
-                        title: 'Praent vestibulum',
-                        start: new Date(y, m, 1, 9, 00),
-                        end: new Date(y, m, 1, 10, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Vestibulum iaculis lacinia',
-                        start: new Date(y, m, 2, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 4, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Aliquam erat volpat. Duis ac turpis',
-                        start: new Date(y, m, 9, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Donec in velit vel ipsum',
-                        start: new Date(y, m, 10, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Praent vestibulum',
-                        start: new Date(y, m, 13, 9, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Vestibulum iaculis lacinia',
-                        start: new Date(y, m, 15, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 17, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'nteger rutrum ante eu lacusi',
-                        start: new Date(y, m, 18, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 19, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 23, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'nteger rutrum ante eu lacus',
-                        start: new Date(y, m, 24, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 27, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Integer rutrum ante eu lacus',
-                        start: new Date(y, m, 28, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Vestibulum iaculis lacinia',
-                        start: new Date(y, m, 29, 16, 00),
-                        allDay: false
-                    },
-                    {
-                        title: 'Praent vestibulum',
-                        start: new Date(y, m, 30, 9, 00),
-                        allDay: false
-                    }
-                ]/*"/calendar/getevents/"*/
+                events: "/calendar/getmeetings/"
+                //[
+                //    {
+                //        title: 'Praent vestibulum',
+                //        start: new Date(y, m, 1, 9, 00),
+                //        end: new Date(y, m, 1, 10, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Vestibulum iaculis lacinia',
+                //        start: new Date(y, m, 2, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 4, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Aliquam erat volpat. Duis ac turpis',
+                //        start: new Date(y, m, 9, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Donec in velit vel ipsum',
+                //        start: new Date(y, m, 10, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Praent vestibulum',
+                //        start: new Date(y, m, 13, 9, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Vestibulum iaculis lacinia',
+                //        start: new Date(y, m, 15, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 17, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'nteger rutrum ante eu lacusi',
+                //        start: new Date(y, m, 18, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 19, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 23, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'nteger rutrum ante eu lacus',
+                //        start: new Date(y, m, 24, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 27, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Integer rutrum ante eu lacus',
+                //        start: new Date(y, m, 28, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Vestibulum iaculis lacinia',
+                //        start: new Date(y, m, 29, 16, 00),
+                //        allDay: false
+                //    },
+                //    {
+                //        title: 'Praent vestibulum',
+                //        start: new Date(y, m, 30, 9, 00),
+                //        allDay: false
+                //    }
+                //]
             });
         });
 
     </script>
-
 }
 
 <br />
@@ -121,7 +119,3 @@
         <div id="calendar"></div>
     </div>
 </div>
-
-
-
-

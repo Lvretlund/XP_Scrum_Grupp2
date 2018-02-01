@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 
+
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BaseController : Controller

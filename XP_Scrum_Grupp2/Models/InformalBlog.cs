@@ -9,14 +9,14 @@ namespace XP_Scrum_Grupp2.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public byte Image { get; set; }
         public string Text { get; set; }
         public ApplicationUser Author { get; set; }
+        public string Filename { get; set; }
+        public string ContentType { get; set; }
+        public byte[] File { get; set; }
+        //public ICollection<InformalBlog> InformalBlogs { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-
-        
-
-
+      
     }
 }
