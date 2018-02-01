@@ -31,22 +31,22 @@ namespace XP_Scrum_Grupp2.Controllers
             model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
 
-            return View("AddPeople", model);
+            return View("AddToMeeting", model);
         }
-        public ActionResult AddPeople(string id, Meeting meeting)
+        public ActionResult AddPeople(ApplicationUser person, MeetingPeopleViewModel model)
         {
-            var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
-            MeetingPeopleViewModel model = new MeetingPeopleViewModel();
+            //var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
+            //MeetingPeopleViewModel model = new MeetingPeopleViewModel();
 
-            if(!meeting.Invited.Contains(person))
+            if(!model.Meeting.Invited.Contains(person))
             {
-                meeting.Invited.Add(person);
+                model.Meeting.Invited.Add(person);
                 db.SaveChanges();
             }
 
-            model.ApplicationUsers = db.Users.ToList();
-            model.Meeting = meeting;
-            return View("AddPeople", model);
+            //model.ApplicationUsers = db.Users.ToList();
+            //model.Meeting = meeting;
+            return View("AddToMeeting", model);
         }
     }
 }
