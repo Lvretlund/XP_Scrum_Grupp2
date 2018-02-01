@@ -19,7 +19,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var posts = db.ResearchBlogs.Include(x => x.Author).ToList();
             var postIndex = new ResearchIndexViewModel
             {
-                EducationBlogs = posts,
+                ResearchBlog = posts,
 
             };
             return View(postIndex);
@@ -55,14 +55,14 @@ namespace XP_Scrum_Grupp2.Controllers
 
             db.ResearchBlogs.Add(newPost);
             db.SaveChanges();
-            return RedirectToAction("Index", "Education");
+            return RedirectToAction("Index", "Research");
         }
 
 
         [HttpGet]
         public ActionResult Download(int id)
         {
-            var fileItem = db.EducationBlogs.Find(id);
+            var fileItem = db.ResearchBlogs.Find(id);
             if (fileItem?.File == null)
             {
                 return HttpNotFound();
@@ -81,7 +81,7 @@ namespace XP_Scrum_Grupp2.Controllers
     public class ResearchIndexViewModel
     {
         public string Id { get; set; }
-        public ICollection<ResearchBlog> EducationBlogs { get; set; }
+        public ICollection<ResearchBlog> ResearchBlog { get; set; }
         public ResearchBlog NewResearchBlog { get; set; } = new ResearchBlog();
 
     }

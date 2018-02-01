@@ -1,10 +1,42 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.EducationIndexViewModel
+@using Microsoft.AspNet.Identity
+@using XP_Scrum_Grupp2.Models
+
 
 @{
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("EducationNYPartial", Model)
+
+<div class="jumbotron">
+    <img src="~/Content/logo1.png" height="150" width="450" />
+    <p class="lead">Education news feed</p>
+
+</div>
+<br />
+
+
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var currentUser = User.Identity.Name;
+    var user = db.Users.Where(u => u.UserName == currentUser).SingleOrDefault();
+
+
+    @Html.AntiForgeryToken()
+
+
+
+    if (user != null)
+    {
+        if (user.EducationAdmin == true)
+        {
+            @Html.Partial("EducationNYPartial", Model)
+        }
+    }
+
+}
+
 
 <h2>Education feed</h2>
 

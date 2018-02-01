@@ -56,7 +56,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             db.EducationBlogs.Add(newPost);
             db.SaveChanges();
-            return RedirectToAction("Index", "Education");
+            return RedirectToAction("Index", "EducationNY");
         }
 
 

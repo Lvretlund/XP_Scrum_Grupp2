@@ -51,7 +51,7 @@ namespace XP_Scrum_Grupp2.Models
                 Email = "mathias.hataaka@oru.se",
                 PasswordHash = "AERuXg8ASZwSJk3McPYBdI+ZssffmQ/5sN74iCbozO+J/d4TDZIc+bX77wcuPlqTpA==",
                 SecurityStamp = "0ec056a8-6be6-4a59-bcbc-12e2c51e7516",
-                EducationAdmin = true,
+                ResearchAdmin = true,
             });
             context.SaveChanges();
         }
