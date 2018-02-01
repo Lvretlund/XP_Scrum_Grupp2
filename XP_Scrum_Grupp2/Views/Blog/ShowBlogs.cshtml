@@ -9,6 +9,7 @@
 <br />
 @Html.Partial("CreatePartial", Model)
 
+
 <table class="table">
 
     @foreach (var item in Model.FormalBlogs.Reverse())
@@ -22,17 +23,13 @@
 
 
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
-
-                @Html.Partial("CommentPartial", Model)
-
+                <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
 
             </td>
 
 
             <td></td>
-
         </tr>
     }
 </table>
-
 

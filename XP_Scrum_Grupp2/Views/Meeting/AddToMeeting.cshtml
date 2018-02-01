@@ -1,0 +1,46 @@
+﻿@model XP_Scrum_Grupp2.Models.MeetingPeopleViewModel
+
+<h4>Add persons to meeting</h4>
+
+@if (Model.ApplicationUsers != null)
+{
+    foreach (var item in Model.ApplicationUsers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            @if (!Model.Meeting.Invited.Contains(item))
+            {
+                <td>
+                    @Html.ActionLink("Add Person", "AddPeople", item)
+                </td>
+            }
+        </tr>
+            <br />
+    }
+}
+<br />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#myLink").click(function (e) {
+
+            e.preventDefault();
+            $.ajax({
+
+                url: $(this).attr("href"), // comma here instead of semicolon
+                success: function () {
+                    alert("Person added");  // or any other indication if you want to show
+                }
+
+            });
+
+        });
+    </script>
+}

@@ -9,7 +9,7 @@
 @Html.Partial("CreateInformalPartial", Model)
 
 <table class="table">
-    @foreach (var item in Model.InformalBlogs)
+    @foreach (var item in Model.InformalBlogs.Reverse())
     {
         <tr>
             <td>

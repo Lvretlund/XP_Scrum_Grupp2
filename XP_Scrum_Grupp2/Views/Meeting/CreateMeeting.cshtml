@@ -1,4 +1,4 @@
-﻿@model XP_Scrum_Grupp2.Models.MeetingPeopleViewModel
+﻿@model XP_Scrum_Grupp2.Models.Meeting
 
 @{
     ViewBag.Title = "CreateMeeting";
@@ -6,30 +6,30 @@
 
 <h2>Create Meeting</h2>
 
-@using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model.Meeting }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Meeting.Title, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Meeting.Title, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Meeting.Title, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Meeting.Start, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Start, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Meeting.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
-            @Html.ValidationMessageFor(m => m.Meeting.Start, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
+            @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Meeting.End, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.End, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Meeting.End, new { @class = "form-control datepicker", @id = "datetimepicker2" })
-            @Html.ValidationMessageFor(m => m.Meeting.End, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.End, new { @class = "form-control datepicker", @id = "datetimepicker2" })
+            @Html.ValidationMessageFor(m => m.End, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -47,62 +47,5 @@
                     <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
-
-}
-
-
-<h3>Search people:</h3>
-<br />
-@using (Html.BeginForm("SearchPeople", "Meeting", FormMethod.Post))
-{
-
-    <div>
-        <input type="text" id="txt" name="txt" />
-        <input type="submit" name="search" value="Search" />
-    </div>
-
-}
-<br />
-
-
-@if (Model.ApplicationUsers != null)
-{
-    foreach (var item in Model.ApplicationUsers)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            <td>
-                @Html.ActionLink("Add Person", "AddPersons", new { pId = item.Id }, new { id = "myLink" })
-            </td>
-        </tr>
-        <br />
-    }
-    @Html.Raw(TempData["msg"])
-
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script>
-        $("#myLink").click(function (e) {
-
-            e.preventDefault();
-            $.ajax({
-
-                url: $(this).attr("href"), // comma here instead of semicolon
-                success: function () {
-                    alert("Person added");  // or any other indication if you want to show
-                }
-
-            });
-
-        });
-    </script>
 
 }
