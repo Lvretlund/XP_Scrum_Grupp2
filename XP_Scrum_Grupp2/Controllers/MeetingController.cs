@@ -10,6 +10,7 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
+        public static Meeting möte;
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
@@ -28,24 +29,25 @@ namespace XP_Scrum_Grupp2.Controllers
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
+            möte = meeting;
+
             model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
 
             return View("AddToMeeting", model);
         }
-        public ActionResult AddPeople(ApplicationUser person, MeetingPeopleViewModel model)
+        public ActionResult AddPeople(ApplicationUser person)
         {
-            //var person = db.Users.Where(u => u.Id == id).SingleOrDefault();
-            //MeetingPeopleViewModel model = new MeetingPeopleViewModel();
+            MeetingPeopleViewModel model = new MeetingPeopleViewModel();
 
-            if(!model.Meeting.Invited.Contains(person))
+            if(!möte.Invited.Contains(person))
             {
-                model.Meeting.Invited.Add(person);
+                möte.Invited.Add(person);
                 db.SaveChanges();
             }
 
-            //model.ApplicationUsers = db.Users.ToList();
-            //model.Meeting = meeting;
+            model.ApplicationUsers = db.Users.ToList();
+            model.Meeting = möte;
             return View("AddToMeeting", model);
         }
     }

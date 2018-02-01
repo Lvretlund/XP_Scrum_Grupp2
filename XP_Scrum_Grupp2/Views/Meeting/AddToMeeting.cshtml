@@ -16,7 +16,7 @@
             @if (!Model.Meeting.Invited.Contains(item))
             {
                 <td>
-                    @Html.ActionLink("Add Person", "AddPeople", item, Model)
+                    @Html.ActionLink("Add Person", "AddPeople", item)
                 </td>
             }
         </tr>
