@@ -2,7 +2,7 @@
 
 <h4>Add persons to meeting</h4>
 
-@if (Model.ApplicationUsers != null)
+@if (Model.Meeting.Invited != null)
 {
     foreach (var item in Model.ApplicationUsers)
     {
@@ -13,34 +13,35 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Lastname)
             </td>
-            @if (!Model.Meeting.Invited.Contains(item))
+            @if (!Model.Meeting.Creator.Email.Equals(item.Email))
             {
                 <td>
                     @Html.ActionLink("Add Person", "AddPeople", item)
                 </td>
             }
         </tr>
-            <br />
+        <br />
+
     }
 }
-<br />
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 
-    <script>
-        $("#myLink").click(function (e) {
+        @*@section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
 
-            e.preventDefault();
-            $.ajax({
+                <script>
+                    $("#myLink").click(function (e) {
 
-                url: $(this).attr("href"), // comma here instead of semicolon
-                success: function () {
-                    alert("Person added");  // or any other indication if you want to show
-                }
+                        e.preventDefault();
+                        $.ajax({
 
-            });
+                            url: $(this).attr("href"), // comma here instead of semicolon
+                            success: function () {
+                                alert("Person added");  // or any other indication if you want to show
+                            }
 
-        });
-    </script>
-}
+                        });
+
+                    });
+                </script>
+            }*@
