@@ -200,7 +200,7 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EducationNYController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InformalBlogController.cs" />
+    <Compile Include="Controllers\InformalBlogNYController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
     <Compile Include="Controllers\ResearchController.cs" />
@@ -209,6 +209,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\EducationBlog.cs" />
     <Compile Include="Models\FormalBlog.cs" />
     <Compile Include="Models\MeetingPeopleViewModel.cs" />
@@ -474,13 +475,15 @@
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
     <Content Include="Views\Blog\ShowBlogs.cshtml" />
     <Content Include="Views\Blog\CreatePartial.cshtml" />
-    <Content Include="Views\InformalBlog\ShowInformalBlogs.cshtml" />
-    <Content Include="Views\InformalBlog\CreateInformalPartial.cshtml" />
+    <Content Include="Views\Blog\ShowInformalBlogs.cshtml" />
+    <Content Include="Views\Blog\CreateInformalPartial.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\EducationNY\Index.cshtml" />
     <Content Include="Views\EducationNY\EducationNYPartial.cshtml" />
     <Content Include="Views\Research\ResearchPartial.cshtml" />
-    <Content Include="Views\Meeting\AddToMeeting.cshtml" />
+    <Content Include="Views\Blog\CommentPartial.cshtml" />
+    <Content Include="Views\InformalBlogNY\ShowInformalBlogs.cshtml" />
+    <Content Include="Views\InformalBlogNY\CreateInformalPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
