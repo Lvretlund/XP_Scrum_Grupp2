@@ -9,14 +9,13 @@
 <br />
 @Html.Partial("CreatePartial", Model)
 
-
 <table class="table">
 
     @foreach (var item in Model.FormalBlogs.Reverse())
     {
         <tr>
             <td>
-                <p > <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date) inom kategorin: @Html.DisplayFor(modelItem => item.CategoryN.Type)</b></p>
+                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date) inom kategorin: @Html.DisplayFor(modelItem => item.CategoryN.Type)</b></p>
                 <p>
                     @Html.DisplayFor(modelItem => item.Text)
                 </p>
@@ -24,12 +23,16 @@
 
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
+                @Html.Partial("CommentPartial", Model)
+
 
             </td>
 
 
             <td></td>
+
         </tr>
     }
 </table>
+
 

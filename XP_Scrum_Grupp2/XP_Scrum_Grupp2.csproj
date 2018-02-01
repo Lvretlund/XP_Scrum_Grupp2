@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\EducationBlog.cs" />
     <Compile Include="Models\FormalBlog.cs" />
     <Compile Include="Models\MeetingPeopleViewModel.cs" />
@@ -479,6 +480,7 @@
     <Content Include="Views\EducationNY\Index.cshtml" />
     <Content Include="Views\EducationNY\EducationNYPartial.cshtml" />
     <Content Include="Views\Research\ResearchPartial.cshtml" />
+    <Content Include="Views\Blog\CommentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

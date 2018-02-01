@@ -163,6 +163,32 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
+
+
+        [HttpPost]
+        public ActionResult Comment(PostIndexViewModel viewModel, FormalBlog formalBlog)
+        {
+        //    Comment newCom = new Comment();
+        //    var userName = User.Identity.Name;
+
+        //    var author = db.Users.SingleOrDefault(x => x.UserName == userName);
+
+        //    //newCom.Username = author;
+        //    //newCom.Text = viewModel.NewComment.Text;
+        //    //newCom.Post = viewModel.NewComment.Post;
+        //    //newCom.Text = viewModel.NewComment.Text;
+
+            
+
+        //    db.Comments.Add(newCom);
+        //    db.SaveChanges();
+
+            return RedirectToAction("ShowBlogs", "Blog");
+        }
+
+
+
+
     }
     
     public class PostIndexViewModel
@@ -176,6 +202,12 @@ namespace XP_Scrum_Grupp2.Controllers
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
         public ICollection<Meeting> Meetings { get; set; } //testrad
+
+       // public int Id { get; set; }
+        public string Text { get; set; }
+        public ApplicationUser UserName { get; set; }
+        public Comment NewComment { get; set; }
+
     }
 
     public class PictureIndexViewModel
@@ -184,4 +216,13 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<InformalBlog> InformalBlogs { get; set; }
         public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
     }
+
+    public class CommentViewModel
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public ApplicationUser UserName { get; set; }
+    }
+    
+
 }
