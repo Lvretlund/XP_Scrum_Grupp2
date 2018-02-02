@@ -4,8 +4,6 @@
 @{
     ViewBag.Title = "ShowBlogs";
 }
-
-
 <h2>Formell blogg</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
@@ -21,7 +19,7 @@
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
 
-
+                @Html.Partial("CreatePartial", Model)
                 <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
                 <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
 
@@ -51,12 +49,12 @@
     url: '@Url.Action("GetComments", "Comment")',
     data: { postId: id },
     success: function (response) {
-
+        alert("hej");
     if ($('div').hasClass('allComments_' + id + ''))
     {
     $('div[class=allComments_' + id + ']').remove();
     }
-    //console.log(response);
+    
     allCommentsArea.html(response);
     allCommentsArea.prependTo('#commentsBlock_' + id);
     },
@@ -84,7 +82,7 @@
     url: '@Url.Action("AddComment", "Comment")',
     data: { comment, postId },
     success: function (response) {
-
+      
     $('div[class=allComments_' + postId + ']').remove();
 
     var allCommentsArea = $('<div>').addClass('allComments_' + postId);
