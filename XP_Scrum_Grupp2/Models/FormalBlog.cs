@@ -15,8 +15,7 @@ namespace XP_Scrum_Grupp2.Models
         public string ContentType { get; set; }
         public byte[] File { get; set; }
         public Category CategoryN { get; set; }
-
-
+        public ICollection<Comment> Comments { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }

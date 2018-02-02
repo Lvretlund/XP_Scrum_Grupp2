@@ -23,6 +23,7 @@ namespace XP_Scrum_Grupp2.Models
         public string Lastname { get; set; }
         public bool EducationAdmin {get; set;}
         public bool ResearchAdmin { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
 
@@ -51,6 +52,7 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<ResearchBlog> ResearchBlogs { get; set; }
         public DbSet<InformalBlog> InformalBlogs { get; set; }
         public DbSet<FormalBlog> FormalBlogs { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         
