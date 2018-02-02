@@ -39,21 +39,25 @@
                     <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
                 }
 
-                else
-                {
-                    <img src="~/Content/vitbild.jpg" />
-                }
-                <div id="@string.Format("{0}_{1}","commentsBlock", post.Id)">
-                    <div class="AddComment">
-                        <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
-                        <button type="button" class="btn btn-default addComment" data-id="@post.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                    else
+                    {
+                        <img src="~/Content/vitbild.jpg" />
+                    }
+                    <div id="@string.Format("{0}_{1}","commentsBlock", post.Id)">
+                        <div class="AddComment">
+                            <p> <b>Comment below</b></p>
+                            <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
+                            <button type="button" class="btn btn-default addComment" data-id="@post.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-    }
-</table>
-<script>
+
+                </td>
+            </tr>
+
+        }
+    </table>
+</div>
+        <script>
         $(document).ready(function () {
             //Click Comment
             $('.Comment').on('click', function () {
@@ -72,7 +76,7 @@
     {
     $('div[class=allComments_' + id + ']').remove();
     }
-    
+
     allCommentsArea.html(response);
     allCommentsArea.prependTo('#commentsBlock_' + id);
     },
@@ -100,7 +104,7 @@
     url: '@Url.Action("AddComment", "Comment")',
     data: { comment, postId },
     success: function (response) {
-      
+
     $('div[class=allComments_' + postId + ']').remove();
 
     var allCommentsArea = $('<div>').addClass('allComments_' + postId);
@@ -114,4 +118,4 @@
         });
         });
         </script>
-        
+

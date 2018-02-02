@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 using System.Data.Entity;
 
-
-
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class EducationNYController : BaseController
@@ -16,7 +14,6 @@ namespace XP_Scrum_Grupp2.Controllers
         // GET: Education
         public ActionResult Index(string id)
         {
-
             var posts = db.EducationBlogs.Include(x => x.Author).ToList();
             var postIndex = new EducationIndexViewModel
             {
@@ -33,7 +30,6 @@ namespace XP_Scrum_Grupp2.Controllers
             var userName = User.Identity.Name;
 
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
-
 
             if (upload != null && upload.ContentLength > 0)
             {
@@ -59,7 +55,6 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("Index", "EducationNY");
         }
 
-
         [HttpGet]
         public ActionResult Download(int id)
         {
@@ -74,9 +69,6 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return response;
         }
-
-
-
     }
 
     public class EducationIndexViewModel
@@ -84,6 +76,5 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Id { get; set; }
         public ICollection<EducationBlog> EducationBlogs { get; set; }
         public EducationBlog NewEducationBlog { get; set; } = new EducationBlog();
-
     }
 }
