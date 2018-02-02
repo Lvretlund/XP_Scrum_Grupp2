@@ -16,6 +16,8 @@ namespace XP_Scrum_Grupp2.Controllers
             return View();
         }
 
+       
+
         [HttpPost]
         public ActionResult AddComment(Comment comment, int postId, string Id)
         {

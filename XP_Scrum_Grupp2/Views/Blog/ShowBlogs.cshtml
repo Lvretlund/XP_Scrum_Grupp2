@@ -1,5 +1,6 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
 @using Microsoft.AspNet.Identity
+@using System.Collections.Generic;
 
 @{
     ViewBag.Title = "ShowBlogs";
@@ -19,12 +20,10 @@
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
 
-                @Html.Partial("CreatePartial", Model)
                 <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
                 <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
 
-            </td>
-            <td>
+            
                 <div id="@string.Format("{0}_{1}","commentsBlock", post.Id)">
                     <div class="AddComment">
                         <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
@@ -36,7 +35,11 @@
     }
 </table>
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
+        GetAll();
+        function GetAll() {
+            @Url.Action("FetchComments", "Comment", Model.FormalBlogs);
+        };
             //Click Comment
             $('.Comment').on('click', function () {
 
@@ -49,12 +52,11 @@
     url: '@Url.Action("GetComments", "Comment")',
     data: { postId: id },
     success: function (response) {
-        alert("hej");
     if ($('div').hasClass('allComments_' + id + ''))
     {
     $('div[class=allComments_' + id + ']').remove();
     }
-    
+
     allCommentsArea.html(response);
     allCommentsArea.prependTo('#commentsBlock_' + id);
     },
@@ -71,7 +73,6 @@
     var dateTimeNow = new Date();
     var userId = "@User.Identity.GetUserId()";
 
-    //alert('Hello');
     var comment = {
     Text: Text,
     Date: dateTimeNow.toLocaleString(),
@@ -82,7 +83,7 @@
     url: '@Url.Action("AddComment", "Comment")',
     data: { comment, postId },
     success: function (response) {
-      
+
     $('div[class=allComments_' + postId + ']').remove();
 
     var allCommentsArea = $('<div>').addClass('allComments_' + postId);
