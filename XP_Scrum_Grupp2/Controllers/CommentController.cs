@@ -16,6 +16,8 @@ namespace XP_Scrum_Grupp2.Controllers
             return View();
         }
 
+       
+
         [HttpPost]
         public ActionResult AddComment(Comment comment, int postId, string Id)
         {
@@ -31,6 +33,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     Date = comment.Date,
                     CommentedBy = user,
                     CommentedById = userId,
+                    User = user,
                     Post = post,
                     FormalBlog = post
                 };

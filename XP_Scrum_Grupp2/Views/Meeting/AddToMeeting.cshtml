@@ -6,42 +6,22 @@
 {
     foreach (var item in Model.ApplicationUsers)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            @if (!Model.Meeting.Creator.Email.Equals(item.Email))
-            {
-                <td>
-                    @Html.ActionLink("Add Person", "AddPeople", item)
-                </td>
-            }
-        </tr>
-        <br />
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Firstname)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Lastname)
+    </td>
+    @if (!Model.Meeting.Creator.Email.Equals(item.Email))
+    {
+    <td>
+        @Html.ActionLink("Add Person", "AddPeople", item)
+    </td>
+    }
+</tr>
+<br />
 
     }
 }
 
-
-        @*@section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-
-                <script>
-                    $("#myLink").click(function (e) {
-
-                        e.preventDefault();
-                        $.ajax({
-
-                            url: $(this).attr("href"), // comma here instead of semicolon
-                            success: function () {
-                                alert("Person added");  // or any other indication if you want to show
-                            }
-
-                        });
-
-                    });
-                </script>
-            }*@

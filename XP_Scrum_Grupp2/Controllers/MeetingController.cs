@@ -66,7 +66,7 @@ namespace XP_Scrum_Grupp2.Controllers
                 db.SaveChanges();
             }
 
-            model.ApplicationUsers = new LinkedList<ApplicationUser>();
+            model.ApplicationUsers = new List<ApplicationUser>();
             var users = db.Users.ToList();
             var fe = false;
 
