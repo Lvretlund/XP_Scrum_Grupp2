@@ -1,6 +1,5 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
 @using Microsoft.AspNet.Identity
-@using System.Collections.Generic;
 
 @{
     ViewBag.Title = "ShowBlogs";
@@ -35,11 +34,7 @@
     }
 </table>
 <script>
-    $(document).ready(function () {
-        GetAll();
-        function GetAll() {
-            @Url.Action("FetchComments", "Comment", Model.FormalBlogs);
-        };
+        $(document).ready(function () {
             //Click Comment
             $('.Comment').on('click', function () {
 
@@ -52,11 +47,12 @@
     url: '@Url.Action("GetComments", "Comment")',
     data: { postId: id },
     success: function (response) {
+        alert("hej");
     if ($('div').hasClass('allComments_' + id + ''))
     {
     $('div[class=allComments_' + id + ']').remove();
     }
-
+    
     allCommentsArea.html(response);
     allCommentsArea.prependTo('#commentsBlock_' + id);
     },
@@ -73,6 +69,7 @@
     var dateTimeNow = new Date();
     var userId = "@User.Identity.GetUserId()";
 
+    //alert('Hello');
     var comment = {
     Text: Text,
     Date: dateTimeNow.toLocaleString(),
@@ -83,7 +80,7 @@
     url: '@Url.Action("AddComment", "Comment")',
     data: { comment, postId },
     success: function (response) {
-
+      
     $('div[class=allComments_' + postId + ']').remove();
 
     var allCommentsArea = $('<div>').addClass('allComments_' + postId);

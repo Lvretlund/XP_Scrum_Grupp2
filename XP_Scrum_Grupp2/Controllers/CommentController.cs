@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 
@@ -15,8 +12,6 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             return View();
         }
-
-       
 
         [HttpPost]
         public ActionResult AddComment(Comment comment, int postId, string Id)
@@ -52,18 +47,6 @@ namespace XP_Scrum_Grupp2.Controllers
             CommentModel cm = new CommentModel
             {
                 Commentarer = db.Comments.Where(c => c.Post.Id == postId).ToList()
-                //.Select(c => new Comment
-                //{
-                //    Id = c.Id,
-                //    Date = c.Date,
-                //    Text = c.Text,
-                //    CommentedBy = new ApplicationUser
-                //    {
-                //        Id = c.CommentedBy.Id,
-                //        Firstname = c.CommentedBy.Firstname,
-                //        Lastname = c.CommentedBy.Lastname
-                //    }
-                //}).ToList()
             };
             return PartialView("~/Views/Shared/_Comments.cshtml", cm);
         }
