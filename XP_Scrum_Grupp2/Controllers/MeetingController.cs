@@ -28,6 +28,7 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Invited = new List<ApplicationUser>();
             meeting.Invited.Add(user);
             meeting.Times = TempTimes;
+            meeting.Start = DateTime.Now;
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
@@ -93,9 +94,10 @@ namespace XP_Scrum_Grupp2.Controllers
             return View("AddToMeeting", model);
         }
 
-        public void AddTempTime(DateTime Start)
+        public ActionResult AddTempTime(DateTime Start)
         {
             TempTimes.Add(Start);
+            return View("CreateMeeting", möte);
         }
     }
 }
