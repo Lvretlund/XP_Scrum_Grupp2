@@ -83,11 +83,6 @@ namespace XP_Scrum_Grupp2.Controllers
 
                 newPost.CategoryN = model.NewCategory;
             }
-            //else
-            //{
-            //    var existingCat = db.Categories.Where(cat => cat.Type == model.NewCategory.Type).FirstOrDefault();
-            //    newPost.CategoryN = existingCat;
-            //}
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("ShowBlogs", "Blog");
@@ -120,32 +115,6 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
-
-
-        [HttpPost]
-        public ActionResult Comment(PostIndexViewModel viewModel, FormalBlog formalBlog)
-        {
-        //    Comment newCom = new Comment();
-        //    var userName = User.Identity.Name;
-
-        //    var author = db.Users.SingleOrDefault(x => x.UserName == userName);
-
-        //    //newCom.Username = author;
-        //    //newCom.Text = viewModel.NewComment.Text;
-        //    //newCom.Post = viewModel.NewComment.Post;
-        //    //newCom.Text = viewModel.NewComment.Text;
-
-            
-
-        //    db.Comments.Add(newCom);
-        //    db.SaveChanges();
-
-            return RedirectToAction("ShowBlogs", "Blog");
-        }
-
-
-
-
     }
     
     public class PostIndexViewModel
@@ -160,7 +129,6 @@ namespace XP_Scrum_Grupp2.Controllers
         public Category CategoryN { get; set; }
         public ICollection<Meeting> Meetings { get; set; } //testrad
 
-       // public int Id { get; set; }
         public string Text { get; set; }
         public ApplicationUser UserName { get; set; }
         public Comment NewComment { get; set; }
@@ -173,6 +141,4 @@ namespace XP_Scrum_Grupp2.Controllers
         public string Text { get; set; }
         public ApplicationUser UserName { get; set; }
     }
-    
-
 }
