@@ -43,7 +43,6 @@ namespace XP_Scrum_Grupp2.Controllers
 
         public PartialViewResult GetComments(int postId)
         {
-
             CommentModel cm = new CommentModel
             {
                 Commentarer = db.Comments.Where(c => c.Post.Id == postId).ToList()

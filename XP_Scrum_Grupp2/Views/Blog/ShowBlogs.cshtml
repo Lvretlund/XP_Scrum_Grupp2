@@ -8,10 +8,15 @@
 <br />
 @Html.Partial("CreatePartial", Model)
 
+@foreach (var posts in Model.Comments.Reverse())
+{
+    <p>@Html.DisplayFor(modelItem => posts.Text)</p>
+}
 <table class="table">
 
     @foreach (var post in Model.FormalBlogs.Reverse())
     {
+      
         <tr>
             <td>
                 <p> <b> @Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname) skrev den @Html.DisplayFor(modelItem => post.Date) inom kategorin: @Html.DisplayFor(modelItem => post.CategoryN.Type)</b></p>
@@ -27,6 +32,7 @@
                     <img src="~/Content/vitbild.jpg" />
                 }
 
+                
 
                 @if (post.File != null)
                 {

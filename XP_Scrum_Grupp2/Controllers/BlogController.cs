@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
 
-
-
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
@@ -34,10 +32,12 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
+            var comments = db.Comments.Include(f => f.FormalBlog).ToList();
             var postIndex = new PostIndexViewModel
             {
                 FormalBlogs = posts,
-                SelectedCategories = PopulateCategories()
+                SelectedCategories = PopulateCategories(),
+                Comments = comments
             };
             return View(postIndex);
         }
@@ -80,14 +80,8 @@ namespace XP_Scrum_Grupp2.Controllers
             }
             else
             {
-
                 newPost.CategoryN = model.NewCategory;
             }
-            //else
-            //{
-            //    var existingCat = db.Categories.Where(cat => cat.Type == model.NewCategory.Type).FirstOrDefault();
-            //    newPost.CategoryN = existingCat;
-            //}
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("ShowBlogs", "Blog");
@@ -111,41 +105,13 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 return HttpNotFound();
             }
-
             var response = new FileContentResult(fileItem.File, fileItem.ContentType)
-
             {
                 FileDownloadName = fileItem.Filename
             };
 
             return response;
         }
-
-
-        [HttpPost]
-        public ActionResult Comment(PostIndexViewModel viewModel, FormalBlog formalBlog)
-        {
-        //    Comment newCom = new Comment();
-        //    var userName = User.Identity.Name;
-
-        //    var author = db.Users.SingleOrDefault(x => x.UserName == userName);
-
-        //    //newCom.Username = author;
-        //    //newCom.Text = viewModel.NewComment.Text;
-        //    //newCom.Post = viewModel.NewComment.Post;
-        //    //newCom.Text = viewModel.NewComment.Text;
-
-            
-
-        //    db.Comments.Add(newCom);
-        //    db.SaveChanges();
-
-            return RedirectToAction("ShowBlogs", "Blog");
-        }
-
-
-
-
     }
     
     public class PostIndexViewModel
@@ -159,20 +125,8 @@ namespace XP_Scrum_Grupp2.Controllers
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
         public ICollection<Meeting> Meetings { get; set; } //testrad
-
-       // public int Id { get; set; }
-        public string Text { get; set; }
-        public ApplicationUser UserName { get; set; }
-        public Comment NewComment { get; set; }
-
-    }
-
-    public class CommentViewModel
-    {
-        public int Id { get; set; }
+        public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
         public ApplicationUser UserName { get; set; }
     }
-    
-
 }
