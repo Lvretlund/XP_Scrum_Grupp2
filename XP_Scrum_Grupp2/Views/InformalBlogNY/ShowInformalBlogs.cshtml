@@ -18,7 +18,17 @@
                     @Html.DisplayFor(modelItem => item.Text)
                 </p>
 
-                <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
+                @if (item.File != null)
+                {
+                     <p><img src="@Url.Action("Image", new { id = item.Id })" /></p>
+                }
+
+                else 
+                {
+                 <img src="~/Content/vitbild.jpg"/>
+                }
+
+
 
             </td>
 
