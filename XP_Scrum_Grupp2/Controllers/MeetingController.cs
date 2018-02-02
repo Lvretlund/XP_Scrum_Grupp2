@@ -11,6 +11,7 @@ namespace XP_Scrum_Grupp2.Controllers
     public class MeetingController : BaseController
     {
         public static Meeting möte;
+        public static List<DateTime> TempTimes = new List<DateTime>();
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
@@ -26,6 +27,7 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Creator = user;
             meeting.Invited = new List<ApplicationUser>();
             meeting.Invited.Add(user);
+            meeting.Times = TempTimes;
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
@@ -89,6 +91,11 @@ namespace XP_Scrum_Grupp2.Controllers
             model.Meeting = möte;
 
             return View("AddToMeeting", model);
+        }
+
+        public void AddTempTime(DateTime Start)
+        {
+            TempTimes.Add(Start);
         }
     }
 }

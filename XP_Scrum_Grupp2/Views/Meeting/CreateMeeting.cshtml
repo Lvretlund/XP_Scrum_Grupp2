@@ -6,6 +6,20 @@
 
 <h2>Create Meeting</h2>
 
+@using (Html.BeginForm("AddTempTime", "Meeting", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Start, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
+            @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <input type="submit" value="Add time" />
+}
+
+
 @using (Html.BeginForm("CreateAMeeting", "Meeting", new { meeting = Model }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -27,16 +41,6 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(m => m.Start, new { @class = "col-md-2 control-label" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(m => m.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
-        @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
-        <button id="TimeButton">Add Time</button>
-    </div>
-</div>
-
-
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
@@ -52,3 +56,23 @@
 </div>
 
 }
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <script>
+            $("#TimeButton").click(function (e) {
+
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+
+                    }
+
+                });
+
+            });
+        </script>
+    }*@
