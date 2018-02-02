@@ -1,4 +1,5 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "ShowBlogs";
@@ -9,27 +10,92 @@
 <br />
 @Html.Partial("CreatePartial", Model)
 
-
 <table class="table">
 
-    @foreach (var item in Model.FormalBlogs.Reverse())
+    @foreach (var post in Model.FormalBlogs.Reverse())
     {
         <tr>
             <td>
-                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date) inom kategorin: @Html.DisplayFor(modelItem => item.CategoryN.Type)</b></p>
+                <p> <b> @Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname) skrev den @Html.DisplayFor(modelItem => post.Date) inom kategorin: @Html.DisplayFor(modelItem => post.CategoryN.Type)</b></p>
                 <p>
-                    @Html.DisplayFor(modelItem => item.Text)
+                    @Html.DisplayFor(modelItem => post.Text)
                 </p>
 
 
-                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
-                <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
+                <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
+                <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
 
             </td>
-
-
-            <td></td>
+            <td>
+                <div id="@string.Format("{0}_{1}","commentsBlock", post.Id)">
+                    <div class="AddComment">
+                        <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
+                        <button type="button" class="btn btn-default addComment" data-id="@post.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </td>
         </tr>
     }
 </table>
+<script>
+        $(document).ready(function () {
+            //Click Comment
+            $('.Comment').on('click', function () {
 
+                var id = $(this).attr("data-id");
+                var allCommentsArea = $('<div>').addClass('allComments_' + id);
+
+    //function that allow us to get all comments related to post id
+    $.ajax({
+    type: 'GET',
+    url: '@Url.Action("GetComments", "Comment")',
+    data: { postId: id },
+    success: function (response) {
+
+    if ($('div').hasClass('allComments_' + id + ''))
+    {
+    $('div[class=allComments_' + id + ']').remove();
+    }
+    //console.log(response);
+    allCommentsArea.html(response);
+    allCommentsArea.prependTo('#commentsBlock_' + id);
+    },
+    error: function (response) {
+    alert('Sorry: Comments cannot be loaded !');
+    }
+    })
+    });
+    //Add New Comment
+    $('.addComment').on('click', function () {
+
+    var postId = $(this).attr('data-id');
+    var Text = $('#comment_' + postId).val();
+    var dateTimeNow = new Date();
+    var userId = "@User.Identity.GetUserId()";
+
+    //alert('Hello');
+    var comment = {
+    Text: Text,
+    Date: dateTimeNow.toLocaleString(),
+    CommentedById: userId
+    };
+    $.ajax({
+    type: 'POST',
+    url: '@Url.Action("AddComment", "Comment")',
+    data: { comment, postId },
+    success: function (response) {
+
+    $('div[class=allComments_' + postId + ']').remove();
+
+    var allCommentsArea = $('<div>').addClass('allComments_' + postId);
+        allCommentsArea.html(response);
+        allCommentsArea.prependTo('#commentsBlock_' + postId);
+        },
+        error: function (response) {
+        alert('Sorry: Something Wrong');
+        }
+        });
+        });
+        });
+        </script>
+        }

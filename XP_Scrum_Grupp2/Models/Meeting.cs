@@ -7,6 +7,7 @@ namespace XP_Scrum_Grupp2.Models
 {
     public class Meeting
     {
+        public string Sweet { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public ApplicationUser Creator { get; set; }
