@@ -50,7 +50,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     Id = item.Id,
                     Title = item.Title,
                     Start = item.Start,
-                    End = item.End,
+                    //End = item.End,
                     AllDay = item.AllDay
                 };
                 eventList.Add(newEvent);
