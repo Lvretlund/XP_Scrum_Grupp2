@@ -18,11 +18,25 @@
                 <p>
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
+                @if (post.Filename != null)
+                {
+                    <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
+                }
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
 
-                <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
-                <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
 
-            
+                @if (post.File != null)
+                {
+                    <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
+                }
+
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
                 <div id="@string.Format("{0}_{1}","commentsBlock", post.Id)">
                     <div class="AddComment">
                         <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
