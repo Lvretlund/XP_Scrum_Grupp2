@@ -31,7 +31,27 @@ namespace XP_Scrum_Grupp2.Controllers
 
             möte = meeting;
 
-            model.ApplicationUsers = db.Users.ToList();
+            model.ApplicationUsers = new LinkedList<ApplicationUser>();
+            var users = db.Users.ToList();
+            var fe = false;
+
+            foreach (var item in users)
+            {
+                foreach (var i in möte.Invited)
+                {
+                    if (item.Email.Equals(i.Email))
+                    {
+                        fe = true;
+                    }
+                }
+                if (fe == false)
+                {
+                    model.ApplicationUsers.Add(item);
+                }
+                fe = false;
+            }
+
+           // model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
 
             return View("AddToMeeting", model);
@@ -46,8 +66,28 @@ namespace XP_Scrum_Grupp2.Controllers
                 db.SaveChanges();
             }
 
-            model.ApplicationUsers = db.Users.ToList();
+            model.ApplicationUsers = new LinkedList<ApplicationUser>();
+            var users = db.Users.ToList();
+            var fe = false;
+
+            foreach (var item in users)
+            {
+                foreach (var i in möte.Invited)
+                {
+                    if (item.Email.Equals(i.Email))
+                    {
+                        fe = true;
+                    }
+                }
+                if(fe == false)
+                {
+                    model.ApplicationUsers.Add(item);
+                }
+                fe = false;
+            }
+
             model.Meeting = möte;
+
             return View("AddToMeeting", model);
         }
     }

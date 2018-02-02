@@ -42,6 +42,16 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(postIndex);
         }
 
+        //public ActionResult ShowInformalBlogs()
+        //{
+        //    var posts = db.InformalBlogs.Include(x => x.Author).ToList();
+        //    var postIndex = new PictureIndexViewModel
+        //    {
+        //        InformalBlogs = posts
+        //    };
+        //    return View(postIndex);
+        //}
+
         //post
         [HttpPost]
         public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
@@ -93,6 +103,49 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowBlogs", "Blog");
         }
 
+        //[HttpPost]
+        //public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
+        //{
+        //    InformalBlog newPost = new InformalBlog();
+        //    var userName = User.Identity.Name;
+
+        //    var author = db.Users.SingleOrDefault(x => x.UserName == userName);
+
+        //    if (upload != null && upload.ContentLength > 0)
+        //    {
+        //        model.NewInformalBlog.Filename = upload.FileName;
+        //        model.NewInformalBlog.ContentType = upload.ContentType;
+
+        //        using (var reader = new BinaryReader(upload.InputStream))
+        //        {
+        //            model.NewInformalBlog.File = reader.ReadBytes(upload.ContentLength);
+        //        }
+        //    }
+
+        //    newPost.Author = author;
+        //    newPost.Text = model.NewInformalBlog.Text;
+        //    newPost.Date = DateTime.Now;
+        //    newPost.ContentType = model.NewInformalBlog.ContentType;
+        //    newPost.Filename = model.NewInformalBlog.Filename;
+        //    newPost.File = model.NewInformalBlog.File;
+
+
+        //    db.InformalBlogs.Add(newPost);
+        //    db.SaveChanges();
+
+        //    return RedirectToAction("ShowInformalBlogs", "Blog");
+        //}
+
+        //public ActionResult Image(int id)
+        //{
+        //    var post = db.InformalBlogs.Single(x => x.Id == id);
+        //    if (post?.File == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return File(post.File, post.ContentType);
+        //}
+
         public ActionResult Image(int id)
         {
             var post = db.FormalBlogs.Single(x => x.Id == id);
@@ -120,6 +173,32 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
+
+
+        [HttpPost]
+        public ActionResult Comment(PostIndexViewModel viewModel, FormalBlog formalBlog)
+        {
+        //    Comment newCom = new Comment();
+        //    var userName = User.Identity.Name;
+
+        //    var author = db.Users.SingleOrDefault(x => x.UserName == userName);
+
+        //    //newCom.Username = author;
+        //    //newCom.Text = viewModel.NewComment.Text;
+        //    //newCom.Post = viewModel.NewComment.Post;
+        //    //newCom.Text = viewModel.NewComment.Text;
+
+            
+
+        //    db.Comments.Add(newCom);
+        //    db.SaveChanges();
+
+            return RedirectToAction("ShowBlogs", "Blog");
+        }
+
+
+
+
     }
     
     public class PostIndexViewModel
@@ -133,5 +212,27 @@ namespace XP_Scrum_Grupp2.Controllers
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
         public ICollection<Meeting> Meetings { get; set; } //testrad
+
+       // public int Id { get; set; }
+        public string Text { get; set; }
+        public ApplicationUser UserName { get; set; }
+        public Comment NewComment { get; set; }
+
     }
+
+    //public class PictureIndexViewModel
+    //{
+    //    public string Id { get; set; }
+    //    public ICollection<InformalBlog> InformalBlogs { get; set; }
+    //    public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
+    //}
+
+    public class CommentViewModel
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public ApplicationUser UserName { get; set; }
+    }
+    
+
 }
