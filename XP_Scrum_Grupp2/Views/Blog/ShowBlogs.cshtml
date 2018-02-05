@@ -7,18 +7,17 @@
 <h2>Formell blogg</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
-
-
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
     <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
 
-        <tr>
-            <td>
-                <p style="font-size: 160%"><b> @Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname) </p>
-                <p style="float: right; color: gray  "> @Html.DisplayFor(modelItem => post.Date) <br />  @Html.DisplayFor(modelItem => post.CategoryN.Type)</p>
-                
-                
+                 <p> 
+                 <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span> 
+                 <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
+                 
+                 </p>
+
+
                 <p style="font-size: 135%">
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
@@ -39,33 +38,27 @@ else
             <img src="~/Content/vitbild.jpg" />
 }
 </div>
-    <div id="@string.Format("{0}_{1}", "commentsBlock", post.Id)" @*style="margin-left: 5%;"*@>
-        <div class="AddComment">
-            <p> <b>Comment below</b></p>
-            <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" class="form-control" placeholder="Add a Comment ..." />
+    <div id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
+        <div class="AddComment" style="margin-left: 5%; padding: 1em">
+            <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" style="display: inline;" class="form-control" placeholder="Add a Comment ..." /> 
             <button type="button" class="btn btn-default addComment" data-id="@post.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+            <br/>
         </div>
     </div>
-    
-
 }
-
 
 <script>
         $(document).ready(function () {
             //Click Comment
-            $('.Comment').on('click', function () {
-
-                var id = $(this).attr("data-id");
+            //$('.Comment').on('click', function () {
+                var id = $('.addComment').attr("data-id");
                 var allCommentsArea = $('<div>').addClass('allComments_' + id);
-
     //function that allow us to get all comments related to post id
     $.ajax({
     type: 'GET',
     url: '@Url.Action("GetComments", "Comment")',
     data: { postId: id },
     success: function (response) {
-        alert("hej");
     if ($('div').hasClass('allComments_' + id + ''))
     {
     $('div[class=allComments_' + id + ']').remove();
@@ -78,7 +71,7 @@ else
     alert('Sorry: Comments cannot be loaded !');
     }
     })
-    });
+    //});
     //Add New Comment
     $('.addComment').on('click', function () {
 
