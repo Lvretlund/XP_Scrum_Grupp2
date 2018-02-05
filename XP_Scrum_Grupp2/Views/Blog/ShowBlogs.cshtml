@@ -7,8 +7,6 @@
 <h2>Formell blogg</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
-
-
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
     <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
@@ -47,26 +45,20 @@ else
             <br/>
         </div>
     </div>
-    
-
 }
-
 
 <script>
         $(document).ready(function () {
             //Click Comment
-            $('.Comment').on('click', function () {
-
-                var id = $(this).attr("data-id");
+            //$('.Comment').on('click', function () {
+                var id = $('.addComment').attr("data-id");
                 var allCommentsArea = $('<div>').addClass('allComments_' + id);
-
     //function that allow us to get all comments related to post id
     $.ajax({
     type: 'GET',
     url: '@Url.Action("GetComments", "Comment")',
     data: { postId: id },
     success: function (response) {
-        alert("hej");
     if ($('div').hasClass('allComments_' + id + ''))
     {
     $('div[class=allComments_' + id + ']').remove();
@@ -79,7 +71,7 @@ else
     alert('Sorry: Comments cannot be loaded !');
     }
     })
-    });
+    //});
     //Add New Comment
     $('.addComment').on('click', function () {
 
