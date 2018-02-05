@@ -12,18 +12,20 @@
 
 <table class="table">
 
-    <h3> <b>Some of the latest posts in the formalblog below:</b></h3>
+    <h3> <b>View some of the latest posts in the formalblog below:</b></h3>
     @foreach (var item in Model.FormalBlogs.Reverse().Take(3))
     {
         <tr>
             <td>
-                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) wrote the @Html.DisplayFor(modelItem => item.Date) in the category: @Html.DisplayFor(modelItem => item.CategoryN.Type)</b></p>
                 <p>
+                    <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
+                    <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => item.Date) <br /> Category: @Html.DisplayFor(modelItem => item.CategoryN.Type) </span>
+                   <br />
                     @Html.DisplayFor(modelItem => item.Text)
+                    <br />
+                    @Html.ActionLink("View post", "ShowBlogs", "Blog")
                 </p>
-
-
-
+              
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
 
             </td>
