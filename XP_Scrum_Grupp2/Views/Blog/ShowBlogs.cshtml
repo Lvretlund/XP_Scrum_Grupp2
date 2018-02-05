@@ -41,30 +41,32 @@
             <br/>
         </div>
     </div>
-
 }
 <script>
     $(document).ready(function () {
-
-        //function showComments(postID) {
-        var id = $('.addComment').attr("data-id");
-        var allCommentsArea = $('<div>').addClass('allComments_' + id);
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetComments", "Comment")',
-            data: { postId: id },
-            success: function (response) {
-                 if ($('div').hasClass('allComments_' + id + '')) {
-                    $('div[class=allComments_' + id + ']').remove();
+        var i;
+        for (i = 0; i < 3; i++) {
+            var id = i;
+            fetch(id);
+        }
+        //var id = $('.addComment').attr("data-id");
+        function fetch(id) {
+            var allCommentsArea = $('<div>').addClass('allComments_' + id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetComments", "Comment")',
+                data: { postId: id },
+                success: function (response) {
+                    if ($('div').hasClass('allComments_' + id + '')) {
+                        $('div[class=allComments_' + id + ']').remove();
+                    }
+                    allCommentsArea.html(response);
+                    allCommentsArea.prependTo('#commentsBlock_' + id);
+                },
+                error: function (response) {
                 }
-                allCommentsArea.html(response);
-                allCommentsArea.prependTo('#commentsBlock_' + id);
-            },
-            error: function (response) {
-            }
-        })
-     //}
-    //});
+            })
+        }
     //Add New Comment
     $('.addComment').on('click', function () {
                 var postId = $(this).attr('data-id');
