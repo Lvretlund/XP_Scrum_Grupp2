@@ -488,6 +488,7 @@
     <Content Include="Views\InformalBlogNY\CreateInformalPartial.cshtml" />
     <Content Include="Views\Shared\_Comments.cshtml" />
     <Content Include="Views\Meeting\AddToMeeting.cshtml" />
+    <Content Include="Views\Manage\ChangeNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
