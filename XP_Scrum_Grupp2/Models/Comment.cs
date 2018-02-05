@@ -14,6 +14,7 @@ namespace XP_Scrum_Grupp2.Models
         public FormalBlog Post { get; set; }
         public DateTime Date { get; set; }
 
+
         public virtual ApplicationUser User { get; set; }
         public virtual FormalBlog FormalBlog { get; set; }
     }

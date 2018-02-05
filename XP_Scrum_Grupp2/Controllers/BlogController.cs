@@ -33,6 +33,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var cat = db.Categories.ToList();
             var posts = db.FormalBlogs.Include(x => x.Author).ToList();
             var comments = db.Comments.Include(f => f.FormalBlog).ToList();
+            
             var postIndex = new PostIndexViewModel
             {
                 FormalBlogs = posts,
