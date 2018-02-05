@@ -24,6 +24,8 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
+        public bool NewMeetingNotification { get; set; }
+        public bool NewFormalPostsNotification { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
