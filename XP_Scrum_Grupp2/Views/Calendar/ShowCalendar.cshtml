@@ -2,10 +2,10 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
+            //var date = new Date();
+            //var d = date.getDate();
+            //var m = date.getMonth();
+            //var y = date.getFullYear();
             $('#calendar').fullCalendar({
                 theme: true,
                 header: {
@@ -20,9 +20,9 @@
                 defaultView: 'month',
                 editable: false,
                 weekMode: 'liquid',
-                allDaySlot: false,
+                //allDaySlot: false,
                 selectTable: true,
-                slotMinutes: 15,
+                //slotMinutes: 15,
                 events: "/calendar/getmeetings/"
                 //[
                 //    {
