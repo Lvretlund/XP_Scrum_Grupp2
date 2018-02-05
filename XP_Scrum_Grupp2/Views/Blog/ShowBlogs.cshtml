@@ -50,8 +50,8 @@ else
 <script>
     $(document).ready(function () {
         var i;
-        for (i = 0; i < 3; i++) {
-            var id = i;
+        for (i = 1; i <@Model.FormalBlogs.Count + 1;i++) {
+            id = i;
             fetch(id);
         }
         //var id = $('.addComment').attr("data-id");
