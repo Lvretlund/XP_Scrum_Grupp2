@@ -16,15 +16,18 @@
         </div>
     </div>
 
-    <input type="submit" value="Add time" onclick="location.href='@Html.ActionLink("AddTempTime", "Meeting", new { meeting = Model })'" />
+    <input type="submit" value="Add time" onclick="location.href='@Url.Action("AddTempTime", "Meeting", new { meeting = Model })'" />
 }
 
 @if (Model != null)
 {
+
     foreach (var item in Model.Times)
     {
         @Html.DisplayFor(modelItem => item)
+        <br/>
     }
+
 }
 
 
@@ -50,7 +53,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" onclick="location.href='@Html.ActionLink("CreateAMeeting", "Meeting", new { meeting = Model })'" />
+            <input type="submit" value="Create" class="btn btn-default" onclick="location.href='@Url.Action("CreateAMeeting", "Meeting", new { meeting = Model })'" />
         </div>
     </div>
 
