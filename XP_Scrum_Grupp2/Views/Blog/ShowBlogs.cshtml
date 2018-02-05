@@ -8,10 +8,6 @@
 <br />
 @Html.Partial("CreatePartial", Model)
 
-@foreach (var posts in Model.Comments.Reverse())
-{
-    <p>@Html.DisplayFor(modelItem => posts.Text)</p>
-}
 <table class="table">
 
     @foreach (var post in Model.FormalBlogs.Reverse())
@@ -19,7 +15,7 @@
       
         <tr>
             <td>
-                <p> <b> @Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname) skrev den @Html.DisplayFor(modelItem => post.Date) inom kategorin: @Html.DisplayFor(modelItem => post.CategoryN.Type)</b></p>
+                <p><b> @Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname) skrev den @Html.DisplayFor(modelItem => post.Date) inom kategorin: @Html.DisplayFor(modelItem => post.CategoryN.Type)</b></p>
                 <p>
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
@@ -31,14 +27,10 @@
                 {
                     <img src="~/Content/vitbild.jpg" />
                 }
-
-                
-
                 @if (post.File != null)
                 {
                     <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
                 }
-
                     else
                     {
                         <img src="~/Content/vitbild.jpg" />
@@ -92,8 +84,6 @@
     var Text = $('#comment_' + postId).val();
     var dateTimeNow = new Date();
     var userId = "@User.Identity.GetUserId()";
-
-    //alert('Hello');
     var comment = {
     Text: Text,
     Date: dateTimeNow.toLocaleString(),
@@ -104,7 +94,7 @@
     url: '@Url.Action("AddComment", "Comment")',
     data: { comment, postId },
     success: function (response) {
-
+        $('#comment_' + postId).val("");
     $('div[class=allComments_' + postId + ']').remove();
 
     var allCommentsArea = $('<div>').addClass('allComments_' + postId);
