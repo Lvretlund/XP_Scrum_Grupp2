@@ -1,10 +1,6 @@
 ﻿<head>
 
     @section scripts{
-        <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
-        <script src='lib/jquery.min.js'></script>
-        <script src='lib/moment.min.js'></script>
-        <script src='fullcalendar/fullcalendar.js'></script>
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -34,18 +30,24 @@
                             url: "/calendar/getmeetings/",
                             type: 'GET',
                             dataType: 'json',
-                            success: function (start, end, timezone, callback) {
-                                alert('success');
-                            },
-                            error: function (start, end, timezone, callback) {
-                                alert('there was an error while fetching events!');
-                            },
                             data: {
                                 // our hypothetical feed requires UNIX timestamps
                                 start: start.unix(),
                                 end: end.unix()
+                            },
+                            success: function (doc) {
+                                var events = [];
+                                $(doc).find('event').each(function () {
+                                    events.push({
+                                        title: $(this).attr('title'),
+                                        start: $(this).attr('start') // will be parsed
+                                    });
+                                });
+                                callback(events);
+                            },
+                            error: function (doc) {
+                                alert("Fail!!")
                             }
-
                         });
                     }
 
