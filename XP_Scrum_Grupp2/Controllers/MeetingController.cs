@@ -94,10 +94,11 @@ namespace XP_Scrum_Grupp2.Controllers
             return View("AddToMeeting", model);
         }
 
-        public ActionResult AddTempTime(DateTime Start)
+        public ActionResult AddTempTime(DateTime Start, Meeting meeting)
         {
             TempTimes.Add(Start);
-            return View("CreateMeeting", möte);
+            meeting.Times = TempTimes;
+            return View("CreateMeeting", meeting);
         }
     }
 }
