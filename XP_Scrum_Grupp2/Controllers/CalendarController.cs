@@ -15,14 +15,14 @@ namespace XP_Scrum_Grupp2.Controllers
             return View();
         }
 
-        public ActionResult GetMeetings()
+        public ActionResult GetMeetings(/*double Start*/)
         {
             using (var db = new ApplicationDbContext())
             {
                 //foreach(var item in db.Meetings)
                 //{
-                //    var fromDate = ConvertFromUnixTimestamp(item.Start.ToOADate());
-                //    var toDate = ConvertFromUnixTimestamp(item.End.ToOADate());
+                //var fromDate = ConvertFromUnixTimestamp(Start);
+                //var toDate = ConvertFromUnixTimestamp(end);
                 //}
 
                 var eventList = GetEvents();
