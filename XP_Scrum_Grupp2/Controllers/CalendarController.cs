@@ -15,14 +15,14 @@ namespace XP_Scrum_Grupp2.Controllers
             return View();
         }
 
-        public ActionResult GetMeetings(/*double Start*/)
+        public ActionResult GetMeetings(double start, double end)
         {
             using (var db = new ApplicationDbContext())
             {
                 //foreach(var item in db.Meetings)
                 //{
-                //var fromDate = ConvertFromUnixTimestamp(Start);
-                //var toDate = ConvertFromUnixTimestamp(end);
+                var fromDate = ConvertFromUnixTimestamp(start);
+                var toDate = ConvertFromUnixTimestamp(end);
                 //}
 
                 var eventList = GetEvents();
@@ -37,26 +37,69 @@ namespace XP_Scrum_Grupp2.Controllers
             return origin.AddSeconds(timestamp);
         }
 
-        private List<Meeting> GetEvents()
+        //private List<Meeting> GetEvents()
+        //{
+        //    List<Meeting> eventList = new List<Meeting>();
+
+        //    var meetings = db.Meetings.ToList();
+
+        //    foreach(var item in meetings)
+        //    {
+        //        Meeting newEvent = new Meeting
+        //        {
+        //            Id = item.Id,
+        //            Title = item.Title,
+        //            Start = item.Start,
+        //            //End = item.End,
+        //            AllDay = item.AllDay
+        //        };
+        //        eventList.Add(newEvent);
+        //    }
+
+        private List<Events> GetEvents()
         {
-            List<Meeting> eventList = new List<Meeting>();
+            List<Events> eventList = new List<Events>();
 
-            var meetings = db.Meetings.ToList();
-
-            foreach(var item in meetings)
+            Events newEvent = new Events
             {
-                Meeting newEvent = new Meeting
-                {
-                    Id = item.Id,
-                    Title = item.Title,
-                    Start = item.Start,
-                    //End = item.End,
-                    AllDay = item.AllDay
-                };
-                eventList.Add(newEvent);
-            }
-            
+                id = "1",
+                title = "Event 1",
+                start = DateTime.Now.AddDays(1).ToString("s"),
+                end = DateTime.Now.AddDays(1).ToString("s"),
+                allDay = false
+            };
+
+            eventList.Add(newEvent);
+
+            newEvent = new Events
+            {
+                id = "1",
+                title = "Event 3",
+                start = DateTime.Now.AddDays(2).ToString("s"),
+                end = DateTime.Now.AddDays(3).ToString("s"),
+                allDay = false
+            };
+
+            eventList.Add(newEvent);
+
             return eventList;
         }
+
+
+
+        //    return eventList;
+        //}
+    }
+
+    public class Events
+    {
+        public string id { get; set; }
+        public string title { get; set; }
+        public string date { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string url { get; set; }
+
+        public bool allDay { get; set; }
     }
 }

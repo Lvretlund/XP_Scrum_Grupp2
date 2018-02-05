@@ -23,7 +23,21 @@
                 //allDaySlot: false,
                 selectTable: true,
                 //slotMinutes: 15,
-                events: "/calendar/getmeetings/"
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: "/calendar/getmeetings/",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            // our hypothetical feed requires UNIX timestamps
+                            start: start.unix(),
+                            end: end.unix()
+                        }
+                    });
+                }
+
+
+                
                 //[
                 //    {
                 //        title: 'Praent vestibulum',
@@ -114,8 +128,7 @@
 }
 
 <br />
-<div class="row">
-    <div class="col-md-12">
-        <div id="calendar"></div>
-    </div>
+<div class="jumbotron">
+    <h1>Event Calendar</h1>
+    <div id="calendar"></div>
 </div>
