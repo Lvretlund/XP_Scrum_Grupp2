@@ -41,6 +41,8 @@ namespace XP_Scrum_Grupp2.Models
 
     public class ChangePasswordViewModel
     {
+        public ApplicationUser User { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
