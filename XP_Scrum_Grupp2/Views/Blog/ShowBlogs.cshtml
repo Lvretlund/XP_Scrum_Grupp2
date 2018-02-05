@@ -4,35 +4,39 @@
 @{
     ViewBag.Title = "ShowBlogs";
 }
-<h2>Formal blog</h2>
+<h2>Formell blogg</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
     <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
+
                  <p> 
                  <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span> 
                  <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
+                 
                  </p>
+
+
                 <p style="font-size: 135%">
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
                 @if (post.Filename != null)
-                {
+    {
             <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
-                }
-                else
-                {
+}
+else
+{
             <img src="~/Content/vitbild.jpg" />
-                }
+}
                 @if (post.File != null)
-                {
-            <p><img src="@Url.Action("Image", new { id = post.Id })" /></p>
-                }
-                else
-                {
+    {
+            <p><img src="@Url.Action("Image", new { id = post.Id})" /></p>
+}
+else
+{
             <img src="~/Content/vitbild.jpg" />
-                }
+}
 </div>
     <div id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
         <div class="AddComment" style="margin-left: 5%; padding: 1em">
@@ -42,6 +46,7 @@
         </div>
     </div>
 }
+
 <script>
     $(document).ready(function () {
         var i;
@@ -69,11 +74,12 @@
         }
     //Add New Comment
     $('.addComment').on('click', function () {
-                var postId = $(this).attr('data-id');
-                var Text = $('#comment_' + postId).val();
-                var dateTimeNow = new Date();
-                var userId = "@User.Identity.GetUserId()";
-                var comment = {
+
+    var postId = $(this).attr('data-id');
+    var Text = $('#comment_' + postId).val();
+    var dateTimeNow = new Date();
+    var userId = "@User.Identity.GetUserId()";
+    var comment = {
     Text: Text,
     Date: dateTimeNow.toLocaleString(),
     CommentedById: userId
@@ -85,14 +91,15 @@
     success: function (response) {
         $('#comment_' + postId).val("");
     $('div[class=allComments_' + postId + ']').remove();
-           var allCommentsArea = $('<div>').addClass('allComments_' + postId);
-            allCommentsArea.html(response);
-            allCommentsArea.prependTo('#commentsBlock_' + postId);
-                },
+
+    var allCommentsArea = $('<div>').addClass('allComments_' + postId);
+        allCommentsArea.html(response);
+        allCommentsArea.prependTo('#commentsBlock_' + postId);
+        },
         error: function (response) {
-                    alert('Failed to post comment');
-                }
-            });
+        alert('Sorry: Something Wrong');
+        }
+        });
         });
         });
 </script>
