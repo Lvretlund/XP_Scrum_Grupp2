@@ -20,5 +20,6 @@ namespace XP_Scrum_Grupp2.Models
         public virtual Category Category { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public Meeting Meetings { get; set; } 
+     
     }
 }
