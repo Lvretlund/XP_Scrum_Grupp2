@@ -158,42 +158,18 @@ namespace XP_Scrum_Grupp2.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    return RedirectToAction("Index", "Home");
+                   await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                //    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                   return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
             return View();
         }
 
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Notification(MeetingPeopleViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.User.Email, Email = model.User.Email, Firstname = model.User.Firstname, Lastname = model.User.Lastname };
-                user.Admin = false;
-                
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    await UserManager.SendEmailAsync(user.Id, "Notis", "Please visit the site to see notifications");
-                    return RedirectToAction("Index", "Home");
-               
-            }
-            return View();
-        }
-
-
-
-
-
-
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

@@ -101,16 +101,22 @@ namespace XP_Scrum_Grupp2.Controllers
 
             model.Meeting = möte;
 
-            
-                var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email};
+            if (person.NewMeetingNotification == true)
+            {
+                var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
                 //userN.Admin = false;
 
                 await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
                 await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
-            
+
+            }
+            else
+            {
 
                 return View("AddToMeeting", model);
+            }
+            return View("AddToMeeting", model);
         }
 
         public ActionResult AddTempTime(DateTime Start, Meeting meeting)
@@ -145,27 +151,7 @@ namespace XP_Scrum_Grupp2.Controllers
                 _userManager = value;
             }
         }
-
-
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Notification(MeetingPeopleViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.User.Email, Email = model.User.Email, Firstname = model.User.Firstname, Lastname = model.User.Lastname };
-                user.Admin = false;
-
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                await UserManager.SendEmailAsync(user.Id, "Notis", "Please visit the site to see notifications");
-                return RedirectToAction("Index", "Home");
-
-            }
-            return View();
-        }
+        
     }
     
 }
