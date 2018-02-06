@@ -10,13 +10,11 @@ using XP_Scrum_Grupp2.Models;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
-
     public class MeetingController : BaseController
     {
-
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public static Meeting möte;
+        public static Meeting NewMeeting;
         public static List<DateTime> TempTimes = new List<DateTime>();
         // GET: Meeting
         public ActionResult CreateMeeting()
@@ -67,16 +65,11 @@ namespace XP_Scrum_Grupp2.Controllers
                 }
                 fe = false;
             }
-
-
-
            // model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
-
             return View("AddToMeeting", model);
         }
-
-
+        
         public async Task<ActionResult> AddPeople(ApplicationUser person)
         {
             MeetingPeopleViewModel model = new MeetingPeopleViewModel();
@@ -113,15 +106,12 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
                 //userN.Admin = false;
-
                 await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
                 await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
-
             }
             else
             {
-
                 return View("AddToMeeting", model);
             }
             return View("AddToMeeting", model);
@@ -133,9 +123,6 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Times = TempTimes;
             return View("CreateMeeting", meeting);
         }
-
-
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -159,8 +146,6 @@ namespace XP_Scrum_Grupp2.Controllers
                 _userManager = value;
             }
         }
-        
     }
-    
 }
 
