@@ -11,6 +11,7 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class InformalBlogNYController : BaseController
     {
+        [Authorize]
         public ActionResult ShowInformalBlogs()
         {
             var posts = db.InformalBlogs.Include(x => x.Author).ToList();
@@ -21,6 +22,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(postIndex);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
         {
@@ -54,6 +56,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("ShowInformalBlogs", "InformalBlogNY");
         }
 
+        [Authorize]
         public ActionResult Image(int id)
         {
             var post = db.InformalBlogs.Single(x => x.Id == id);

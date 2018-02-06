@@ -6,22 +6,36 @@
 {
     foreach (var item in Model.ApplicationUsers)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Firstname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Lastname)
-    </td>
-    @if (!Model.Meeting.Creator.Email.Equals(item.Email))
-    {
-    <td>
-        @Html.ActionLink("Add Person", "AddPeople", item)
-    </td>
-    }
-</tr>
-<br />
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            @if (!Model.Meeting.Creator.Email.Equals(item.Email))
+            {
+                <td>
+                    @Html.ActionLink("Add Person", "AddPeople", item)
+                </td>
+            }
 
+
+        </tr>
+        @*<button type="button" class="btn btn-default Notification"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>*@
+        <br />
+        
     }
 }
+
+    @*<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create meeting request" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'" />
+        </div>
+    </div>*@
+    @*<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Delete meeting request" class="btn btn-default" onclick="location.href='@Url.Action("DeleteMeeting", "Meeting", new { MeetingModel = Model.Meeting })'" />
+        </div>
+    </div>*@
 

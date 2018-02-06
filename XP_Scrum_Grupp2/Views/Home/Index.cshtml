@@ -12,13 +12,13 @@
 
 <table class="table">
 
-    <h3> <b>View some of the latest posts in the formalblog below:</b></h3>
+    <h4> <b>View some of the latest posts in the formalblog below:</b></h4>
     @foreach (var item in Model.FormalBlogs.Reverse().Take(3))
     {
         <tr>
             <td>
                 <p>
-                    <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
+                    <span style="font-size: 100%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
                     <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => item.Date) <br /> Category: @Html.DisplayFor(modelItem => item.CategoryN.Type) </span>
                    <br />
                     @Html.DisplayFor(modelItem => item.Text)
@@ -41,7 +41,7 @@
 <hr style="height:2px;border:groove;color:#f00;background-color:#333;" />
 <br />
 
-<h3> <b>Recently added meetings</b></h3>
+<h4> <b>Recently added meetings</b></h4>
 <br />
 <table class="table">
     @foreach (var item in Model.Meetings.Reverse().Take(3))

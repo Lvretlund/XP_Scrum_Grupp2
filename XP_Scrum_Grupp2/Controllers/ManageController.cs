@@ -244,6 +244,26 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(model);
         }
 
+        public ActionResult ChangeNotification()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var curruser = User.Identity.Name;
+            var user = db.Users.Where(u => u.UserName == curruser).SingleOrDefault();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeNotification(ApplicationUser NotificationModel)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var curruser = User.Identity.Name;
+            var user = db.Users.Where(u => u.UserName == curruser).SingleOrDefault();
+            user.NewFormalPostsNotification = NotificationModel.NewFormalPostsNotification;
+            user.NewMeetingNotification = NotificationModel.NewMeetingNotification;
+            db.SaveChanges();
+            return View("ChangeNotification",NotificationModel);
+        }
+
         //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()

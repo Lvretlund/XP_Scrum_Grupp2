@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
@@ -10,13 +12,23 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
-        public static Meeting möte;
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        public static Meeting NewMeeting;
         public static List<DateTime> TempTimes = new List<DateTime>();
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
             return View();
         }
+
+        //public ActionResult DeleteMeeting(Meeting MeetingModel)
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    db.Meetings.Remove(model);
+        //    db.SaveChanges();
+        //    return View("Index", "Home");
+        //}
 
         public ActionResult CreateAMeeting(Meeting meeting)
         {
@@ -32,7 +44,7 @@ namespace XP_Scrum_Grupp2.Controllers
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
-            möte = meeting;
+            NewMeeting = meeting;
 
             model.ApplicationUsers = new LinkedList<ApplicationUser>();
             var users = db.Users.ToList();
@@ -40,7 +52,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             foreach (var item in users)
             {
-                foreach (var i in möte.Invited)
+                foreach (var i in NewMeeting.Invited)
                 {
                     if (item.Email.Equals(i.Email))
                     {
@@ -53,19 +65,18 @@ namespace XP_Scrum_Grupp2.Controllers
                 }
                 fe = false;
             }
-
            // model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
-
             return View("AddToMeeting", model);
         }
-        public ActionResult AddPeople(ApplicationUser person)
+        
+        public async Task<ActionResult> AddPeople(ApplicationUser person)
         {
             MeetingPeopleViewModel model = new MeetingPeopleViewModel();
 
-            if(!möte.Invited.Contains(person))
+            if(!NewMeeting.Invited.Contains(person))
             {
-                möte.Invited.Add(person);
+                NewMeeting.Invited.Add(person);
                 db.SaveChanges();
             }
 
@@ -75,7 +86,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             foreach (var item in users)
             {
-                foreach (var i in möte.Invited)
+                foreach (var i in NewMeeting.Invited)
                 {
                     if (item.Email.Equals(i.Email))
                     {
@@ -89,8 +100,20 @@ namespace XP_Scrum_Grupp2.Controllers
                 fe = false;
             }
 
-            model.Meeting = möte;
+            model.Meeting = NewMeeting;
 
+            if (person.NewMeetingNotification == true)
+            {
+                var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
+                //userN.Admin = false;
+                await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
+                await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
+            }
+            else
+            {
+                return View("AddToMeeting", model);
+            }
             return View("AddToMeeting", model);
         }
 
@@ -99,6 +122,29 @@ namespace XP_Scrum_Grupp2.Controllers
             TempTimes.Add(Start);
             meeting.Times = TempTimes;
             return View("CreateMeeting", meeting);
+        }
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
     }
 }

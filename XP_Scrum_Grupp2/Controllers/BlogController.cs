@@ -28,6 +28,7 @@ namespace XP_Scrum_Grupp2.Controllers
         }
 
         // GET: Blog
+        [Authorize]
         public ActionResult ShowBlogs()
         {
             var cat = db.Categories.ToList();
