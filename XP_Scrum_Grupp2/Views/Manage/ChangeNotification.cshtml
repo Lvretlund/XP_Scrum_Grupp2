@@ -1,33 +1,28 @@
 ﻿@model XP_Scrum_Grupp2.Models.ApplicationUser
-@{
-    ViewBag.Title = "ChangeNotification";
-}
 
-<h2>ChangeNotifications</h2>
+
+<h2>Notification Settings</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
 <div class="form-group">
     @Html.Label("Notify me through email when theres a new post")
     <div class="col-md-10">
         @Html.CheckBoxFor(m => m.NewFormalPostsNotification)
-        <div class="checkbox">
-            @Html.EditorFor(m => m.NewFormalPostsNotification)
-            @Html.ValidationMessageFor(m => m.NewFormalPostsNotification, "", new { @class = "text-danger" })
         </div>
     </div>
-</div>
 
 <div class="form-group">
     @Html.Label("Notify me through email when theres a new meeting")
     <div class="col-md-10">
         @Html.CheckBoxFor(m => m.NewMeetingNotification)
-        <div class="checkbox">
-            @Html.EditorFor(m => m.NewMeetingNotification)
-            @Html.ValidationMessageFor(m => m.NewMeetingNotification, "", new { @class = "text-danger" })
-        </div>
     </div>
-</div>
+    </div>
 <div class="form-group">
+    <br />
     <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Change notification settings" class="btn btn-default" onclick="location.href='@Url.Action("ChangeNotification", "Manage", new { NotificationModel = Model })'" />
+        <input type="submit" value="Change notification settings" class="btn btn-default" />
     </div>
 </div>
+    }
