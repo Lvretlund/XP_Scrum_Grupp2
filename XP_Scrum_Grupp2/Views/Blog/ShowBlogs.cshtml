@@ -4,20 +4,16 @@
 @{
     ViewBag.Title = "ShowBlogs";
 }
-<h2>Formell blogg</h2>
+<h2>Formal blog</h2>
 <br />
 @Html.Partial("CreatePartial", Model)
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
     <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
-
                  <p> 
                  <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span> 
-                 <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
-                 
+                 <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span> 
                  </p>
-
-
                 <p style="font-size: 135%">
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
@@ -54,7 +50,6 @@ else
             id = i;
             fetch(id);
         }
-        //var id = $('.addComment').attr("data-id");
         function fetch(id) {
             var allCommentsArea = $('<div>').addClass('allComments_' + id);
             $.ajax({
@@ -74,7 +69,6 @@ else
         }
     //Add New Comment
     $('.addComment').on('click', function () {
-
     var postId = $(this).attr('data-id');
     var Text = $('#comment_' + postId).val();
     var dateTimeNow = new Date();
@@ -97,7 +91,7 @@ else
         allCommentsArea.prependTo('#commentsBlock_' + postId);
         },
         error: function (response) {
-        alert('Sorry: Something Wrong');
+        alert('Failed to post comment');
         }
         });
         });
