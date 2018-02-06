@@ -60,27 +60,18 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             List<Events> eventList = new List<Events>();
 
-            Events newEvent = new Events
+            foreach(var item in db.Meetings)
             {
-                id = "1",
-                title = "Event 1",
-                start = DateTime.Now.AddDays(1).ToString("s"),
-                end = DateTime.Now.AddDays(1).ToString("s"),
-                allDay = false
-            };
-
-            eventList.Add(newEvent);
-
-            newEvent = new Events
-            {
-                id = "1",
-                title = "Event 3",
-                start = DateTime.Now.AddDays(2).ToString("s"),
-                end = DateTime.Now.AddDays(3).ToString("s"),
-                allDay = false
-            };
-
-            eventList.Add(newEvent);
+                Events newEvent = new Events
+                {
+                    id = item.Id.ToString(),
+                    title = item.Title,
+                    start = item.Start.ToString("s"),
+                    end = item.End.ToString("s"),
+                    allDay = false
+                };
+                eventList.Add(newEvent);
+            }
 
             return eventList;
         }
