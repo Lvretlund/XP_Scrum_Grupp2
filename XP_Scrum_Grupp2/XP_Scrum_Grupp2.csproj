@@ -478,8 +478,6 @@
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
     <Content Include="Views\Blog\ShowBlogs.cshtml" />
     <Content Include="Views\Blog\CreatePartial.cshtml" />
-    <Content Include="Views\Blog\ShowInformalBlogs.cshtml" />
-    <Content Include="Views\Blog\CreateInformalPartial.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\EducationNY\Index.cshtml" />
     <Content Include="Views\EducationNY\EducationNYPartial.cshtml" />

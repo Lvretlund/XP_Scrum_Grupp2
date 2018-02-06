@@ -13,6 +13,7 @@ namespace XP_Scrum_Grupp2.Controllers
     {
        
         // GET: Education
+        [Authorize]
         public ActionResult Index(string id)
         {
 
@@ -25,6 +26,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(postIndex);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Create(ResearchIndexViewModel model, HttpPostedFileBase upload)
         {
@@ -58,7 +60,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("Index", "Research");
         }
 
-
+        [Authorize]
         [HttpGet]
         public ActionResult Download(int id)
         {

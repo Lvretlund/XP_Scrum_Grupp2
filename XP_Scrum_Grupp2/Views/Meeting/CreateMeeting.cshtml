@@ -9,29 +9,24 @@
 @using (Html.BeginForm("AddTempTime", "Meeting", FormMethod.Post))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Start, new { @class = "col-md-2 control-label" })
+        @Html.Label("Time and date", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Start, new { @class = "form-control datepicker", @id = "datetimepicker1" })
+            @Html.TextBoxFor(m => m.Start, new { @placeholder = "Click to choose", @class = "form-control datepicker", @id = "datetimepicker1" })
             @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <input type="submit" value="Add time" onclick="location.href='@Url.Action("AddTempTime", "Meeting", new { meeting = Model })'" />
+    <input type="submit" value="Add" onclick="location.href='@Url.Action("AddTempTime", "Meeting", new { meeting = Model })'" />
 }
-
 @if (Model != null)
 {
-
     foreach (var item in Model.Times)
     {
         @Html.DisplayFor(modelItem => item)
         <br/>
     }
-
 }
-
-
-@using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@if(Model!= null) {
+using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -43,26 +38,26 @@
             @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(m => m.Minutes, new { @class = "col-md-2 control-label" })
+        @Html.Label("Length in minutes", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Minutes, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Minutes, new { @placeholder = "Ex. 30", @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Minutes, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" onclick="location.href='@Url.Action("CreateAMeeting", "Meeting", new { meeting = Model })'" />
+            <input type="submit" value="Create meeting" class="btn btn-default" onclick="location.href='@Url.Action("CreateAMeeting", "Meeting", new { meeting = Model })'" />
         </div>
     </div>
-
+    }
 }
 
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
         $('#datetimepicker2').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
+        $('.form-control').val("");
     });
 </script>
 @*<script>
@@ -80,9 +75,6 @@
 
         });
     </script>*@
-
-
-
 
 @*@section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
