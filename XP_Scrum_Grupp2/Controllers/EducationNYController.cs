@@ -12,6 +12,7 @@ namespace XP_Scrum_Grupp2.Controllers
     public class EducationNYController : BaseController
     {
         // GET: Education
+        [Authorize]
         public ActionResult Index(string id)
         {
             var posts = db.EducationBlogs.Include(x => x.Author).ToList();
@@ -22,7 +23,7 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return View(postIndex);
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(EducationIndexViewModel model, HttpPostedFileBase upload)
         {
@@ -54,7 +55,7 @@ namespace XP_Scrum_Grupp2.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "EducationNY");
         }
-
+        [Authorize]
         [HttpGet]
         public ActionResult Download(int id)
         {
