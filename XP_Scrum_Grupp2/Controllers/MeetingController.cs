@@ -10,13 +10,21 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class MeetingController : BaseController
     {
-        public static Meeting möte;
+        public static Meeting NewMeeting;
         public static List<DateTime> TempTimes = new List<DateTime>();
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
             return View();
         }
+
+        //public ActionResult DeleteMeeting(Meeting MeetingModel)
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    db.Meetings.Remove(model);
+        //    db.SaveChanges();
+        //    return View("Index", "Home");
+        //}
 
         public ActionResult CreateAMeeting(Meeting meeting)
         {
@@ -32,7 +40,7 @@ namespace XP_Scrum_Grupp2.Controllers
             db.Meetings.Add(meeting);
             db.SaveChanges();
 
-            möte = meeting;
+            NewMeeting = meeting;
 
             model.ApplicationUsers = new LinkedList<ApplicationUser>();
             var users = db.Users.ToList();
@@ -40,7 +48,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             foreach (var item in users)
             {
-                foreach (var i in möte.Invited)
+                foreach (var i in NewMeeting.Invited)
                 {
                     if (item.Email.Equals(i.Email))
                     {
@@ -63,9 +71,9 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             MeetingPeopleViewModel model = new MeetingPeopleViewModel();
 
-            if(!möte.Invited.Contains(person))
+            if(!NewMeeting.Invited.Contains(person))
             {
-                möte.Invited.Add(person);
+                NewMeeting.Invited.Add(person);
                 db.SaveChanges();
             }
 
@@ -75,7 +83,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             foreach (var item in users)
             {
-                foreach (var i in möte.Invited)
+                foreach (var i in NewMeeting.Invited)
                 {
                     if (item.Email.Equals(i.Email))
                     {
@@ -89,7 +97,7 @@ namespace XP_Scrum_Grupp2.Controllers
                 fe = false;
             }
 
-            model.Meeting = möte;
+            model.Meeting = NewMeeting;
 
             return View("AddToMeeting", model);
         }
