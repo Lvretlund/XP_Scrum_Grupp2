@@ -1,16 +1,22 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
+
     public class MeetingController : BaseController
     {
-        public static Meeting NewMeeting;
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        public static Meeting möte;
         public static List<DateTime> TempTimes = new List<DateTime>();
         // GET: Meeting
         public ActionResult CreateMeeting()
@@ -62,12 +68,16 @@ namespace XP_Scrum_Grupp2.Controllers
                 fe = false;
             }
 
+
+
            // model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
 
             return View("AddToMeeting", model);
         }
-        public ActionResult AddPeople(ApplicationUser person)
+
+
+        public async Task<ActionResult> AddPeople(ApplicationUser person)
         {
             MeetingPeopleViewModel model = new MeetingPeopleViewModel();
 
@@ -99,6 +109,21 @@ namespace XP_Scrum_Grupp2.Controllers
 
             model.Meeting = NewMeeting;
 
+            if (person.NewMeetingNotification == true)
+            {
+                var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
+                //userN.Admin = false;
+
+                await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
+                await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
+
+            }
+            else
+            {
+
+                return View("AddToMeeting", model);
+            }
             return View("AddToMeeting", model);
         }
 
@@ -108,6 +133,34 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Times = TempTimes;
             return View("CreateMeeting", meeting);
         }
+
+
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        
     }
+    
 }
 

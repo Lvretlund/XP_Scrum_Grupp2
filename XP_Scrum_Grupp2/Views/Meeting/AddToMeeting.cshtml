@@ -6,21 +6,25 @@
 {
     foreach (var item in Model.ApplicationUsers)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Firstname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Lastname)
-    </td>
-    @if (!Model.Meeting.Creator.Email.Equals(item.Email))
-    {
-    <td>
-        @Html.ActionLink("Add Person", "AddPeople", item)
-    </td>
-    }
-</tr>
-<br />
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            @if (!Model.Meeting.Creator.Email.Equals(item.Email))
+            {
+                <td>
+                    @Html.ActionLink("Add Person", "AddPeople", item)
+                </td>
+            }
+
+
+        </tr>
+        @*<button type="button" class="btn btn-default Notification"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>*@
+        <br />
+        
     }
 }
 

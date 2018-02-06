@@ -19,5 +19,7 @@ namespace XP_Scrum_Grupp2.Models
         public bool AllDay { get; set; }
 
         public ICollection<ApplicationUser> User { get; set; }
+        public ApplicationUser UserNotis { get; set; }
+        
     }
 }
