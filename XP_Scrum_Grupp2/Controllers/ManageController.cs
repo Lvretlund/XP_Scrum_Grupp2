@@ -251,6 +251,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var user = db.Users.Where(u => u.UserName == curruser).SingleOrDefault();
             return View(user);
         }
+
         [HttpPost]
         public ActionResult ChangeNotification(ApplicationUser NotificationModel)
         {
@@ -260,7 +261,7 @@ namespace XP_Scrum_Grupp2.Controllers
             user.NewFormalPostsNotification = NotificationModel.NewFormalPostsNotification;
             user.NewMeetingNotification = NotificationModel.NewMeetingNotification;
             db.SaveChanges();
-            return View("ChangePassword",NotificationModel);
+            return View("ChangeNotification",NotificationModel);
         }
 
         //
