@@ -41,6 +41,7 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Invited.Add(user);
             meeting.Times = TempTimes;
             meeting.Start = DateTime.Now;
+            meeting.End = meeting.Start.AddMinutes(meeting.Minutes);
             db.Meetings.Add(meeting);
             db.SaveChanges();
 

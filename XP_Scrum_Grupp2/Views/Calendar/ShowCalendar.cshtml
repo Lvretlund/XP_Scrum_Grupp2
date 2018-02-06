@@ -27,26 +27,26 @@
                     //slotMinutes: 15,
                     events: function (start, end, timezone, callback) {
                         $.ajax({
-                            url: "/calendar/getmeetings/",
-                            type: 'GET',
+                            url: "/calendar/getmeetings",
+                            type: 'POST',
                             dataType: 'json',
                             data: {
                                 // our hypothetical feed requires UNIX timestamps
                                 start: start.unix(),
                                 end: end.unix()
-                            },
-                            success: function (doc) {
+                            },  
+                            success: function (response) {
                                 var events = [];
-                                $(doc).find('event').each(function () {
+                                $(response).find('event').each(function () {
                                     events.push({
                                         title: $(this).attr('title'),
                                         start: $(this).attr('start') // will be parsed
                                     });
                                 });
-                                callback(events);
+                                callback(response);
                             },
-                            error: function (doc) {
-                                alert("Fail!!")
+                            error: function (jqXHR) {
+                                alert(jqXHR.responseText);
                             }
                         });
                     }
