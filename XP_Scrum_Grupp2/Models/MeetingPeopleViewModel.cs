@@ -10,5 +10,7 @@ namespace XP_Scrum_Grupp2.Models
         public Meeting Meeting { get; set; }
       
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }
