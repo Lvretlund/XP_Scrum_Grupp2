@@ -33,5 +33,22 @@
                 <p style="font-size: 135%">
                     @Html.DisplayFor(modelItem => item.Text)
                 </p>
+                @if (item.Filename != null)
+                {
+                    <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+                }
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
+                @if (item.File != null)
+                {
+                    <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
+                }
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
             </div>
+
         }
