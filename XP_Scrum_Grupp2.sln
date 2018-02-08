@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XP_Scrum_Grupp2", "XP_Scrum_Grupp2\XP_Scrum_Grupp2.csproj", "{ED11E338-8314-4FF6-9712-1784E9A6AD7C}"
 EndProject

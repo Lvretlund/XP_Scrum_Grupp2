@@ -68,6 +68,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public async Task<ActionResult> CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
+            var post = db.FormalBlogs.ToList();
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
             model.SelectedCategories = PopulateCategories();
             if (upload != null && upload.ContentLength > 0)
@@ -111,7 +112,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var allUsers = db.Users.ToList();
             foreach(var user in allUsers)
             {
-                if (user.NewFormalPostsNotification == true)
+                if (user.NewFormalPostsNotification == true && post.Count > 5)
                 {
                     var userN = new ApplicationUser { Id = user.Id, UserName = user.Email, Email = user.Email };
                     await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
