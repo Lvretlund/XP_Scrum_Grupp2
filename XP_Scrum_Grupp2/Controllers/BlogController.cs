@@ -6,11 +6,16 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
         [HttpPost]
         public ActionResult HidePost(FormalBlog post)
         {
@@ -60,7 +65,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
         //post
         [HttpPost]
-        public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
+        public async Task<ActionResult> CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
@@ -98,11 +103,49 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 newPost.CategoryN = model.NewCategory;
             }
+
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
-            return RedirectToAction("ShowBlogs", "Blog");
+
+            var allUsers = db.Users.ToList();
+            foreach(var user in allUsers)
+            {
+                if (user.NewFormalPostsNotification == true)
+                {
+                    var userN = new ApplicationUser { Id = user.Id, UserName = user.Email, Email = user.Email };
+                    await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
+                    await UserManager.SendEmailAsync(userN.Id, "The daily blog summary", "Here is a blog summary for today");
+                }
+            }
+
+           return RedirectToAction("ShowBlogs", "Blog");
         }
-       
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Image(int id)
         {
             var post = db.FormalBlogs.Single(x => x.Id == id);
