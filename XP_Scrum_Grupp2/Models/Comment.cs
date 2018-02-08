@@ -13,7 +13,7 @@ namespace XP_Scrum_Grupp2.Models
         public string CommentedById { get; set; }
         public FormalBlog Post { get; set; }
         public DateTime Date { get; set; }
-
+        
 
         public virtual ApplicationUser User { get; set; }
         public virtual FormalBlog FormalBlog { get; set; }
@@ -22,5 +22,6 @@ namespace XP_Scrum_Grupp2.Models
     public class CommentModel
     {
         public ICollection<Comment> Commentarer { get; set; }
+        public ICollection<InformalComment> IComments { get; set; }
     }
 }
