@@ -104,8 +104,7 @@ namespace XP_Scrum_Grupp2.Controllers
             if (person.NewMeetingNotification == true)
             {
                 var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
-                //userN.Admin = false;
-
+           
                 await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
                 await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
