@@ -11,6 +11,23 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class InformalBlogNYController : BaseController
     {
+        [HttpPost]
+        public ActionResult HidePost(int postId, bool status)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            InformalBlog fb = db.InformalBlogs.Where(f => f.Id == postId).FirstOrDefault();
+            if (status == true)
+            {
+                fb.Visible = false;
+            }
+            else
+            {
+                fb.Visible = true;
+            }
+            db.SaveChanges();
+            return RedirectToAction("ShowInformalBlogs", "InformalBlogNY");
+        }
+
         [Authorize]
         public ActionResult ShowInformalBlogs()
         {
