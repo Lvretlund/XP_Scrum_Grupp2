@@ -17,11 +17,11 @@ namespace XP_Scrum_Grupp2.Controllers
         private ApplicationUserManager _userManager;
 
         [HttpPost]
-        public ActionResult HidePost(FormalBlog post)
+        public ActionResult HidePost(int postId, bool status)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            FormalBlog fb = db.FormalBlogs.Where(f => f.Id == post.Id+1).FirstOrDefault();
-            if(post.Visible == true) {
+            FormalBlog fb = db.FormalBlogs.Where(f => f.Id == postId).FirstOrDefault();
+            if(status == true) {
                 fb.Visible = false;
             } else {
                 fb.Visible = true; }
