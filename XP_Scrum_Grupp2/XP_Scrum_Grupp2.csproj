@@ -488,6 +488,7 @@
     <Content Include="Views\Meeting\AddToMeeting.cshtml" />
     <Content Include="Views\Manage\ChangeNotification.cshtml" />
     <Content Include="Views\Shared\_IComments.cshtml" />
+    <Content Include="Views\Blog\SearchFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -173,6 +173,11 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
+
+        public ActionResult SearchFiles()
+        {
+            return View();
+        }
     }
     
     public class PostIndexViewModel
