@@ -42,6 +42,35 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("GetComments", "Comment", new { postId = postId });
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddIComment(InformalComment comment, int postId, string Id)
+        {
+            string userId = comment.CommentedById;
+            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            var post = db.InformalBlogs.FirstOrDefault(p => p.Id == postId);
+            if (comment != null)
+            {
+                var NewComment = new InformalComment
+                {
+                    Id = 1,
+                    Text = comment.Text,
+                    Date = comment.Date,
+                    CommentedBy = user,
+                    CommentedById = userId,
+                    User = user,
+                    Post = post,
+                    InformalBlog = post
+                };
+                if (user != null && post != null)
+                {
+                    db.InformalComments.Add(NewComment);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("GetIComments", "Comment", new { postId = postId });
+        }
+
         public PartialViewResult GetComments(int postId)
         {
             CommentModel cm = new CommentModel
@@ -49,6 +78,14 @@ namespace XP_Scrum_Grupp2.Controllers
                 Commentarer = db.Comments.Where(c => c.Post.Id == postId).ToList()
             };
             return PartialView("~/Views/Shared/_Comments.cshtml", cm);
+        }
+        public PartialViewResult GetIComments(int postId)
+        {
+            CommentModel cm = new CommentModel
+            {
+                IComments = db.InformalComments.Where(c => c.Post.Id == postId).ToList()
+            };
+            return PartialView("~/Views/Shared/_IComments.cshtml", cm);
         }
     }
 }

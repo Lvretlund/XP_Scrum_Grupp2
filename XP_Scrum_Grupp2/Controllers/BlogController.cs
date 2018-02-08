@@ -11,6 +11,19 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
     {
+        [HttpPost]
+        public ActionResult HidePost(FormalBlog post)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            FormalBlog fb = db.FormalBlogs.Where(f => f.Id == post.Id+1).FirstOrDefault();
+            if(post.Visible == true) {
+                fb.Visible = false;
+            } else {
+                fb.Visible = true; }
+            db.SaveChanges();
+            return RedirectToAction("ShowBlogs", "Blog");
+        }
+
         private static List<SelectListItem> PopulateCategories()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -27,6 +40,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return items;
         }
 
+     
         // GET: Blog
         [Authorize]
         public ActionResult ShowBlogs()
@@ -118,6 +132,7 @@ namespace XP_Scrum_Grupp2.Controllers
     
     public class PostIndexViewModel
     {
+        public ICollection<InformalBlog> InformalBlogs { get; set; }
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
@@ -130,5 +145,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
         public ApplicationUser UserName { get; set; }
+        public ICollection<InformalComment> InformalComments { get; set; }
+        public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
     }
 }

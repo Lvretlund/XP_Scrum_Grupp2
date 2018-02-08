@@ -15,16 +15,19 @@ namespace XP_Scrum_Grupp2.Controllers
         public ActionResult ShowInformalBlogs()
         {
             var posts = db.InformalBlogs.Include(x => x.Author).ToList();
-            var postIndex = new PictureIndexViewModel
+            var comments = db.InformalComments.Include(f => f.InformalBlog).ToList();
+
+            var postIndex = new PostIndexViewModel
             {
-                InformalBlogs = posts
+                InformalBlogs = posts,
+                InformalComments = comments
             };
             return View(postIndex);
         }
-
+ 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult CreateInformalPartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             InformalBlog newPost = new InformalBlog();
             var userName = User.Identity.Name;

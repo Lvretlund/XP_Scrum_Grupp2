@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace XP_Scrum_Grupp2.Models
 {
@@ -24,7 +25,6 @@ namespace XP_Scrum_Grupp2.Models
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<Meeting> Meeting { get; set; }
-        public bool NewMeetingNotification { get; set; }
         public bool NewFormalPostsNotification { get; set; }
 
 
@@ -55,11 +55,25 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<InformalComment> InformalComments { get; set; }
 
-       
         public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
 
         }
+    }
+
+    public class InformalComment
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public ApplicationUser CommentedBy { get; set; }
+        public string CommentedById { get; set; }
+        public InformalBlog Post { get; set; }
+        public DateTime Date { get; set; }
+
+
+        public virtual ApplicationUser User { get; set; }
+        public virtual InformalBlog InformalBlog { get; set; }
     }
 }

@@ -2,31 +2,16 @@
 @using Microsoft.AspNet.Identity
 @using XP_Scrum_Grupp2.Models
 
-
-@{
-    ViewBag.Title = "Index";
-}
-
-
 <div class="jumbotron">
     <img src="~/Content/logo1.png" height="150" width="450" />
-    <p class="lead">Education news feed</p>
-
 </div>
 <br />
-
-
 @if (Request.IsAuthenticated)
 {
     var db = new ApplicationDbContext();
     var currentUser = User.Identity.Name;
     var user = db.Users.Where(u => u.UserName == currentUser).SingleOrDefault();
-
-
     @Html.AntiForgeryToken()
-
-
-
     if (user != null)
     {
         if (user.EducationAdmin == true)
@@ -34,30 +19,34 @@
             @Html.Partial("EducationNYPartial", Model)
         }
     }
-
 }
-
-
 <h2>Education feed</h2>
-
-<table class="table">
-
     @foreach (var item in Model.EducationBlogs.Reverse())
     {
-        <tr>
-            <td>
-                <p> <b> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</b></p>
+            <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
                 <p>
+                    <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
+                    <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => item.Date) <br /> </span>
+                </p>
+                <p style="font-size: 135%">
                     @Html.DisplayFor(modelItem => item.Text)
                 </p>
+                @if (item.Filename != null)
+                {
+                    <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+                }
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
+                @if (item.File != null)
+                {
+                    <p><img src="@Url.Action("Image", new { id = item.Id})" /></p>
+                }
+                else
+                {
+                    <img src="~/Content/vitbild.jpg" />
+                }
+            </div>
 
-
-                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
-
-            </td>
-
-
-            <td></td>
-        </tr>
-    }
-</table>
+        }

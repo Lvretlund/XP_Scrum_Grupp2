@@ -1,39 +1,93 @@
-﻿@model XP_Scrum_Grupp2.Controllers.PictureIndexViewModel
-
-@{
-    ViewBag.Title = "Informell blogg";
-}
-
-<h2>Informell blogg</h2>
-
+﻿@model XP_Scrum_Grupp2.Controllers.PostIndexViewModel
+@using Microsoft.AspNet.Identity
+<h2>Informal blog</h2>
 @Html.Partial("CreateInformalPartial", Model)
-
-<table class="table">
-    @foreach (var item in Model.InformalBlogs.Reverse())
-    {
-        <tr>
-            <td>
-                <p> @Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname) skrev den @Html.DisplayFor(modelItem => item.Date)</p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </p>
-
-                @if (item.File != null)
-                {
-                     <p><img src="@Url.Action("Image", new { id = item.Id })" /></p>
+@foreach (var item in Model.InformalBlogs.Reverse())
+{
+    <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
+        <p>
+            <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
+            <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => item.Date) <br /> </span>
+        </p>
+        <p style="font-size: 135%">
+            @Html.DisplayFor(modelItem => item.Text)
+        </p>
+        @if (item.Filename != null)
+        {
+            <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+        }
+        else
+        {
+            <img src="~/Content/vitbild.jpg" />
+        }
+        @if (item.File != null)
+        {
+            <p><img src="@Url.Action("Image", new { id = item.Id })" /></p>
+        }
+        else
+        {
+            <img src="~/Content/vitbild.jpg" />
+        }
+    </div>
+    <div id="@string.Format("{0}_{1}", "commentsBlock", item.Id)">
+        <div class="AddComment" style="margin-left: 5%; padding: 1em">
+            <input type="text" id="@string.Format("{0}_{1}", "comment", item.Id)" style="display: inline;" class="form-control" placeholder="Add a Comment ..." />
+            <button type="button" class="btn btn-default addComment" data-id="@item.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+            <br />
+        </div>
+    </div>
+}
+<script>
+  $(document).ready(function () {
+        var i;
+        for (i = 1; i <@Model.InformalBlogs.Count + 1;i++) {
+         id=i;
+        fetch(id);
+         }
+        function fetch(id) {
+        var allCommentsArea=$('<div>').addClass('allComments_' + id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetIComments", "Comment")',
+                data: { postId: id },
+                success: function (response) {
+                    if ($('div').hasClass('allComments_' + id + '')) {
+                        $('div[class=allComments_' + id + ']').remove();
+                    }
+                    allCommentsArea.html(response);
+                    allCommentsArea.prependTo('#commentsBlock_' + id);
+                },
+                error: function (response) {
                 }
+            })
+        }
+    //Add New Comment
+    $('.addComment').on('click', function () {
+    var postId = $(this).attr('data-id');
+    var Text = $('#comment_' + postId).val();
+    var dateTimeNow = new Date();
+    var userId = "@User.Identity.GetUserId()";
+    var comment = {
+    Text: Text,
+    Date: dateTimeNow.toLocaleString(),
+    CommentedById: userId
+    };
+    $.ajax({
+    type: 'POST',
+    url: '@Url.Action("AddIComment", "Comment")',
+    data: { comment, postId },
+    success: function (response) {
+        $('#comment_' + postId).val("");
+    $('div[class=allComments_' + postId + ']').remove();
 
-                else 
-                {
-                 <img src="~/Content/vitbild.jpg"/>
-                }
-
-
-
-            </td>
-
-
-            <td></td>
-        </tr>
-    }
-</table>
+    var allCommentsArea = $('<div>').addClass('allComments_' + postId);
+        allCommentsArea.html(response);
+        allCommentsArea.prependTo('#commentsBlock_' + postId);
+        },
+        error: function (response) {
+        alert('Failed to post comment');
+        }
+        });
+        });
+        });
+</script>
