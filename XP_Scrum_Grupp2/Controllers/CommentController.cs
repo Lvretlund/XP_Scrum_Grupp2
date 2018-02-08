@@ -79,6 +79,7 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return PartialView("~/Views/Shared/_Comments.cshtml", cm);
         }
+
         public PartialViewResult GetIComments(int postId)
         {
             CommentModel cm = new CommentModel

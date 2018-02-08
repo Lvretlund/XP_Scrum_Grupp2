@@ -63,14 +63,13 @@
     }
     else if (post.Visible == false && post.Author.Id == User.Identity.GetUserId())
     {
-        <div class="visiblePost" data-id="@post.Id">
             <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: gray; padding: 1em;">
 
                 <p>
                     <span style="font-size: 160%; color: gray" > <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span>
                     <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
                 </p>
-                <p style="font-size: 135%">
+                <p style="font-size: 135%; color: gray">
                     @Html.DisplayFor(modelItem => post.Text)
                 </p>
                 @if (post.Filename != null)
@@ -97,7 +96,7 @@
                     <br />
                 </div>
             </div>
-        </div>
+       
     }
 }
 <script>
