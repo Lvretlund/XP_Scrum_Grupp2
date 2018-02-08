@@ -8,16 +8,23 @@
 
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
-    using (Html.BeginForm("HidePost", "Blog", new { formal = post }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    using (Html.BeginForm("HidePost", "Blog", new { postId = post.Id, status = post.Visible }, FormMethod.Post))
     {
         if (post.Author.Id == User.Identity.GetUserId()) { 
-                    @Html.CheckBoxFor(modelItem => post.Visible, new { @class = "check" })
-        <input type="submit" value="Hide" data-id="@post" id="hidden" class="btn btn-default" />
-
+                 <span style="display:none">    @Html.CheckBoxFor(modelItem => post.Visible, new { @class = "check" })</span>
+            if (post.Visible == true)
+            {
+        <input type="submit" value="Hide" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
+            }
+            else
+            {
+        <input type="submit" value="Show" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
+            }
+        }
     }
-}
-if (post.Visible == false)
-{
+    
+    if (post.Visible == true)
+    {
     <div class="visiblePost" data-id="@post.Id">
         <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
            
@@ -58,15 +65,7 @@ if (post.Visible == false)
 <script>
     $(document).ready(function () {
 
-        //$("#check").click(function () {
-        //    var status = $('#hidden').attr('data-id');
-        //        if (status == true) {
-        //            $('#hidden').attr("Hide");
-                    
-        //        } else {
-        //            $('#hidden').attr("Show");
-        //        };
-        //    });
+
 
     var i;
     for (i = 1; i <@Model.FormalBlogs.Count + 1;i++) {

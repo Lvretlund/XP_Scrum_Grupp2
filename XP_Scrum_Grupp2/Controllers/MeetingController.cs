@@ -102,8 +102,7 @@ namespace XP_Scrum_Grupp2.Controllers
             }
 
             model.Meeting = NewMeeting;
-
-           
+            
                 var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
                 //userN.Admin = false;
                 await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
