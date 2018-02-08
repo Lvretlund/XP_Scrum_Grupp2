@@ -22,12 +22,12 @@
             }
         }
     }
-    
+ 
     if (post.Visible == true)
     {
     <div class="visiblePost" data-id="@post.Id">
         <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
-           
+            <script async defer id="geo" src="" type="text/javascript"></script>
             <p>
                 <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span>
                 <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
@@ -101,9 +101,7 @@
 }
 <script>
     $(document).ready(function () {
-
-
-
+               
     var i;
     for (i = 1; i <@Model.FormalBlogs.Count + 1;i++) {
         id = i;

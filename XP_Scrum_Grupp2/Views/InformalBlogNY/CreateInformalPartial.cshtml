@@ -16,19 +16,40 @@
     @Html.EditorFor(model => model.NewInformalBlog.Text, new { htmlAttributes = new { @class = "form-control" } })
     @Html.ValidationMessageFor(model => model.NewInformalBlog.Text, "", new { @class = "text-danger" })
     <br />
-</div>
 
+    @{Model.NewInformalBlog.Location = "jiafjkagjk"; }
+    @Html.HiddenFor(m => m.Location);
+</div>
 <input type="file" name="upload" />
     <br />
-
-    <input type="submit" value="Create post" class="btn btn-default" />
-
+    <input type="submit" id="test" value="Create post" class="btn btn-default" />
     <br />
     <br />
     <hr style="height:2px;border:none;color:#333;background-color:#333;" />
     <br />
+
+    <label id="try"></label>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    $(document).ready(function () {
+        //$("#test").on("click", function () {
+        @*var ex = ("@Model.NewInformalBlog.Location").val();*@
+        function positionError(position) {
+            alert("Failed to fetch position");
+        }
+        navigator.geolocation.getCurrentPosition(showPosition, positionError);
+        function showPosition(position) {
+            var coordinates = position.coords;
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coordinates.latitude + "," + coordinates.longitude + "&key=AIzaSyDqTI0mrcYycfIzYcVEIIUy2CV1M6xusTA"
+            $.getJSON(url, function (data) {
+                alert("hej");
+                $.each(data.results[0], function (key, value) {
+                    while (key == "formatted_address") {
+                        break;
+                    }
+                });
+            });
+        }
+    });
+</script>

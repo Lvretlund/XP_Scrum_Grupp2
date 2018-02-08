@@ -68,8 +68,8 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.ContentType = model.NewInformalBlog.ContentType;
             newPost.Filename = model.NewInformalBlog.Filename;
             newPost.File = model.NewInformalBlog.File;
-
-
+            newPost.Location = model.NewInformalBlog.Location;
+            newPost.Visible = true;
             db.InformalBlogs.Add(newPost);
             db.SaveChanges();
 
