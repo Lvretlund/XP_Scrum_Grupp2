@@ -59,6 +59,8 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<MeetingInvited> MeetingInvited { get; set; }
+        public DbSet<MeetingTimes> MeetingTimes { get; set; }
         public DbSet<InformalComment> InformalComments { get; set; }
         public DbSet<UEvent> UserEvents { get; set; }
 
