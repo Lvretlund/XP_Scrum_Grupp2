@@ -112,12 +112,9 @@ namespace XP_Scrum_Grupp2.Controllers
             var allUsers = db.Users.ToList();
             foreach(var user in allUsers)
             {
-                if (user.NewFormalPostsNotification == true && post.Count > 5)
+                if (user.NewFormalPostsNotification)
                 {
-                    var userN = new ApplicationUser { Id = user.Id, UserName = user.Email, Email = user.Email };
-                    await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
-                    await UserManager.SendEmailAsync(userN.Id, "The daily blog summary", "Here is a blog summary for today");
+                    BlogScheduler.Start();
                 }
             }
 

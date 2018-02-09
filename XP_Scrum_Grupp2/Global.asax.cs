@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using XP_Scrum_Grupp2.Models;
+using Quartz;
 
 namespace XP_Scrum_Grupp2
 {
