@@ -17,6 +17,8 @@
     @Html.ValidationMessageFor(model => model.NewInformalBlog.Text, "", new { @class = "text-danger" })
     <br />
     @Html.HiddenFor(m => m.NewInformalBlog.Location, new { id = "userListIdHidden" })
+    @Html.HiddenFor(m => m.NewInformalBlog.Long, new { id = "longIdHidden" })
+    @Html.HiddenFor(m => m.NewInformalBlog.Lat, new { id = "latIdHidden" })
 </div>
 <input type="file" name="upload" />
     <br />
@@ -41,12 +43,12 @@
             var coordinates = position.coords;
             var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coordinates.latitude + "," + coordinates.longitude + "&key=AIzaSyDqTI0mrcYycfIzYcVEIIUy2CV1M6xusTA"
             $.getJSON(url, function (data) {
-                alert("hej");
                 $.each(data.results[0], function (key, value) {
                     while (key == "formatted_address") {
                         //$('#myVar').val(value);
                         document.getElementById("userListIdHidden").value = value;
-
+                        document.getElementById("longIdHidden").value = coordinates.latitude;
+                        document.getElementById("latIdHidden").value = coordinates.longitude;
                         break;
                     }
                 });

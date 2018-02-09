@@ -33,8 +33,9 @@ namespace XP_Scrum_Grupp2.Controllers
         public ActionResult CreateAMeeting(Meeting meeting)
         {
             var userName = User.Identity.Name;
-            var user = db.Users.Where(u => u.UserName == userName).SingleOrDefault();
+            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
             var model = new MeetingPeopleViewModel();
+            DateTime time = DateTime.Now;
 
             meeting.Creator = user;
             meeting.Invited = new List<ApplicationUser>();
@@ -42,10 +43,12 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Times = TempTimes;
             meeting.Start = DateTime.Now;
             meeting.End = meeting.Start.AddMinutes(meeting.Minutes);
+            NewMeeting = meeting;
+
             db.Meetings.Add(meeting);
             db.SaveChanges();
+            SaveTimes();
 
-            NewMeeting = meeting;
 
             model.ApplicationUsers = new LinkedList<ApplicationUser>();
             var users = db.Users.ToList();
@@ -66,18 +69,23 @@ namespace XP_Scrum_Grupp2.Controllers
                 }
                 fe = false;
             }
-           // model.ApplicationUsers = db.Users.ToList();
+            // model.ApplicationUsers = db.Users.ToList();
             model.Meeting = meeting;
             return View("AddToMeeting", model);
         }
-        
+
         public async Task<ActionResult> AddPeople(ApplicationUser person)
         {
             MeetingPeopleViewModel model = new MeetingPeopleViewModel();
+            MeetingInvited TempMeetingInvited = new MeetingInvited();
 
-            if(!NewMeeting.Invited.Contains(person))
+            if (!NewMeeting.Invited.Contains(person))
             {
                 NewMeeting.Invited.Add(person);
+
+                //TempMeetingInvited.MeetingId = NewMeeting;
+                //TempMeetingInvited.Invited = person;
+                //db.MeetingInvited.Add(TempMeetingInvited);
                 db.SaveChanges();
             }
 
@@ -94,7 +102,7 @@ namespace XP_Scrum_Grupp2.Controllers
                         fe = true;
                     }
                 }
-                if(fe == false)
+                if (fe == false)
                 {
                     model.ApplicationUsers.Add(item);
                 }
@@ -117,6 +125,37 @@ namespace XP_Scrum_Grupp2.Controllers
             meeting.Times = TempTimes;
             return View("CreateMeeting", meeting);
         }
+
+        public ActionResult ChooseTimes()
+        {
+            var userName = User.Identity.Name;
+            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+            Meeting meeting = new Meeting();
+            List<Meeting> Meetings = db.Meetings.ToList();
+
+            foreach (var item in Meetings)
+            {
+                if (item.Invited.Contains(user))
+                {
+                    meeting = item;
+                }
+            }
+            return View(meeting);
+        }
+
+        public void SaveTimes()
+        {
+            MeetingTimes MeetingTimes = new MeetingTimes();
+
+            foreach (var item in TempTimes)
+            {
+                MeetingTimes.MeetingId = NewMeeting;
+                MeetingTimes.Time = item;
+                db.MeetingTimes.Add(MeetingTimes);
+                db.SaveChanges();
+            }
+        }
+
         public ApplicationSignInManager SignInManager
         {
             get
