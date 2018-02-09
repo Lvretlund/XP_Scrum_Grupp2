@@ -70,6 +70,8 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.File = model.NewInformalBlog.File;
             newPost.Location = model.NewInformalBlog.Location;
             newPost.Visible = true;
+            newPost.Long = model.NewInformalBlog.Long;
+            newPost.Lat = model.NewInformalBlog.Lat;
             db.InformalBlogs.Add(newPost);
             db.SaveChanges();
 
