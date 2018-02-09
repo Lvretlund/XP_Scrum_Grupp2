@@ -14,7 +14,10 @@ namespace XP_Scrum_Grupp2.Models
         public string Filename { get; set; }
         public string ContentType { get; set; }
         public byte[] File { get; set; }
-        //public ICollection<InformalBlog> InformalBlogs { get; set; }
+        public bool Visible { get; set; }
+        public string Location { get; set; }
+        public string Long { get; set; }
+        public string Lat { get; set; }
 
         public virtual ApplicationUser User { get; set; }
       

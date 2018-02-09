@@ -1,0 +1,28 @@
+﻿
+@model XP_Scrum_Grupp2.Models.CommentModel
+
+@if (Model != null)
+{
+    foreach (var com in Model.IComments)
+    {
+        <div class="row" style="width: 93.7%; border-radius:4px; border-style: double; border-color: cadetblue; padding: 1em; margin-left: 5%;">
+
+            <p>
+                <span style="font-weight: bold; font-size: 13px;"> @com.User.Firstname @com.User.Lastname:</span>
+                <span>
+                    <time class="timeago" style="float:right; font-size: 13px; color: #9c9898; " datetime="@com.Date">@com.Date</time>
+                </span>
+            </p>
+
+
+            <div class="commentDetails">
+                <p style="margin-top: 10px; font-size: 13px; color: #9c9898;"> @com.Text </p>
+
+            </div>
+        </div>
+
+
+    }
+}
+
+

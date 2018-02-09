@@ -60,6 +60,16 @@ namespace XP_Scrum_Grupp2.Controllers
             return RedirectToAction("Index", "Research");
         }
 
+        public ActionResult Image(int id)
+        {
+            var post = db.FormalBlogs.Single(x => x.Id == id);
+            if (post?.File == null)
+            {
+                return HttpNotFound();
+            }
+            return File(post.File, post.ContentType);
+        }
+
         [Authorize]
         [HttpGet]
         public ActionResult Download(int id)

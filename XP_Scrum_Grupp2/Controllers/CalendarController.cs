@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,69 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class CalendarController : BaseController
     {
-        // GET: Calendar
+        public JsonResult GetUEvents()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var events = db.UserEvents.ToList();
+                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveEvent(UEvent e)
+        {
+            var user = User.Identity.GetUserId();
+            var status = false;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var curr = db.Users.Where(u => u.Id == user).FirstOrDefault();
+                //if (e.Id > 0)
+                //{
+                //Update the event
+                //var v = db.UserEvents.Where(a => a.Id == e.Id).FirstOrDefault();
+                //if (v != null)
+                //{
+                var v = new UEvent
+                {
+                    Title = e.Title,
+                    Start = e.Start,
+                    End = e.End,
+                    AllDay = e.AllDay,
+                    Creator = curr
+                };
+                //}
+                //else
+                //{
+                    db.UserEvents.Add(v);
+                //}
+                db.SaveChanges();
+                status = true;
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
+
+        [HttpPost]
+        public JsonResult DeleteEvent(int eventID)
+        {
+            var status = false;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var v = db.UserEvents.Where(a => a.Id == eventID).FirstOrDefault();
+                if (v != null)
+                {
+                    db.UserEvents.Remove(v);
+                    db.SaveChanges();
+                    status = true;
+                }
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
+
+        public ActionResult ShowPersonalCalendar()
+        {
+            return View();
+        }
         public ActionResult ShowCalendar()
         {
             return View();
@@ -19,12 +82,9 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                //foreach(var item in db.Meetings)
-                //{
                 var fromDate = ConvertFromUnixTimestamp(start);
                 var toDate = ConvertFromUnixTimestamp(end);
-                //}
-
+                
                 var eventList = GetEvents();
 
                 var rows = eventList.ToArray();
@@ -37,30 +97,11 @@ namespace XP_Scrum_Grupp2.Controllers
             return origin.AddSeconds(timestamp);
         }
 
-        //private List<Meeting> GetEvents()
-        //{
-        //    List<Meeting> eventList = new List<Meeting>();
-
-        //    var meetings = db.Meetings.ToList();
-
-        //    foreach(var item in meetings)
-        //    {
-        //        Meeting newEvent = new Meeting
-        //        {
-        //            Id = item.Id,
-        //            Title = item.Title,
-        //            Start = item.Start,
-        //            //End = item.End,
-        //            AllDay = item.AllDay
-        //        };
-        //        eventList.Add(newEvent);
-        //    }
-
         private List<Events> GetEvents()
         {
             List<Events> eventList = new List<Events>();
 
-            foreach(var item in db.Meetings)
+            foreach (var item in db.Meetings)
             {
                 Events newEvent = new Events
                 {
@@ -75,11 +116,6 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return eventList;
         }
-
-
-
-        //    return eventList;
-        //}
     }
 
     public class Events
@@ -90,7 +126,12 @@ namespace XP_Scrum_Grupp2.Controllers
         public string start { get; set; }
         public string end { get; set; }
         public string url { get; set; }
-
         public bool allDay { get; set; }
+    }
+
+    public class PersonalCalendarViewModel
+    {
+        public ICollection<UEvent> PersonalEvents { get; set; }
+        public ICollection<Meeting> Meetings { get; set; }
     }
 }

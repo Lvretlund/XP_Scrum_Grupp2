@@ -6,11 +6,29 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
     public class BlogController : BaseController
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        [HttpPost]
+        public ActionResult HidePost(int postId, bool status)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            FormalBlog fb = db.FormalBlogs.Where(f => f.Id == postId).FirstOrDefault();
+            if(status == true) {
+                fb.Visible = false;
+            } else {
+                fb.Visible = true; }
+            db.SaveChanges();
+            return RedirectToAction("ShowBlogs", "Blog");
+        }
+
         private static List<SelectListItem> PopulateCategories()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -27,6 +45,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return items;
         }
 
+     
         // GET: Blog
         [Authorize]
         public ActionResult ShowBlogs()
@@ -46,9 +65,10 @@ namespace XP_Scrum_Grupp2.Controllers
 
         //post
         [HttpPost]
-        public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
+        public async Task<ActionResult> CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
+            var post = db.FormalBlogs.ToList();
             var author = db.Users.SingleOrDefault(x => x.UserName == userName);
             model.SelectedCategories = PopulateCategories();
             if (upload != null && upload.ContentLength > 0)
@@ -68,7 +88,8 @@ namespace XP_Scrum_Grupp2.Controllers
                 Date = DateTime.Now,
                 ContentType = model.NewFormalBlog.ContentType,
                 Filename = model.NewFormalBlog.Filename,
-                File = model.NewFormalBlog.File
+                File = model.NewFormalBlog.File,
+                Visible = true
             };
 
             if (model.NewCategory.Type == null)
@@ -84,11 +105,49 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 newPost.CategoryN = model.NewCategory;
             }
+
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
-            return RedirectToAction("ShowBlogs", "Blog");
+
+            var allUsers = db.Users.ToList();
+            foreach(var user in allUsers)
+            {
+                if (user.NewFormalPostsNotification == true && post.Count > 5)
+                {
+                    var userN = new ApplicationUser { Id = user.Id, UserName = user.Email, Email = user.Email };
+                    await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
+                    await UserManager.SendEmailAsync(userN.Id, "The daily blog summary", "Here is a blog summary for today");
+                }
+            }
+
+           return RedirectToAction("ShowBlogs", "Blog");
         }
-       
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Image(int id)
         {
             var post = db.FormalBlogs.Single(x => x.Id == id);
@@ -114,10 +173,16 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
+
+        public ActionResult SearchFiles()
+        {
+            return View();
+        }
     }
     
     public class PostIndexViewModel
     {
+        public ICollection<InformalBlog> InformalBlogs { get; set; }
         public string Id { get; set; }
         public ICollection<FormalBlog> FormalBlogs { get; set; }
         public FormalBlog NewFormalBlog { get; set; } = new FormalBlog();
@@ -129,6 +194,9 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<Meeting> Meetings { get; set; } //testrad
         public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
+        public string Location { get; set; }
         public ApplicationUser UserName { get; set; }
+        public ICollection<InformalComment> InformalComments { get; set; }
+        public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
     }
 }

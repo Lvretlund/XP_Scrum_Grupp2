@@ -55,6 +55,16 @@ namespace XP_Scrum_Grupp2.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "EducationNY");
         }
+        public ActionResult Image(int id)
+        {
+            var post = db.FormalBlogs.Single(x => x.Id == id);
+            if (post?.File == null)
+            {
+                return HttpNotFound();
+            }
+            return File(post.File, post.ContentType);
+        }
+
         [Authorize]
         [HttpGet]
         public ActionResult Download(int id)
@@ -71,6 +81,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return response;
         }
     }
+
 
     public class EducationIndexViewModel
     {

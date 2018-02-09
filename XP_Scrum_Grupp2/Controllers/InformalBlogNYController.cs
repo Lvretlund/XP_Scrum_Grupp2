@@ -11,20 +11,40 @@ namespace XP_Scrum_Grupp2.Controllers
 {
     public class InformalBlogNYController : BaseController
     {
+        [HttpPost]
+        public ActionResult HidePost(int postId, bool status)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            InformalBlog fb = db.InformalBlogs.Where(f => f.Id == postId).FirstOrDefault();
+            if (status == true)
+            {
+                fb.Visible = false;
+            }
+            else
+            {
+                fb.Visible = true;
+            }
+            db.SaveChanges();
+            return RedirectToAction("ShowInformalBlogs", "InformalBlogNY");
+        }
+
         [Authorize]
         public ActionResult ShowInformalBlogs()
         {
             var posts = db.InformalBlogs.Include(x => x.Author).ToList();
-            var postIndex = new PictureIndexViewModel
+            var comments = db.InformalComments.Include(f => f.InformalBlog).ToList();
+
+            var postIndex = new PostIndexViewModel
             {
-                InformalBlogs = posts
+                InformalBlogs = posts,
+                InformalComments = comments
             };
             return View(postIndex);
         }
-
+ 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateInformalPartial(PictureIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult CreateInformalPartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             InformalBlog newPost = new InformalBlog();
             var userName = User.Identity.Name;
@@ -48,8 +68,10 @@ namespace XP_Scrum_Grupp2.Controllers
             newPost.ContentType = model.NewInformalBlog.ContentType;
             newPost.Filename = model.NewInformalBlog.Filename;
             newPost.File = model.NewInformalBlog.File;
-
-
+            newPost.Location = model.NewInformalBlog.Location;
+            newPost.Visible = true;
+            newPost.Long = model.NewInformalBlog.Long;
+            newPost.Lat = model.NewInformalBlog.Lat;
             db.InformalBlogs.Add(newPost);
             db.SaveChanges();
 

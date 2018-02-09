@@ -5,11 +5,7 @@
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h2>Create meeting request</h2>
-<div class="popup" onclick="popUp()">
-    <i class="fa fa-question-circle-o" style="font-size:24px"></i>
-    <span class="popuptext" id="myPopup">To create a meeting request, click and choose a date and time and press the Add button. You'll see that your suggestion has been added below the button and you can now either continue adding more suggestions. Continue with adding a title and length for your meeting before clicking the create meeting button.
-</span>
-</div>
+
 
 @using (Html.BeginForm("AddTempTime", "Meeting", FormMethod.Post))
 {
@@ -65,10 +61,7 @@ using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class
         $('#datetimepicker2').datetimepicker({ format: 'YYYY-MM-DD HH:mm' });
         $('.form-control').val("");
     });
-    function popUp() {
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-    }
+
 </script>
 
 @*<script>
