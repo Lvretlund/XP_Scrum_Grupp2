@@ -1,7 +1,7 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.PersonalCalendarViewModel
 @using Microsoft.AspNet.Identity
 <h2>Index</h2>
-<div id="calender"></div>
+<div id="calender" style="max-width:80%;margin-left:8.5%"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -110,7 +110,7 @@
                                 description: v.Description,
                                 start: moment(v.Start),
                                 end: v.End != null ? moment(v.End) : null,
-                                color: v.ThemeColor,
+                                color: "palevioletred",
                                 allDay: v.AllDay
                             });
                         })
@@ -121,7 +121,7 @@
                                 description: v.Description,
                                 start: moment(v.Start),
                                 end: v.End != null ? moment(v.End) : null,
-                                color: v.ThemeColor,
+                                color: "#3a87ad",
                                 allDay: v.AllDay
                             });
                         })
