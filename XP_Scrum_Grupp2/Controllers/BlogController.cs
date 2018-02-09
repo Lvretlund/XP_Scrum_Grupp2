@@ -88,7 +88,8 @@ namespace XP_Scrum_Grupp2.Controllers
                 Date = DateTime.Now,
                 ContentType = model.NewFormalBlog.ContentType,
                 Filename = model.NewFormalBlog.Filename,
-                File = model.NewFormalBlog.File
+                File = model.NewFormalBlog.File,
+                Visible = true
             };
 
             if (model.NewCategory.Type == null)
@@ -172,6 +173,11 @@ namespace XP_Scrum_Grupp2.Controllers
 
             return response;
         }
+
+        public ActionResult SearchFiles()
+        {
+            return View();
+        }
     }
     
     public class PostIndexViewModel
@@ -188,6 +194,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public ICollection<Meeting> Meetings { get; set; } //testrad
         public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
+        public string Location { get; set; }
         public ApplicationUser UserName { get; set; }
         public ICollection<InformalComment> InformalComments { get; set; }
         public InformalBlog NewInformalBlog { get; set; } = new InformalBlog();
