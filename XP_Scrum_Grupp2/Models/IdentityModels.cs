@@ -13,19 +13,23 @@ namespace XP_Scrum_Grupp2.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<FormalBlog> FormalBlog { get; set; }
-        public ICollection<InformalBlog> InformalBlog { get; set; }
-        public ICollection<ResearchBlog> ResearchBlog { get; set; }
-        public ICollection<EducationBlog> EducationBlog { get; set; }
+        
         public bool Admin { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public bool EducationAdmin { get; set; }
         public bool ResearchAdmin { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-
-        public ICollection<Meeting> Meeting { get; set; }
         public bool NewFormalPostsNotification { get; set; }
+
+
+        public ICollection<UserEvent> UserEvents { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Meeting> Meeting { get; set; }
+        public ICollection<FormalBlog> FormalBlog { get; set; }
+        public ICollection<InformalBlog> InformalBlog { get; set; }
+        public ICollection<ResearchBlog> ResearchBlog { get; set; }
+        public ICollection<EducationBlog> EducationBlog { get; set; }
+        
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -56,6 +60,7 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<InformalComment> InformalComments { get; set; }
+        public DbSet<UserEvent> UserEvents { get; set; }
 
         public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
