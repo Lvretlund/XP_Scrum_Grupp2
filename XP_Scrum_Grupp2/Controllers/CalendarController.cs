@@ -14,8 +14,15 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var events = db.UserEvents.ToList();
-                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                var userId = User.Identity.GetUserId();
+                var events = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
+                var me = db.Meetings.Where(m => m.Creator.Id == userId).ToList();
+                var model = new PersonalCalendarViewModel
+                {
+                    PersonalEvents = events,
+                    Meetings = me
+                };
+                return new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
@@ -27,12 +34,6 @@ namespace XP_Scrum_Grupp2.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var curr = db.Users.Where(u => u.Id == user).FirstOrDefault();
-                //if (e.Id > 0)
-                //{
-                //Update the event
-                //var v = db.UserEvents.Where(a => a.Id == e.Id).FirstOrDefault();
-                //if (v != null)
-                //{
                 var v = new UEvent
                 {
                     Title = e.Title,
@@ -41,11 +42,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     AllDay = e.AllDay,
                     Creator = curr
                 };
-                //}
-                //else
-                //{
                     db.UserEvents.Add(v);
-                //}
                 db.SaveChanges();
                 status = true;
             }
@@ -71,7 +68,15 @@ namespace XP_Scrum_Grupp2.Controllers
 
         public ActionResult ShowPersonalCalendar()
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+            ApplicationDbContext db = new ApplicationDbContext();
+            var ue = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
+            var me = db.Meetings.Where(m=> m.Creator.Id == userId).ToList();
+            var model = new PersonalCalendarViewModel {
+            PersonalEvents = ue,
+            Meetings = me
+            };
+            return View(model);
         }
         public ActionResult ShowCalendar()
         {
