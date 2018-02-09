@@ -22,7 +22,7 @@ namespace XP_Scrum_Grupp2.Models
         public bool NewFormalPostsNotification { get; set; }
 
 
-        public ICollection<UserEvent> UserEvents { get; set; }
+        public ICollection<UEvent> UserEvents { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Meeting> Meeting { get; set; }
         public ICollection<FormalBlog> FormalBlog { get; set; }
@@ -60,7 +60,7 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<InformalComment> InformalComments { get; set; }
-        public DbSet<UserEvent> UserEvents { get; set; }
+        public DbSet<UEvent> UserEvents { get; set; }
 
         public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {

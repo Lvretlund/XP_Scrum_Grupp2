@@ -5,7 +5,7 @@ using System.Web;
 
 namespace XP_Scrum_Grupp2.Models
 {
-    public class UserEvent
+    public class UEvent
     {
         public int Id { get; set; }
         public string Title { get; set; }
