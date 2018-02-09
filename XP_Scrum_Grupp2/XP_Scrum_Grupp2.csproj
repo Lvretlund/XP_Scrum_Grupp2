@@ -213,7 +213,9 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\EducationBlog.cs" />
     <Compile Include="Models\FormalBlog.cs" />
+    <Compile Include="Models\MeetingInvited.cs" />
     <Compile Include="Models\MeetingPeopleViewModel.cs" />
+    <Compile Include="Models\MeetingTimes.cs" />
     <Compile Include="Models\ResearchBlog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InformalBlog.cs" />
@@ -487,6 +489,7 @@
     <Content Include="Views\Shared\_Comments.cshtml" />
     <Content Include="Views\Meeting\AddToMeeting.cshtml" />
     <Content Include="Views\Manage\ChangeNotification.cshtml" />
+    <Content Include="Views\Meeting\ChooseTimes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
