@@ -1,6 +1,6 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.PersonalCalendarViewModel
-@using Microsoft.AspNet.Identity
-<h2>Index</h2>
+<br />
+<br />
 <div id="calender" style="max-width:80%;margin-left:8.5%"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -11,12 +11,6 @@
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
-                    <span class="glyphicon glyphicon-remove"></span> Remove
-                </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit
-                </button>
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
@@ -31,51 +25,34 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Save Event</h4>
+                <h4 class="modal-title">Create event</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <input type="hidden" id="hdEventID" value="0" />
-                    <div class="form-group">
+                    <div style="margin-left: 4%" class="form-group">
                         <label>Subject</label>
                         <input type="text" id="txtSubject" class="form-control" />
                     </div>
-                    <div class="form-group">
+                    <div style="margin-left: 4%" class="form-group">
                         <label>Start</label>
                         <div class="input-group date" id="dtp1">
-                            <input type="text" id="txtStart" class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
+                            <input type="text" id="txtStart" class="form-control" />
+
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="divEndDate" style="display:none">
+                    <div class="form-group" style="margin-left:4%" id="divEndDate" >
                         <label>End</label>
                         <div class="input-group date" id="dtp2">
-                            <input type="text" id="txtEnd" class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
+                            <input type="text" id="txtEnd" class="form-control" />
+                           
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Theme Color</label>
-                        <select id="ddThemeColor" class="form-control">
-                            <option value="">Default</option>
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="black">Black</option>
-                            <option value="green">Green</option>
-                        </select>
                     </div>
                     <button type="button" id="btnSave" class="btn btn-success">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -110,8 +87,7 @@
                                 description: v.Description,
                                 start: moment(v.Start),
                                 end: v.End != null ? moment(v.End) : null,
-                                color: "palevioletred",
-                                allDay: v.AllDay
+                                color: "palevioletred"
                             });
                         })
                         $.each(data.Meetings, function (i, v) {
@@ -121,11 +97,9 @@
                                 description: v.Description,
                                 start: moment(v.Start),
                                 end: v.End != null ? moment(v.End) : null,
-                                color: "#3a87ad",
-                                allDay: v.AllDay
+                                color: "#3a87ad"
                             });
                         })
-
                         GenerateCalender(events);
                     },
                     error: function (error) {
@@ -133,11 +107,10 @@
                     }
                 })
             }
-
             function GenerateCalender(events) {
                 $('#calender').fullCalendar('destroy');
                 $('#calender').fullCalendar({
-                    contentHeight: 400,
+                    contentHeight: 450,
                     defaultDate: new Date(),
                     timeFormat: 'h(:mm)a',
                     header: {
@@ -156,7 +129,6 @@
                         if (calEvent.end != null) {
                             $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("YYYY-MM-DD HH:mm")));
                         }
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
@@ -183,8 +155,7 @@
                             Start: event.start.format('YYYY-MM-DD HH:mm'),
                             End: event.end != null ? event.end.format('YYYY-MM-DD HH:mm') : null,
                             Description: event.description,
-                            ThemeColor: event.color,
-                            AllDay: event.allDay
+                            ThemeColor: event.color
                         };
                         SaveEvent(data);
                     }
@@ -244,14 +215,14 @@
 
                 //Validation/
                 if ($('#txtSubject').val().trim() == "") {
-                    alert('Subject required');
+                    alert('Title required');
                     return;
                 }
                 if ($('#txtStart').val().trim() == "") {
                     alert('Start date required');
                     return;
                 }
-                if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
+                if ($('#txtEnd').val().trim() == "") {
                     alert('End date required');
                     return;
                 }
@@ -268,11 +239,9 @@
                     Id: $('#hdEventID').val(),
                     Title: $('#txtSubject').val().trim(),
                     Start: $('#txtStart').val().trim(),
-                    End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
+                    End:  $('#txtEnd').val().trim(),
                     Description: $('#txtDescription').val(),
-                    ThemeColor: $('#ddThemeColor').val(),
-                    AllDay: $('#chkIsFullDay').is(':checked')
-                    @*Creator: "@User.Identity.GetUserId()";*@
+                    ThemeColor: $('#ddThemeColor').val()
                 }
                 SaveEvent(data);
                 // call function for submit data to the server

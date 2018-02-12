@@ -1,0 +1,70 @@
+﻿@model XP_Scrum_Grupp2.Controllers.MeetingInvitedModelTest
+
+<h4>Received meeting requests</h4>
+
+@foreach(var meetreq in Model.Metinv)
+{  <ul class="list-group">
+        <li class="list-group-item"><p>@meetreq.Meeting.Title @meetreq.Meeting.Creator.Firstname @meetreq.Meeting.Creator.Lastname</p>
+        </li>
+   </ul>
+    <div id="@string.Format("{0}_{1}", "timesBlock", meetreq.Id)">
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        var i;
+        for (i = 1; i <@Model.Metinv.Count + 1; i++) {
+        id = i;
+        fetch(id);
+        }
+        function fetch(id) {
+            var allTimesArea = $('<div>').addClass('allTimes_' + id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RequestedTimes", "Meeting")',
+                data: { meetreq: id },
+                success: function (response) {
+                    if ($('div').hasClass('allComments_' + id + '')) {
+                        $('div[class=allTimes_' + id + ']').remove();
+                    }
+                    allTimesArea.html(response);
+                    allTimesArea.prependTo('#timesBlock_' + id);
+                },
+                error: function (response) {
+                    alert("failed");
+                }
+            });
+        }
+    });
+        @*var url = '@Url.Action("RequestedTimes", "Meeting")';
+        $('#getTimes').on('click', function () {
+            alert("hej");
+            var ID = $(this).attr('data-id');
+            $('#allTimes').load(url, { meetreq: ID });
+        });
+    });*@
+   // Add New Comment
+    @*$('#getTimes').on('click', function () {
+        var ID = $(this).attr('data-id');
+    $.ajax({
+    type: 'POST',
+    url: '@Url.Action("RequestedTimes", "Meeting")',
+    data: { meetreq: ID },
+    success: function (response) {
+        alert("success");*@
+    //    $('#comment_' + postId).val("");
+    //$('div[class=allComments_' + postId + ']').remove();
+
+    //var allCommentsArea = $('<div>').addClass('allComments_' + postId);
+    //    allCommentsArea.html(response);
+    //    allCommentsArea.prependTo('#commentsBlock_' + postId);
+        //},
+    //    error: function (response) {
+    //    alert('Failed to post comment');
+    //    }
+    //    });
+    //    });
+
+    //       //});
+    //});
+    </script>

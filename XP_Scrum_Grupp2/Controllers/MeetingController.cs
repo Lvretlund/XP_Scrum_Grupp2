@@ -14,148 +14,198 @@ namespace XP_Scrum_Grupp2.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public static Meeting NewMeeting;
-        public static List<DateTime> TempTimes = new List<DateTime>();
+        public static int MeetingId { get; set; }
+        public static List<DateTime> TempStart = new List<DateTime>();
+        public static List<DateTime> TempEnd = new List<DateTime>();
+
+     
+            public ActionResult MeetingRequests()
+            {
+            var userId = User.Identity.GetUserId();
+            var currUser = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+            var meetingReqs = db.MeetingInvitees.Where(m => m.UserId == userId).ToList();
+            var listOfMeet = new List<MeetingInvited>();
+            foreach(var meet in meetingReqs)
+            {
+                var meetInv = new MeetingInvited
+                {
+                    MeetingId = meet.MeetingId,
+                    Name = meet.Name,
+                    UserId = meet.UserId,
+                    Id = meet.Id,
+                    Meeting = db.Meetings.Where(m => m.Id == meet.MeetingId).FirstOrDefault(),
+                    User = db.Users.Where(u=>u.Id == meet.UserId).FirstOrDefault()
+                    
+                };
+                meetInv.Creator = db.Users.Where(u => u.Id == meetInv.Meeting.CreatorId).FirstOrDefault();
+                listOfMeet.Add(meetInv);
+            }
+            var model = new MeetingInvitedModelTest
+            {
+                Metinv = listOfMeet
+            };
+            return View(model);
+            }
+    
+        public ActionResult RequestedTimes(int meetreq)
+        {
+            var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
+            var meeting = db.Meetings.Where(m=>m.Id == meetreq).FirstOrDefault();
+            var meetingId = meeting.Id;
+            var listOfTimes = new List<MeetingTimes>();
+            foreach (var mt in meetTime)
+            {
+                var model = new MeetingTimes
+                {
+                    MeetingId = meetingId,
+                    Meeting = meeting,
+                    Time = mt.Time
+                };
+                listOfTimes.Add(model);
+            }
+            return PartialView("_RequestedTimes", listOfTimes);
+        }
+
+        [HttpPost]
+        public ActionResult ChooseTime(int Id, bool status)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeetingTimes time = db.MeetingTimes.Where(f => f.Id == Id).FirstOrDefault();
+            if (status == true)
+            {
+                time.ChosenTime = false;
+            }
+            else
+            {
+                time.ChosenTime = true;
+            }
+            db.SaveChanges();
+            return RedirectToAction("MeetingRequests", "Meeting");
+        }
+        
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
-            return View();
+            TempStart.Clear();
+            var model = new Meeting {
+                Start = DateTime.Now
+            };
+            return View(model);
         }
 
-        //public ActionResult DeleteMeeting(Meeting MeetingModel)
-        //{
-        //    ApplicationDbContext db = new ApplicationDbContext();
-        //    db.Meetings.Remove(model);
-        //    db.SaveChanges();
-        //    return View("Index", "Home");
-        //}
+        [HttpPost]
+        public ActionResult AddTempTime(Meeting m)
+        {
+            TempStart.Add(m.Start);
+            var nm = new Meeting
+            {
+                Start = m.Start,
+                Times = TempStart
+            };
+            return View("CreateMeeting", nm);
+        }
 
-        public ActionResult CreateAMeeting(Meeting meeting)
+        public void SaveTimes(Meeting meeting)
+        {
+            foreach (var time in TempStart)
+            {
+                var mt = new MeetingTimes
+                {
+                    MeetingId = meeting.Id,
+                    Meeting = meeting,
+                    Time = time
+                };
+                db.MeetingTimes.Add(mt);
+                db.SaveChanges();
+            }
+        }
+        [HttpPost]
+        public ActionResult CreateAMeeting(Meeting m)
         {
             var userName = User.Identity.Name;
             var user = db.Users.FirstOrDefault(u => u.UserName == userName);
-            var model = new MeetingPeopleViewModel();
-            DateTime time = DateTime.Now;
 
-            meeting.Creator = user;
-            meeting.Invited = new List<ApplicationUser>();
-            meeting.Invited.Add(user);
-            meeting.Times = TempTimes;
-            meeting.Start = DateTime.Now;
-            meeting.End = meeting.Start.AddMinutes(meeting.Minutes);
-            NewMeeting = meeting;
-
-            db.Meetings.Add(meeting);
+            Meeting newm = new Meeting
+            {
+                Creator = user,
+                CreatorId = user.Id,
+                Title = m.Title,
+                Times = TempStart,
+                Start = m.Start,
+                Minutes = m.Minutes
+            };
+            newm.End = m.Start.AddMinutes(m.Minutes);
+            db.Meetings.Add(newm);
             db.SaveChanges();
-            SaveTimes();
-
-
-            model.ApplicationUsers = new LinkedList<ApplicationUser>();
+            MeetingId = newm.Id;
+            SaveTimes(newm);
+            TempStart.Clear();
             var users = db.Users.ToList();
-            var fe = false;
-
-            foreach (var item in users)
+            var model = new MeetingInvited
             {
-                foreach (var i in NewMeeting.Invited)
-                {
-                    if (item.Email.Equals(i.Email))
-                    {
-                        fe = true;
-                    }
-                }
-                if (fe == false)
-                {
-                    model.ApplicationUsers.Add(item);
-                }
-                fe = false;
-            }
-            // model.ApplicationUsers = db.Users.ToList();
-            model.Meeting = meeting;
+                Meeting = newm,
+                MeetingId = newm.Id,
+                User = user,
+                UserId = user.Id,
+                Uninvited = db.Users.ToList()
+            };
             return View("AddToMeeting", model);
         }
-
-        public async Task<ActionResult> AddPeople(ApplicationUser person)
+        
+        public async Task<ActionResult> AddPeople(MeetingInvited us)
         {
-            MeetingPeopleViewModel model = new MeetingPeopleViewModel();
-            MeetingInvited TempMeetingInvited = new MeetingInvited();
-
-            if (!NewMeeting.Invited.Contains(person))
+            var invited = db.Users.Where(u => u.Id == us.UserId).FirstOrDefault();
+            var meeting = db.Meetings.Where(m => m.Id == MeetingId).FirstOrDefault();
+            var mi = new MeetingInvited
             {
-                NewMeeting.Invited.Add(person);
-
-                //TempMeetingInvited.MeetingId = NewMeeting;
-                //TempMeetingInvited.Invited = person;
-                //db.MeetingInvited.Add(TempMeetingInvited);
+                User = invited,
+                UserId = us.UserId,
+                Name = invited.Firstname + " " + invited.Lastname,
+                Meeting = meeting,
+                MeetingId = meeting.Id
+            };
+            bool exist = db.MeetingInvitees.Where(m => m.UserId == us.UserId).Where(m => m.MeetingId == us.MeetingId).Any();
+            if (!exist)
+            {
+                db.MeetingInvitees.Add(mi);
                 db.SaveChanges();
             }
-
-            model.ApplicationUsers = new List<ApplicationUser>();
-            var users = db.Users.ToList();
-            var fe = false;
-
-            foreach (var item in users)
+            var invitees = db.MeetingInvitees.Where(m => m.MeetingId == us.MeetingId).ToList();
+            var listaInv = new List<ApplicationUser>();
+            foreach(var inv in invitees)
             {
-                foreach (var i in NewMeeting.Invited)
+                listaInv.Add(db.Users.Where(u => u.Id == inv.UserId).FirstOrDefault());
+            }
+            var nm = new MeetingInvited
+            {
+                Uninvited = new List<ApplicationUser>(),
+                Meeting = meeting,
+                MeetingId = meeting.Id,
+                Invited = listaInv
+            };
+            var all = db.Users.ToList();
+            foreach (var u in all)
+            {
+                bool exists = db.MeetingInvitees.Where(m => m.UserId == u.Id).Where(m => m.MeetingId == us.MeetingId).Any();
+                    if (u.Id != us.UserId)
                 {
-                    if (item.Email.Equals(i.Email))
+                    if (!exists)
                     {
-                        fe = true;
+                        nm.Uninvited.Add(u);
                     }
                 }
-                if (fe == false)
-                {
-                    model.ApplicationUsers.Add(item);
-                }
-                fe = false;
             }
-
-            model.Meeting = NewMeeting;
-            
-                var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
-                await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
-                string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
-                await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
-           
-            return View("AddToMeeting", model);
-        }
-
-        public ActionResult AddTempTime(DateTime Start, Meeting meeting)
-        {
-            TempTimes.Add(Start);
-            meeting.Times = TempTimes;
-            return View("CreateMeeting", meeting);
-        }
-
-        public ActionResult ChooseTimes()
-        {
-            var userName = User.Identity.Name;
-            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
-            Meeting meeting = new Meeting();
-            List<Meeting> Meetings = db.Meetings.ToList();
-
-            foreach (var item in Meetings)
+            bool isfalse = false;
+            if (isfalse == true)
             {
-                if (item.Invited.Contains(user))
-                {
-                    meeting = item;
-                }
+                //var userN = new ApplicationUser { Id = invited.Id, UserName = invited.Email, Email = invited.Email };
+                await SignInManager.SignInAsync(us.User, isPersistent: false, rememberBrowser: false);
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(us.UserId);
+                await UserManager.SendEmailAsync(us.UserId, "You have received a new meeting request", "Please visit the site to see meeting invitation.");
             }
-            return View(meeting);
+            return View("AddToMeeting", nm);
         }
-
-        public void SaveTimes()
-        {
-            MeetingTimes MeetingTimes = new MeetingTimes();
-
-            foreach (var item in TempTimes)
-            {
-                MeetingTimes.MeetingId = NewMeeting;
-                MeetingTimes.Time = item;
-                db.MeetingTimes.Add(MeetingTimes);
-                db.SaveChanges();
-            }
-        }
-
+    
         public ApplicationSignInManager SignInManager
         {
             get
@@ -179,6 +229,11 @@ namespace XP_Scrum_Grupp2.Controllers
                 _userManager = value;
             }
         }
+    }
+
+    public class MeetingInvitedModelTest
+    {
+        public List<MeetingInvited> Metinv { get; set; }
     }
 }
 

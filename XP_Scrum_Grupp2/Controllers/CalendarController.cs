@@ -16,7 +16,7 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 var events = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
-                var me = db.Meetings.Where(m => m.Creator.Id == userId).ToList();
+                var me = db.Meetings.Where(m => m.CreatorId == userId).ToList();
                 var model = new PersonalCalendarViewModel
                 {
                     PersonalEvents = events,
@@ -24,6 +24,11 @@ namespace XP_Scrum_Grupp2.Controllers
                 };
                 return new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
+        }
+        public ActionResult ShowInvited(int meetingId)
+        {
+            var model = db.MeetingInvitees.Where(m => m.MeetingId == meetingId).ToList();
+            return PartialView("_Invited", model);
         }
 
         [HttpPost]
@@ -42,7 +47,7 @@ namespace XP_Scrum_Grupp2.Controllers
                     AllDay = e.AllDay,
                     Creator = curr
                 };
-                    db.UserEvents.Add(v);
+                db.UserEvents.Add(v);
                 db.SaveChanges();
                 status = true;
             }
@@ -71,56 +76,46 @@ namespace XP_Scrum_Grupp2.Controllers
             var userId = User.Identity.GetUserId();
             ApplicationDbContext db = new ApplicationDbContext();
             var ue = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
-            var me = db.Meetings.Where(m=> m.Creator.Id == userId).ToList();
-            var model = new PersonalCalendarViewModel {
-            PersonalEvents = ue,
-            Meetings = me
+            var me = db.Meetings.Where(m => m.Creator.Id == userId).ToList();
+            var model = new PersonalCalendarViewModel
+            {
+                PersonalEvents = ue,
+                Meetings = me
             };
             return View(model);
         }
+
+        public JsonResult GetEvents()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var me = db.Meetings.ToList();
+                return new JsonResult { Data = me, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
         public ActionResult ShowCalendar()
         {
-            return View();
-        }
-
-        public ActionResult GetMeetings(double start, double end)
-        {
-            using (var db = new ApplicationDbContext())
+            ApplicationDbContext db = new ApplicationDbContext();
+            var meetings = db.Meetings.ToList();
+            var inviteds = new List<List<MeetingInvited>>
             {
-                var fromDate = ConvertFromUnixTimestamp(start);
-                var toDate = ConvertFromUnixTimestamp(end);
-                
-                var eventList = GetEvents();
-
-                var rows = eventList.ToArray();
-                return Json(rows, JsonRequestBehavior.AllowGet);
-            }
-        }
-        private static DateTime ConvertFromUnixTimestamp(double timestamp)
-        {
-            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return origin.AddSeconds(timestamp);
-        }
-
-        private List<Events> GetEvents()
-        {
-            List<Events> eventList = new List<Events>();
-
-            foreach (var item in db.Meetings)
+                new List<MeetingInvited>()
+            };
+            foreach (var m in meetings)
             {
-                Events newEvent = new Events
-                {
-                    id = item.Id.ToString(),
-                    title = item.Title,
-                    start = item.Start.ToString("s"),
-                    end = item.End.ToString("s"),
-                    allDay = false
-                };
-                eventList.Add(newEvent);
+                var o = db.MeetingInvitees.Where(me => me.MeetingId == m.Id).ToList();
+                inviteds.Add(o);
             }
-
-            return eventList;
+            var model = new MeetingInvitedModel {
+                Meetinginvited = inviteds
+            };
+            return View(model);
         }
+    }
+        public class MeetingInvitedModel
+    {
+        public List<List<MeetingInvited>> Meetinginvited { get; set; }
+
     }
 
     public class Events

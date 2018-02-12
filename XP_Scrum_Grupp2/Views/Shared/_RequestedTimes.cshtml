@@ -1,0 +1,15 @@
+﻿@model IEnumerable<XP_Scrum_Grupp2.Models.MeetingTimes>
+
+    @foreach (var time in Model)
+    {
+        using (Html.BeginForm("ChooseTime", "Meeting", new { Id = time.Id, status = time.ChosenTime }, FormMethod.Post))
+        {
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p>@time.Time </p> @Html.CheckBoxFor(m => time.ChosenTime)
+                <input type="submit" class="btn btn-default" /> 
+            </li>
+            </ul>    
+            @Html.HiddenFor(m => time.Id);
+        }
+    }

@@ -10,7 +10,11 @@ namespace XP_Scrum_Grupp2.Models
     {
         [Key]
         public int Id { get; set; }
-        public Meeting MeetingId { get; set; }
+        public int MeetingId { get; set; }
         public DateTime Time { get; set; }
+        public bool ChosenTime { get; set; }
+        public int Votes { get; set; }
+
+        public Meeting Meeting { get; set; }
     }
 }
