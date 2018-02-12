@@ -175,6 +175,16 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             return View();
         }
+
+        public ActionResult Search(int startYear, int startMonth, int endYear, int endMonth)
+        {
+            DateTime startDate = new DateTime(startYear, startMonth, 1);
+            DateTime endDate = new DateTime(endYear, endMonth + 1, 1);
+
+            var files = db.FormalBlogs.Where(f => f.Date >= startDate && f.Date <= endDate ).ToList();
+
+            return View("SearchFiles", files);
+        }
     }
     
     public class PostIndexViewModel

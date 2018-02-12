@@ -1,4 +1,4 @@
-﻿@model XP_Scrum_Grupp2.Models.FormalBlog
+﻿@model IEnumerable<XP_Scrum_Grupp2.Models.FormalBlog>
 
 
 @{
@@ -7,12 +7,34 @@
 
 <h2>Search Files</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Search", "Blog", FormMethod.Get))
 {
-   @Html.DropDownList("Year", Enumerable.Range(DateTime.Now.Year - 10, 11).Select(x => new SelectListItem { Text = x.ToString() }), "Year")
-   @Html.DropDownList("Month", Enumerable.Range(1, 12).Select(x => new SelectListItem { Text = x.ToString() }), "Month")
-    <label>Quarter</label>
-    <input type="radio" name="YourRadioButton" value="Quarter"> <br />
-
+    <div>
+        <p>Start</p>
+        @Html.DropDownList("startYear", Enumerable.Range(DateTime.Now.Year - 10, 11).Select(x => new SelectListItem { Text = x.ToString() }), "Year")
+        @Html.DropDownList("startMonth", Enumerable.Range(1, 12).Select(x => new SelectListItem { Text = x.ToString() }), "Month")
+    </div>
+    <br />
+    <div>
+        <p>End</p>
+        @Html.DropDownList("endYear", Enumerable.Range(DateTime.Now.Year - 10, 11).Select(x => new SelectListItem { Text = x.ToString() }), "Year")
+        @Html.DropDownList("endMonth", Enumerable.Range(1, 12).Select(x => new SelectListItem { Text = x.ToString() }), "Month")
+    </div>
+    <br />
     <input type="submit" value="Search" />
+}
+
+<hr />
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <label>@item.Date.ToString("yyyy/MM/dd")</label>
+                <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
+            </td>
+        </tr>
+        <br />        
+    }
 }
