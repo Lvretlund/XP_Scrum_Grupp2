@@ -16,12 +16,26 @@ namespace XP_Scrum_Grupp2
 
         protected void Application_Start()
         {
-            BlogScheduler.Start();
-            Database.SetInitializer(new UserInitializer());
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ApplicationUser user = new ApplicationUser();
+
+            if(user.NewFormalPostsNotification == true)
+            {
+                BlogScheduler.Start();
+                Database.SetInitializer(new UserInitializer());
+                AreaRegistration.RegisterAllAreas();
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+            }
+
+            else
+            {
+                Database.SetInitializer(new UserInitializer());
+                AreaRegistration.RegisterAllAreas();
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+            }
         }
     }
 }
