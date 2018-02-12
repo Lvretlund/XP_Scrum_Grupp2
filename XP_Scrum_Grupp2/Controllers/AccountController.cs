@@ -15,7 +15,7 @@ using XP_Scrum_Grupp2.Models;
 namespace XP_Scrum_Grupp2.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -141,7 +141,13 @@ namespace XP_Scrum_Grupp2.Controllers
         [Authorize]
         public ActionResult Register()
         {
-            return View();
+            var id = User.Identity.GetUserId();
+            var user = db.Users.Where(u => u.Id == id).SingleOrDefault();
+            if(user.Admin == true)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         //
