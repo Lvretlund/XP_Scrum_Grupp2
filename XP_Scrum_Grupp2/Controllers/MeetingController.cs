@@ -86,6 +86,7 @@ namespace XP_Scrum_Grupp2.Controllers
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
+            TempStart.Clear();
             var model = new Meeting {
                 Start = DateTime.Now
             };
