@@ -25,7 +25,7 @@ namespace XP_Scrum_Grupp2
                  .ForJob(emailJob)
                  .WithIdentity("trigger1")
                  .StartNow()
-                 .WithCronSchedule("0 27 11 * * ?") // Time : Every 1 Minutes job execute
+                .WithCronSchedule("0 0/1 * * * ?") // Time : Every 1 Minutes job execute
                  .Build();
 
             ISchedulerFactory sf = new StdSchedulerFactory();
