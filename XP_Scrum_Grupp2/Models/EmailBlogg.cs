@@ -21,12 +21,14 @@ namespace XP_Scrum_Grupp2
             using (MailMessage mailMessage = new MailMessage())
             {
                 ApplicationDbContext db = new ApplicationDbContext();
-                
+                var post = db.FormalBlogs.ToList();
+
                 mailMessage.From =
                 new MailAddress(ConfigurationManager.AppSettings["FromMail"]);
-                mailMessage.Subject = "SchedulerEmail";
-                mailMessage.Body = "Test Body SchedulerEmail";
-                mailMessage.IsBodyHtml = true;
+
+                mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["FromMail"]);
+                mailMessage.Subject = "Daily blog notification" + DateTime.Now;
+                mailMessage.Body = post.Count() + " new blog posts were added today in the formal blog";
 
                 var allUsers = db.Users.ToList();
                 foreach (var user in allUsers)
