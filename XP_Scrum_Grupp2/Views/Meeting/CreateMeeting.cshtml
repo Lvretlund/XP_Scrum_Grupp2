@@ -7,7 +7,7 @@
 <h2>Create meeting request</h2>
 
 
-@using (Html.BeginForm("AddTempTime", "Meeting", FormMethod.Post))
+@using (Html.BeginForm("AddTempTime", "Meeting",FormMethod.Post))
 {
     <div class="form-group">
         @Html.Label("Time and date", new { @class = "col-md-2 control-label" })
@@ -15,10 +15,12 @@
             @Html.TextBoxFor(m => m.Start, new { @placeholder = "Click to choose", @class = "form-control datepicker", @id = "datetimepicker1" })
             @Html.ValidationMessageFor(m => m.Start, "", new { @class = "text-danger" })
         </div>
+        @Html.HiddenFor(m => m.Creator)
+        @Html.HiddenFor(m => m.Minutes)
     </div>
-    <input type="submit" value="Add" onclick="location.href='@Url.Action("AddTempTime", "Meeting", new { meeting = Model })'" />
+    <input type="submit" value="Add" />
 }
-@if (Model != null)
+@if (Model.Times != null)
 {
     foreach (var item in Model.Times)
     {
@@ -27,8 +29,8 @@
     }
 }
 @if(Model!= null) {
-using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+    using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -46,10 +48,15 @@ using (Html.BeginForm("CreateAMeeting", "Meeting", FormMethod.Post, new { @class
             @Html.ValidationMessageFor(m => m.Minutes, "", new { @class = "text-danger" })
         </div>
     </div>
+    @Html.HiddenFor(m=> m.Creator)
+        @Html.HiddenFor(m=>m.Id)
+        @Html.HiddenFor(m=>m.Start)
+        @Html.HiddenFor(m=>m.End)
+     
   
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add meeting details" class="btn btn-default" onclick="location.href='@Url.Action("CreateAMeeting", "Meeting", new { meeting = Model })'" />
+            <input type="submit" value="Create meeting request" class="btn btn-default" />
         </div>
     </div>
     }

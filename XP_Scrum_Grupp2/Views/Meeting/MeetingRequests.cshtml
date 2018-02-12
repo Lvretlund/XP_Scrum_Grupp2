@@ -1,0 +1,39 @@
+﻿@model IEnumerable<XP_Scrum_Grupp2.Models.MeetingInvited>
+
+<h4>Received meeting requests</h4>
+
+@foreach (var meetreq in Model)
+{
+    <ul class="list-group">
+        <li class="list-group-item"><p>@meetreq.Meeting.Title @meetreq.Meeting.Creator.Firstname @meetreq.Meeting.Creator.Lastname</p>
+        </li>
+   </ul>
+    <input id="getTimes" data-id="@meetreq.MeetingId" type="button" value="Show"/>
+    <div id="allTimes"></div>
+}
+
+<script>
+    $(document).ready(function () {
+    
+            var url = '@Url.Action("RequestedTimes", "Meeting")';
+            $('#getTimes').click(function () {
+                var ID = $(this).attr('data-id');
+                $('#allTimes').load(url, { meetreq: ID });
+            });
+
+        @*var meetingReq = $(this).attr('data-id');
+        var allTimesArea = $('<div>').addClass('allTimes_');
+        function fetch(meetingReq) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("_RequestedTimes", "Meeting")',
+                data: { meetreq: meetingReq },
+                success: function (response) {
+                    allTimesArea.html(response);
+                },
+                error: function (response) {
+                }
+            })
+        }*@
+    });
+    </script>

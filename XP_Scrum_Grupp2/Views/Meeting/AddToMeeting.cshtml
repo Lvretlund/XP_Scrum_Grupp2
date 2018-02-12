@@ -1,39 +1,60 @@
-﻿@model XP_Scrum_Grupp2.Models.MeetingPeopleViewModel
-
-<h4>Add persons to meeting</h4>
-
-@if (Model.Meeting.Invited != null)
+﻿@model XP_Scrum_Grupp2.Models.MeetingInvited
+@using Microsoft.AspNet.Identity
+<br /><br />
+<div class="alert alert-success" style="max-width:16%;margin-left:40%">
+    <strong>Meeting created! </strong>
+</div>
+<br />
+<h4>Choose a colleague to invite</h4>
+@using (Html.BeginForm("AddPeople", "Meeting", new { mi = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    foreach (var item in Model.ApplicationUsers)
+    if (Model.Uninvited != null)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            @if (!Model.Meeting.Creator.Email.Equals(item.Email))
+        foreach (var user in Model.Uninvited)
+        {
+            if (!User.Identity.GetUserId().Equals(user.Id))
             {
-                <td>
-                    @Html.ActionLink("Add Person", "AddPeople", item)
-                </td>
+            <ul class="list-group" style="margin-bottom: -20px">
+                <li class="list-group-item" style="max-width: 30%; border: 0px">
+                    <p> @Html.DisplayFor(modelItem => user.Firstname) @Html.DisplayFor(modelItem => user.Lastname) <input type="submit" data-id="@user.Id" class="btn btn-default addPerson" value="Add" /></p>
+                      
+                    </li>
+                    </ul>
+                }
             }
-
-
-        </tr>
-        @*<button type="button" class="btn btn-default Notification"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>*@
         <br />
-        
+        @Html.HiddenFor(m => m.UserId, new { id = "userIdHid" })
+        @Html.HiddenFor(m => m.MeetingId, new { id = "meetingIdHid" })
+                    } 
+                if (Model.Invited != null)
+                {
+        <br />
+        <p style="font-size: 17px">Invited</p>
+        <ul class="list-group">
+            @foreach (var invited in Model.Invited)
+        {
+                <li class="list-group-item" style="max-width: 20%">@invited.Firstname @invited.Lastname</li>
+            }
+        </ul>
     }
 }
+<script>
+    $(document).ready(function () {
+        $('.addPerson').on('click', function () {
+            var userId = $(this).attr('data-id');
+            var meetingId = @Model.MeetingId;
+            document.getElementById("meetingIdHid").value = meetingId;
+            document.getElementById("userIdHid").value = userId;
+        });
+    });
+</script>
 
-    @*<div class="form-group">
+@*<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create meeting request" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'" />
         </div>
     </div>*@
-    @*<div class="form-group">
+@*<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Delete meeting request" class="btn btn-default" onclick="location.href='@Url.Action("DeleteMeeting", "Meeting", new { MeetingModel = Model.Meeting })'" />
         </div>

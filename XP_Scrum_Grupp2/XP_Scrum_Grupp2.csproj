@@ -509,6 +509,9 @@
     <Content Include="Views\Shared\_IComments.cshtml" />
     <Content Include="Views\Blog\SearchFiles.cshtml" />
     <Content Include="Views\Calendar\ShowPersonalCalendar.cshtml" />
+    <Content Include="Views\Shared\_Invited.cshtml" />
+    <Content Include="Views\Meeting\MeetingRequests.cshtml" />
+    <Content Include="Views\Shared\_RequestedTimes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

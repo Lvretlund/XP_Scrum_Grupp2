@@ -36,8 +36,17 @@
     </li>
     <li>@Html.ActionLink("Education", "Index", "EducationNY")</li>
     <li>@Html.ActionLink("Research", "Index", "Research")</li>
-    <li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>
-    @*<li>@Html.ActionLink("Calendar", "ShowCalendar", "Calendar")</li>*@
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Meetings
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="~/Meeting/CreateMeeting"> Create meeting</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="~/Meeting/MeetingRequests">Meeting requests</a>
+        </div>
+    </li>
+    @*<li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>*@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Calendar
