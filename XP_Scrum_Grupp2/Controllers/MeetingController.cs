@@ -25,18 +25,20 @@ namespace XP_Scrum_Grupp2.Controllers
             var currUser = db.Users.Where(u => u.Id == userId).FirstOrDefault();
             var meetingReqs = db.MeetingInvitees.Where(m => m.UserId == userId).ToList();
             var listOfMeet = new List<MeetingInvited>();
-            foreach(var meet in meetingReqs)
+            var i = 1;
+            foreach (var meet in meetingReqs)
             {
                 var meetInv = new MeetingInvited
                 {
                     MeetingId = meet.MeetingId,
                     Name = meet.Name,
                     UserId = meet.UserId,
-                    Id = meet.Id,
+                    Id = i,
                     Meeting = db.Meetings.Where(m => m.Id == meet.MeetingId).FirstOrDefault(),
-                    User = db.Users.Where(u=>u.Id == meet.UserId).FirstOrDefault()
-                    
+                    User = db.Users.Where(u => u.Id == meet.UserId).FirstOrDefault()
+
                 };
+                i++;
                 meetInv.Creator = db.Users.Where(u => u.Id == meetInv.Meeting.CreatorId).FirstOrDefault();
                 listOfMeet.Add(meetInv);
             }

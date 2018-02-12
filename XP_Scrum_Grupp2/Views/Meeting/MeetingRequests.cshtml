@@ -1,10 +1,11 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.MeetingInvitedModelTest
+<br />
 
 <h4>Received meeting requests</h4>
 
 @foreach(var meetreq in Model.Metinv)
 {  <ul class="list-group">
-        <li class="list-group-item"><p>@meetreq.Meeting.Title @meetreq.Meeting.Creator.Firstname @meetreq.Meeting.Creator.Lastname</p>
+        <li class="list-group-item"><p>Title: @meetreq.Meeting.Title Creator: @meetreq.Meeting.Creator.Firstname @meetreq.Meeting.Creator.Lastname</p>
         </li>
    </ul>
     <div id="@string.Format("{0}_{1}", "timesBlock", meetreq.Id)">
