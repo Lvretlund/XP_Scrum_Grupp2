@@ -18,23 +18,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public static List<DateTime> TempStart = new List<DateTime>();
         public static List<DateTime> TempEnd = new List<DateTime>();
 
-        //public ActionResult ChooseTimes()
-        //{
-        //    var userName = User.Identity.Name;
-        //    var user = db.Users.FirstOrDefault(u => u.UserName == userName);
-        //    Meeting meeting = new Meeting();
-        //    List<Meeting> Meetings = db.Meetings.ToList();
-
-        //    foreach (var item in Meetings)
-        //    {
-        //        if (item.Invited.Contains(user))
-        //        {
-        //            meeting = item;
-        //        }
-        //    }
-        //    return View(meeting);
-        //}
-
+     
             public ActionResult MeetingRequests()
             {
             var userId = User.Identity.GetUserId();
@@ -56,7 +40,11 @@ namespace XP_Scrum_Grupp2.Controllers
                 meetInv.Creator = db.Users.Where(u => u.Id == meetInv.Meeting.CreatorId).FirstOrDefault();
                 listOfMeet.Add(meetInv);
             }
-            return View(listOfMeet);
+            var model = new MeetingInvitedModelTest
+            {
+                Metinv = listOfMeet
+            };
+            return View(model);
             }
     
         public ActionResult RequestedTimes(int meetreq)
@@ -216,54 +204,7 @@ namespace XP_Scrum_Grupp2.Controllers
             }
             return View("AddToMeeting", nm);
         }
-
-        //public async Task<ActionResult> AddPeople(ApplicationUser person)
-        //{
-        //    MeetingPeopleViewModel model = new MeetingPeopleViewModel();
-        //    MeetingInvited TempMeetingInvited = new MeetingInvited();
-
-        //    if (!NewMeeting.Invited.Contains(person))
-        //    {
-        //        NewMeeting.Invited.Add(person);
-
-        //        //TempMeetingInvited.MeetingId = NewMeeting;
-        //        //TempMeetingInvited.Invited = person;
-        //        //db.MeetingInvited.Add(TempMeetingInvited);
-        //        db.SaveChanges();
-        //    }
-
-        //    model.ApplicationUsers = new List<ApplicationUser>();
-        //    var users = db.Users.ToList();
-        //    var fe = false;
-
-        //    foreach (var item in users)
-        //    {
-        //        foreach (var i in NewMeeting.Invited)
-        //        {
-        //            if (item.Email.Equals(i.Email))
-        //            {
-        //                fe = true;
-        //            }
-        //        }
-        //        if (fe == false)
-        //        {
-        //            model.ApplicationUsers.Add(item);
-        //        }
-        //        fe = false;
-        //    }
-
-        //    model.Meeting = NewMeeting;
-
-        //        var userN = new ApplicationUser { Id = person.Id, UserName = person.Email, Email = person.Email };
-        //        await SignInManager.SignInAsync(userN, isPersistent: false, rememberBrowser: false);
-        //        string code = await UserManager.GenerateEmailConfirmationTokenAsync(userN.Id);
-        //        await UserManager.SendEmailAsync(userN.Id, "Meeting conformation", "Please visit the site to see meeting invitations");
-
-        //    return View("AddToMeeting", model);
-        //}
-
-  
-        
+    
         public ApplicationSignInManager SignInManager
         {
             get
@@ -287,6 +228,11 @@ namespace XP_Scrum_Grupp2.Controllers
                 _userManager = value;
             }
         }
+    }
+
+    public class MeetingInvitedModelTest
+    {
+        public List<MeetingInvited> Metinv { get; set; }
     }
 }
 
