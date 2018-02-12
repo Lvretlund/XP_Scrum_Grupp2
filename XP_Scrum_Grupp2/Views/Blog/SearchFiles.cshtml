@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<XP_Scrum_Grupp2.Models.FormalBlog>
 
 
-@{
-    ViewBag.Title = "SearchFiles";
-}
+
+
 
 <h2>Search Files</h2>
 
@@ -22,6 +21,12 @@
     </div>
     <br />
     <input type="submit" value="Search" />
+    <br />
+    <div>
+       <p style="color:red; font-weight: bold;">
+           @ViewBag.Message
+      </p> 
+    </div>
 }
 
 <hr />
