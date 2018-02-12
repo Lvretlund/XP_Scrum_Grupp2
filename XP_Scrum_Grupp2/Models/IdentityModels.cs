@@ -63,6 +63,7 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<MeetingTimes> MeetingTimes { get; set; }
         public DbSet<InformalComment> InformalComments { get; set; }
         public DbSet<UEvent> UserEvents { get; set; }
+        public bool NewFormalPostsNotification { get; internal set; }
 
         public class DataContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {

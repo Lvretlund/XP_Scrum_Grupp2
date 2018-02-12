@@ -109,14 +109,14 @@ namespace XP_Scrum_Grupp2.Controllers
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
 
-            var allUsers = db.Users.ToList();
-            foreach(var user in allUsers)
-            {
-                if (user.NewFormalPostsNotification)
-                {
-                    BlogScheduler.Start();
-                }
-            }
+            //var allUsers = db.Users.ToList();
+            //foreach(var user in allUsers)
+            //{
+            //    if (user.NewFormalPostsNotification)
+            //    {
+                    //BlogScheduler.Start();
+            //    }
+            //}
 
            return RedirectToAction("ShowBlogs", "Blog");
         }
