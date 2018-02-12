@@ -10,6 +10,7 @@ using System.Net;
 using System.Web.UI;
 using System.Configuration;
 using System.Threading.Tasks;
+using XP_Scrum_Grupp2.Models;
 
 namespace XP_Scrum_Grupp2
 {
@@ -19,12 +20,23 @@ namespace XP_Scrum_Grupp2
         {
             using (MailMessage mailMessage = new MailMessage())
             {
+                ApplicationDbContext db = new ApplicationDbContext();
+                
                 mailMessage.From =
                 new MailAddress(ConfigurationManager.AppSettings["FromMail"]);
                 mailMessage.Subject = "SchedulerEmail";
                 mailMessage.Body = "Test Body SchedulerEmail";
                 mailMessage.IsBodyHtml = true;
-                mailMessage.To.Add(new MailAddress("hanna-stenberg@hotmail.com"));
+
+                var allUsers = db.Users.ToList();
+                foreach (var user in allUsers)
+                {
+                    if (user.NewFormalPostsNotification)
+                    {
+                        mailMessage.To.Add(new MailAddress(user.Email));
+                    }
+                }
+
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
@@ -37,6 +49,5 @@ namespace XP_Scrum_Grupp2
                 smtp.Send(mailMessage);
             }
         }
-
     }
 }

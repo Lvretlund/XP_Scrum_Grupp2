@@ -18,6 +18,7 @@ namespace XP_Scrum_Grupp2.Models
         public DateTime End { get; set; }
         public ICollection<DateTime> Times { get; set; }
         public bool AllDay { get; set; }
+        public bool Approved { get; set; }
 
         public ICollection<MeetingInvited> MeetingInvited { get; set; }
         public ApplicationUser UserNotis { get; set; }

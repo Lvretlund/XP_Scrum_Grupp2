@@ -109,14 +109,14 @@ namespace XP_Scrum_Grupp2.Controllers
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
 
-            var allUsers = db.Users.ToList();
-            foreach(var user in allUsers)
-            {
-                if (user.NewFormalPostsNotification)
-                {
-                    BlogScheduler.Start();
-                }
-            }
+            //var allUsers = db.Users.ToList();
+            //foreach(var user in allUsers)
+            //{
+            //    if (user.NewFormalPostsNotification)
+            //    {
+                    //BlogScheduler.Start();
+            //    }
+            //}
 
            return RedirectToAction("ShowBlogs", "Blog");
         }
@@ -175,15 +175,21 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             return View();
         }
-
-        public ActionResult Search(int startYear, int startMonth, int endYear, int endMonth)
+        public ActionResult Search(int? startYear, int? startMonth, int? endYear, int? endMonth)
         {
-            DateTime startDate = new DateTime(startYear, startMonth, 1);
-            DateTime endDate = new DateTime(endYear, endMonth + 1, 1);
+            if (startYear != null && endYear != null && startMonth != null && endMonth != null )
+            {
+                DateTime startDate = new DateTime(startYear.Value, startMonth.Value, 1);
+                DateTime endDate = new DateTime(endYear.Value, endMonth.Value + 1, 1);
 
-            var files = db.FormalBlogs.Where(f => f.Date >= startDate && f.Date <= endDate ).ToList();
+                var files = db.FormalBlogs.Where(f => f.Date >= startDate && f.Date <= endDate).ToList();
 
-            return View("SearchFiles", files);
+                return View("SearchFiles", files);
+
+            }
+            ViewBag.Message = "Select start and end year/month";
+            return View("SearchFiles");
+
         }
     }
     
