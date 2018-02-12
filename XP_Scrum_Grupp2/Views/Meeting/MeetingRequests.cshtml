@@ -27,7 +27,6 @@
                     if ($('div').hasClass('allComments_' + id + '')) {
                         $('div[class=allTimes_' + id + ']').remove();
                     }
-                    alert("success");
                     allTimesArea.html(response);
                     allTimesArea.prependTo('#timesBlock_' + id);
                 },
