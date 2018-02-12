@@ -23,7 +23,7 @@
                    <br />
                     @Html.DisplayFor(modelItem => item.Text)
                     <br />
-                    @Html.ActionLink("View post", "ShowBlogs", "Blog")
+                    @Html.ActionLink("View post", "ShowBlogs", "Blog", new { @style= "color:blue;" })
                 </p>
               
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>
