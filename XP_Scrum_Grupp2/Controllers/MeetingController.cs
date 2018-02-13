@@ -51,36 +51,83 @@ namespace XP_Scrum_Grupp2.Controllers
     
         public ActionResult RequestedTimes(int meetreq)
         {
+            var userId = User.Identity.GetUserId();
             var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
             var meeting = db.Meetings.Where(m=>m.Id == meetreq).FirstOrDefault();
             var meetingId = meeting.Id;
             var listOfTimes = new List<MeetingTimes>();
+            var i = 1;
             foreach (var mt in meetTime)
             {
-                var model = new MeetingTimes
+                var aMeetingTime = new MeetingTimes
                 {
                     MeetingId = meetingId,
                     Meeting = meeting,
-                    Time = mt.Time
+                    Time = mt.Time,
+                    FakeId = mt.Id,
+                    Id = i
                 };
-                listOfTimes.Add(model);
+                listOfTimes.Add(aMeetingTime);
+                i++;
             }
-            return PartialView("_RequestedTimes", listOfTimes);
+
+            var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
+            var model = new MeetTimeInvModel {
+
+                ListOfTimes = listOfTimes,
+                ListOfChosenTimes = chosen
+            };
+            
+            return PartialView("_RequestedTimes", model);
+        }
+
+        public ActionResult SentTimes(int meetreq)
+        {
+            var userId = User.Identity.GetUserId();
+            var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
+            var meeting = db.Meetings.Where(m => m.Id == meetreq).FirstOrDefault();
+            var meetingId = meeting.Id;
+            var listOfTimes = new List<MeetingTimes>();
+            var i = 1;
+            foreach (var mt in meetTime)
+            {
+                var aMeetingTime = new MeetingTimes
+                {
+                    MeetingId = meetingId,
+                    Meeting = meeting,
+                    Time = mt.Time,
+                    FakeId = mt.Id,
+                    Id = i
+                };
+                listOfTimes.Add(aMeetingTime);
+                i++;
+            }
+
+            var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
+            var model = new MeetTimeInvModel
+            {
+
+                ListOfTimes = listOfTimes,
+                ListOfChosenTimes = chosen
+            };
+
+            return PartialView("_SentTimes", model);
         }
 
         [HttpPost]
-        public ActionResult ChooseTime(int Id, bool status)
+        public ActionResult ChooseTime(int Id)
         {
+            var user = User.Identity.GetUserId();
             ApplicationDbContext db = new ApplicationDbContext();
             MeetingTimes time = db.MeetingTimes.Where(f => f.Id == Id).FirstOrDefault();
-            if (status == true)
+
+            var newMetTimInv = new MeetingTimeInvited
             {
-                time.ChosenTime = false;
-            }
-            else
-            {
-                time.ChosenTime = true;
-            }
+                MeetingId = time.MeetingId,
+                InvitedId = user,
+                TimesId = Id
+            };
+            db.MetTimInvs.Add(newMetTimInv);
             db.SaveChanges();
             return RedirectToAction("MeetingRequests", "Meeting");
         }
@@ -206,6 +253,15 @@ namespace XP_Scrum_Grupp2.Controllers
                 await UserManager.SendEmailAsync(us.UserId, "You have received a new meeting request", "Please visit the site to see meeting invitation.");
             }
             return View("AddToMeeting", nm);
+        }
+
+        public ActionResult _SentMeetingRequests()
+        {
+            var userName = User.Identity.Name;
+            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+            var model = db.Meetings.Where(m => m.CreatorId == user.Id).ToList();
+
+            return View(model);
         }
     
         public ApplicationSignInManager SignInManager

@@ -227,6 +227,7 @@
     <Compile Include="Models\FormalBlog.cs" />
     <Compile Include="Models\MeetingInvited.cs" />
     <Compile Include="Models\MeetingPeopleViewModel.cs" />
+    <Compile Include="Models\MeetingTimeInvited.cs" />
     <Compile Include="Models\MeetingTimes.cs" />
     <Compile Include="Models\ResearchBlog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -511,6 +512,8 @@
     <Content Include="Views\Shared\_Invited.cshtml" />
     <Content Include="Views\Meeting\MeetingRequests.cshtml" />
     <Content Include="Views\Shared\_RequestedTimes.cshtml" />
+    <Content Include="Views\Shared\_SentMeetingRequests.cshtml" />
+    <Content Include="Views\Shared\_SentTimes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -66,7 +66,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
         //post
         [HttpPost]
-        public async Task<ActionResult> CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
             var post = db.FormalBlogs.ToList();
@@ -110,16 +110,7 @@ namespace XP_Scrum_Grupp2.Controllers
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
 
-            //var allUsers = db.Users.ToList();
-            //foreach(var user in allUsers)
-            //{
-            //    if (user.NewFormalPostsNotification)
-            //    {
-                    //BlogScheduler.Start();
-            //    }
-            //}
-
-           return RedirectToAction("ShowBlogs", "Blog");
+            return RedirectToAction("ShowBlogs", "Blog");
         }
 
         public ApplicationSignInManager SignInManager
@@ -205,7 +196,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public List<SelectListItem> SelectedCategories { get; set; }
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
-        public ICollection<Meeting> Meetings { get; set; } //testrad
+        public ICollection<Meeting> Meetings { get; set; } 
         public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
         public string Location { get; set; }
