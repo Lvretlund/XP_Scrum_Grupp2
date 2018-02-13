@@ -65,7 +65,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
         //post
         [HttpPost]
-        public async Task<ActionResult> CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
             var userName = User.Identity.Name;
             var post = db.FormalBlogs.ToList();
@@ -114,11 +114,11 @@ namespace XP_Scrum_Grupp2.Controllers
             //{
             //    if (user.NewFormalPostsNotification)
             //    {
-                    //BlogScheduler.Start();
+            //BlogScheduler.Start();
             //    }
             //}
 
-           return RedirectToAction("ShowBlogs", "Blog");
+            return RedirectToAction("ShowBlogs", "Blog");
         }
 
         public ApplicationSignInManager SignInManager

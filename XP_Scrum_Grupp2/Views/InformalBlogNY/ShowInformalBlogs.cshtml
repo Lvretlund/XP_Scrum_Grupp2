@@ -145,7 +145,7 @@
         allCommentsArea.prependTo('#commentsBlock_' + postId);
         },
         error: function (response) {
-        alert('Failed to post comment');
+            alert('Failed to post comment, the textfield is empty!');
         }
         });
         });
