@@ -28,11 +28,11 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Blogs
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="~/Blog/ShowBlogs"style="color:black;"> Formal blog</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="~/InformalBlogNY/ShowInformalBlogs"style="color:black;">Informal blog</a>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:0;">
+            <li><a href="~/Blog/ShowBlogs"style="color:black;"> Formal blog</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="~/InformalBlogNY/ShowInformalBlogs"style="color:black;">Informal blog</a></li>
+        </ul>
     </li>
     <li>@Html.ActionLink("Education", "Index", "EducationNY")</li>
     <li>@Html.ActionLink("Research", "Index", "Research")</li>
@@ -40,22 +40,22 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Meetings
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="~/Meeting/CreateMeeting"> Create meeting</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="~/Meeting/MeetingRequests">Meeting requests</a>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:0;">
+            <li><a href="~/Meeting/CreateMeeting"> Create meeting</a> </li>
+            <li class="dropdown-divider"></li>
+            <li><a href="~/Meeting/MeetingRequests">Meeting requests</a> </li>
+        </ul>
     </li>
     @*<li>@Html.ActionLink("Create meeting", "CreateMeeting", "Meeting")</li>*@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Calendar
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="~/Calendar/ShowCalendar"style="color:black;">Public calendar</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="~/Calendar/ShowPersonalCalendar"style="color:black;">Private calendar</a>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:0;">
+            <li><a href="~/Calendar/ShowCalendar"style="color:black;">Public calendar</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="~/Calendar/ShowPersonalCalendar"style="color:black;">Private calendar</a></li>
+        </ul>
     </li>
 
 
