@@ -93,19 +93,29 @@ namespace XP_Scrum_Grupp2.Controllers
                 Visible = true
             };
 
-            if (model.NewCategory.Type == null)
+            //if (model.NewCategory.Type == null)
+            //{
+            //    IEnumerable<SelectListItem> selectedItems = model.SelectedCategories.Where(c => model.CategoryIds.Contains(int.Parse(c.Value))).ToList();
+            //    foreach (var selectedItem in selectedItems)
+            //    {
+            //        selectedItem.Selected = true;
+            //        newPost.CategoryN = db.Categories.Where(c => c.Type == selectedItem.Text).FirstOrDefault();
+            //    }
+            //}
+            var exists = db.Categories.Where(c => c.Type == model.NewCategory.Type).FirstOrDefault();
+            if (exists != null)
             {
-                IEnumerable<SelectListItem> selectedItems = model.SelectedCategories.Where(c => model.CategoryIds.Contains(int.Parse(c.Value))).ToList();
-                foreach (var selectedItem in selectedItems)
-                {
-                    selectedItem.Selected = true;
-                    newPost.CategoryN = db.Categories.Where(c => c.Type == selectedItem.Text).FirstOrDefault();
-                }
+                newPost.CategoryN = exists;
             }
             else
             {
-                newPost.CategoryN = model.NewCategory;
+                newPost.CategoryN = model.NewCategory; 
             }
+            //else
+            //{
+                
+            //}
+            
 
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
