@@ -27,5 +27,10 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return View(postIndex);
         }
+
+        public ActionResult RedirectToPost()
+        {
+            return RedirectToAction("ShowBlogs", "Blog");
+        }
     }
 }

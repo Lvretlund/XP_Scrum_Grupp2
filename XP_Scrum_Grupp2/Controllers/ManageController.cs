@@ -260,6 +260,9 @@ namespace XP_Scrum_Grupp2.Controllers
             var user = db.Users.Where(u => u.UserName == curruser).SingleOrDefault();
             user.NewFormalPostsNotification = NotificationModel.NewFormalPostsNotification;
             db.SaveChanges();
+
+            //BlogScheduler.Start();
+
             return View("ChangeNotification",NotificationModel);
         }
 
