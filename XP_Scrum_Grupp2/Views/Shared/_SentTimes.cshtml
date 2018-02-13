@@ -19,12 +19,10 @@
     }
 }
 
-@foreach(var listvotes in Model.ListOfChosenTimes)
+@foreach (var listvotes in Model.ListOfChosenTimes)
 {
-    foreach(var votes in listvotes)
-    {
-        <p>Mötestid-ID: @votes.TimesId MötesID: @votes.MeetingId Id på den som röstade: @votes.InvitedId Id på röstning: @votes.Id</p>
-    }
+    <p>@listvotes.Count</p>
+
 }
 <script>
     $(document).ready(function () {
