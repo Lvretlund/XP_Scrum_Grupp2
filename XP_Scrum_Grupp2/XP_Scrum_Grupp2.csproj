@@ -246,12 +246,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\education.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\fullcalendar.print.css" />
+    <Content Include="Content\image_2.png" />
     <Content Include="Content\logo1.png" />
     <Content Include="Content\logon.png" />
+    <Content Include="Content\research.png" />
+    <Content Include="Content\SCIENCE.png" />
     <Content Include="Content\vitbild.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
