@@ -16,15 +16,14 @@
     @Html.EditorFor(model => model.NewFormalBlog.Text, new { htmlAttributes = new { @class = "form-control" } })
     @Html.ValidationMessageFor(model => model.NewFormalBlog.Text, "", new { @class = "text-danger" })
 
-
+    <br />
     @Html.Label("Categories", new { htmlAttributes = new { @class = "control-label col-md-2" } })
     <br />
 
-
-    @Html.EditorFor(model => model.NewCategory.Type, new { htmlAttributes = new { @class = "form-control" }, Model.SelectedCategories })
+    @Html.EditorFor(model => model.NewCategory.Type, new { htmlAttributes = new { @class = "form-control", id= "txt" }, Model.SelectedCategories })
     @Html.ValidationMessageFor(model => model.NewCategory.Type, "", new { @class = "text-danger" })
     <br />
-    @Html.ListBoxFor(model => model.CategoryIds, Model.SelectedCategories, new { style = "width:140px;height:170px;", @class = "ListBoxClass" })
+    @Html.ListBoxFor(model => model.CategoryIds, Model.SelectedCategories, new { style = "width:140px;height:170px;", @class = "ListBoxClass", id = "lbx" })
     <br />
     <br>
 
@@ -46,5 +45,14 @@
 
 
 
-@Scripts.Render("~/bundles/jqueryval")
+
+
 }
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    $("#lbx").on("click", function () {
+        $('#txt').val($(this).text());
+    });
+</script>
