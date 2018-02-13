@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
+using System.Data.Entity.Validation;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
@@ -46,6 +47,7 @@ namespace XP_Scrum_Grupp2.Controllers
         [HttpPost]
         public ActionResult CreateInformalPartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
+            try { 
             InformalBlog newPost = new InformalBlog();
             var userName = User.Identity.Name;
 
@@ -76,6 +78,22 @@ namespace XP_Scrum_Grupp2.Controllers
             db.SaveChanges();
 
             return RedirectToAction("ShowInformalBlogs", "InformalBlogNY");
+            }
+
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+                return View();
+            }
+
+
+
         }
 
         [Authorize]

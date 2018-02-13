@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity.Validation;
+using System.Linq;
 using System.Web.Mvc;
 using XP_Scrum_Grupp2.Models;
 
@@ -17,6 +18,8 @@ namespace XP_Scrum_Grupp2.Controllers
         [HttpPost]
         public ActionResult AddComment(Comment comment, int postId, string Id)
         {
+            try
+            { 
             string userId = comment.CommentedById;
             var user = db.Users.FirstOrDefault(u => u.Id == userId);
             var post = db.FormalBlogs.FirstOrDefault(p => p.Id == postId);
@@ -39,7 +42,22 @@ namespace XP_Scrum_Grupp2.Controllers
                     db.SaveChanges();
                 }
             }
+        
             return RedirectToAction("GetComments", "Comment", new { postId = postId });
+            }
+
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+                return View();
+            }
+
         }
 
         [Authorize]
