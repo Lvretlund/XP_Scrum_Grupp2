@@ -209,34 +209,43 @@ namespace XP_Scrum_Grupp2.Controllers
         [HttpPost]
         public ActionResult CreateAMeeting(Meeting m)
         {
-            var userName = User.Identity.Name;
-            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+            if (ModelState.IsValid)
+            {
+                var userName = User.Identity.Name;
+                var user = db.Users.FirstOrDefault(u => u.UserName == userName);
 
-            Meeting newm = new Meeting
+                Meeting newm = new Meeting
+                {
+                    Creator = user,
+                    CreatorId = user.Id,
+                    Title = m.Title,
+                    Times = TempStart,
+                    Start = m.Start,
+                    Minutes = m.Minutes
+                };
+                newm.End = m.Start.AddMinutes(m.Minutes);
+                db.Meetings.Add(newm);
+                db.SaveChanges();
+                MeetingId = newm.Id;
+                SaveTimes(newm);
+                TempStart.Clear();
+                var users = db.Users.ToList();
+                var model = new MeetingInvited
+                {
+                    Meeting = newm,
+                    MeetingId = newm.Id,
+                    User = user,
+                    UserId = user.Id,
+                    Uninvited = db.Users.ToList()
+                };
+
+
+                return View("AddToMeeting", model);
+            }
+            else
             {
-                Creator = user,
-                CreatorId = user.Id,
-                Title = m.Title,
-                Times = TempStart,
-                Start = m.Start,
-                Minutes = m.Minutes
-            };
-            newm.End = m.Start.AddMinutes(m.Minutes);
-            db.Meetings.Add(newm);
-            db.SaveChanges();
-            MeetingId = newm.Id;
-            SaveTimes(newm);
-            TempStart.Clear();
-            var users = db.Users.ToList();
-            var model = new MeetingInvited
-            {
-                Meeting = newm,
-                MeetingId = newm.Id,
-                User = user,
-                UserId = user.Id,
-                Uninvited = db.Users.ToList()
-            };
-            return View("AddToMeeting", model);
+                return RedirectToAction("CreateMeeting");
+            }
         }
         
         public async Task<ActionResult> AddPeople(MeetingInvited us)
