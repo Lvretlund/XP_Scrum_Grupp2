@@ -81,6 +81,39 @@ namespace XP_Scrum_Grupp2.Controllers
             return PartialView("_RequestedTimes", model);
         }
 
+        //public ActionResult SentTimes(int meetreq)
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
+        //    var meeting = db.Meetings.Where(m => m.Id == meetreq).FirstOrDefault();
+        //    var meetingId = meeting.Id;
+        //    var listOfTimes = new List<MeetingTimes>();
+        //    var i = 1;
+        //    foreach (var mt in meetTime)
+        //    {
+        //        var aMeetingTime = new MeetingTimes
+        //        {
+        //            MeetingId = meetingId,
+        //            Meeting = meeting,
+        //            Time = mt.Time,
+        //            FakeId = mt.Id,
+        //            Id = i
+        //        };
+        //        listOfTimes.Add(aMeetingTime);
+        //        i++;
+        //    }
+
+        //    var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
+        //    var model = new MeetTimeInvModel
+        //    {
+
+        //        ListOfTimes = listOfTimes,
+        //        ListOfChosenTimes = chosen
+        //    };
+
+        //    return PartialView("_SentTimes", model);
+        //}
+
         public ActionResult SentTimes(int meetreq)
         {
             var userId = User.Identity.GetUserId();
@@ -88,6 +121,8 @@ namespace XP_Scrum_Grupp2.Controllers
             var meeting = db.Meetings.Where(m => m.Id == meetreq).FirstOrDefault();
             var meetingId = meeting.Id;
             var listOfTimes = new List<MeetingTimes>();
+            var chosen = new List<MeetingTimeInvited>();
+            var listofChosen = new List<List<MeetingTimeInvited>>();
             var i = 1;
             foreach (var mt in meetTime)
             {
@@ -101,18 +136,18 @@ namespace XP_Scrum_Grupp2.Controllers
                 };
                 listOfTimes.Add(aMeetingTime);
                 i++;
+                chosen = db.MetTimInvs.Where(m => m.TimesId == mt.Id).ToList();
+                listofChosen.Add(chosen);
             }
-
-            var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
-            var model = new MeetTimeInvModel
+            var model = new MeetTimeInvModelForSent
             {
-
                 ListOfTimes = listOfTimes,
-                ListOfChosenTimes = chosen
+                ListOfChosenTimes = listofChosen
             };
 
             return PartialView("_SentTimes", model);
         }
+
 
         [HttpPost]
         public ActionResult ChooseTime(int Id)
@@ -255,7 +290,7 @@ namespace XP_Scrum_Grupp2.Controllers
             return View("AddToMeeting", nm);
         }
 
-        public ActionResult _SentMeetingRequests()
+        public ActionResult SentMeetingRequests()
         {
             var userName = User.Identity.Name;
             var user = db.Users.FirstOrDefault(u => u.UserName == userName);

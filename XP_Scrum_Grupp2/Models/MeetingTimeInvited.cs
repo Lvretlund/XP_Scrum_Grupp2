@@ -19,4 +19,10 @@ namespace XP_Scrum_Grupp2.Models
         public List<MeetingTimes> ListOfTimes { get; set; }
         public List<MeetingTimeInvited> ListOfChosenTimes { get; set; }
     }
+    public class MeetTimeInvModelForSent
+    {
+        public List<MeetingTimes> ListOfTimes { get; set; }
+        public List<List<MeetingTimeInvited>> ListOfChosenTimes { get; set; }
+    }
+
 }
