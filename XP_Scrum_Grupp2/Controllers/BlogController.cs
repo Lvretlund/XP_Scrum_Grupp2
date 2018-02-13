@@ -195,7 +195,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public List<SelectListItem> SelectedCategories { get; set; }
         public int[] CategoryIds { get; set; }
         public Category CategoryN { get; set; }
-        public ICollection<Meeting> Meetings { get; set; } //testrad
+        public ICollection<Meeting> Meetings { get; set; } 
         public ICollection<Comment> Comments { get; set; }
         public string Text { get; set; }
         public string Location { get; set; }
