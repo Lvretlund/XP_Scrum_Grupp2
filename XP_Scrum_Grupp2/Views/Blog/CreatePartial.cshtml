@@ -53,6 +53,7 @@
 
 <script>
     $("#lbx").on("click", function () {
-        $('#txt').val($(this).text());
+        var texten = $("#lbx option:selected").text();
+        $('#txt').val(texten);
     });
 </script>
