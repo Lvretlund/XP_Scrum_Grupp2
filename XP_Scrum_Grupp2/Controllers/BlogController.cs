@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
+using System.ComponentModel.DataAnnotations;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
