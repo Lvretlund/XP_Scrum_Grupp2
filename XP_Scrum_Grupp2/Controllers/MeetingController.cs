@@ -81,6 +81,39 @@ namespace XP_Scrum_Grupp2.Controllers
             return PartialView("_RequestedTimes", model);
         }
 
+        public ActionResult SentTimes(int meetreq)
+        {
+            var userId = User.Identity.GetUserId();
+            var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
+            var meeting = db.Meetings.Where(m => m.Id == meetreq).FirstOrDefault();
+            var meetingId = meeting.Id;
+            var listOfTimes = new List<MeetingTimes>();
+            var i = 1;
+            foreach (var mt in meetTime)
+            {
+                var aMeetingTime = new MeetingTimes
+                {
+                    MeetingId = meetingId,
+                    Meeting = meeting,
+                    Time = mt.Time,
+                    FakeId = mt.Id,
+                    Id = i
+                };
+                listOfTimes.Add(aMeetingTime);
+                i++;
+            }
+
+            var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
+            var model = new MeetTimeInvModel
+            {
+
+                ListOfTimes = listOfTimes,
+                ListOfChosenTimes = chosen
+            };
+
+            return PartialView("_SentTimes", model);
+        }
+
         [HttpPost]
         public ActionResult ChooseTime(int Id)
         {
@@ -220,6 +253,15 @@ namespace XP_Scrum_Grupp2.Controllers
                 await UserManager.SendEmailAsync(us.UserId, "You have received a new meeting request", "Please visit the site to see meeting invitation.");
             }
             return View("AddToMeeting", nm);
+        }
+
+        public ActionResult _SentMeetingRequests()
+        {
+            var userName = User.Identity.Name;
+            var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+            var model = db.Meetings.Where(m => m.CreatorId == user.Id).ToList();
+
+            return View(model);
         }
     
         public ApplicationSignInManager SignInManager

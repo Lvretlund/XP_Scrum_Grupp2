@@ -23,31 +23,50 @@
         <p> You haven't received any meeting requests.</p>
     }
 </div>
+<div>
+    @*@Html.Partial("_SentMeetingRequests")*@
+    <div style="text-align:center" id="sentBlock">
+    </div>
+
+</div>
 <script>
     $(document).ready(function () {
-                var i;
-                var id;
-                for (i = 1; i <@Model.Metinv.Count + 1; i++) {
-                    id = i;
-                    fetch(id);
-                }
-                function fetch(id) {
-                    var allTimesArea = $('<div>').addClass('allTimes_' + id);
+        var i;
+        var id;
+        for (i = 1; i <@Model.Metinv.Count + 1; i++) {
+            id = i;
+            fetch(id);
+        }
+        function fetch(id) {
+            var allTimesArea = $('<div>').addClass('allTimes_' + id);
             $.ajax({
-                        type: 'GET',
+                type: 'GET',
                 url: '@Url.Action("RequestedTimes", "Meeting")',
                 data: { meetreq: id },
                 success: function (response) {
-                            if ($('div').hasClass('allComments_' + id + '')) {
+                    if ($('div').hasClass('allComments_' + id + '')) {
                         $('div[class=allTimes_' + id + ']').remove();
-                }
-                allTimesArea.html(response);
-                allTimesArea.prependTo('#timesBlock_' + id);
-            },
+                    }
+                    allTimesArea.html(response);
+                    allTimesArea.prependTo('#timesBlock_' + id);
+                },
                 error: function (response) {
+                    alert("failed");
+                }
+            });
+        }
+        var sentTimesArea = $('<div>').addClass('allSent_');
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("_SentMeetingRequests", "Meeting")',
+            success: function (response) {
+                sentTimesArea.html(response);
+                sentTimesArea.prependTo('#sentBlock_' + id);
+            },
+            error: function (response) {
                 alert("failed");
             }
         });
-        }
-});
+    });
+
 </script>

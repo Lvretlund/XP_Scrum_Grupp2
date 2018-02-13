@@ -1,0 +1,55 @@
+﻿@model IEnumerable<XP_Scrum_Grupp2.Models.Meeting>
+<br />
+<div id="center" style="margin-left:31%">
+    <h4 style="margin-left:12%">Sent meeting requests</h4>
+    <br />
+
+    @if (Model.Any())
+    {
+        foreach (var meeting in Model)
+        {
+            <ul class="list-group" style="margin-bottom:-5px; max-width: 50%;">
+                <li class="list-group-item" style="background-color: lightgrey; text-align:center">
+                    <p style="text-align:center"><b>Meeting:</b> @meeting.Title</p><br /><p style="text-align:center">
+                </li>
+            </ul>
+            <div style="text-align:center" id="@string.Format("{0}_{1}", "timesBlock", meeting.Id)">
+            </div>
+        }
+    }
+    else
+    {
+        <br />
+        <p> You haven't sent any meeting requests.</p>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        var i;
+        var id;
+        for (i = 1; i < 2; i++) {
+            id = i;
+            fetch(id);
+        }
+        function fetch(id) {
+            var allTimesArea = $('<div>').addClass('allTimes_' + id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("SentTimes", "Meeting")',
+                data: { meetreq: id },
+                success: function (response) {
+                    if ($('div').hasClass('allComments_' + id + '')) {
+                        $('div[class=allTimes_' + id + ']').remove();
+                    }
+                    allTimesArea.html(response);
+                    allTimesArea.prependTo('#timesBlock_' + id);
+                },
+                error: function (response) {
+                    alert("failed");
+                }
+            });
+        }
+    });
+</script>
+
+
