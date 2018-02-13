@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/logon.png" rel="shortcut icon" type="image/x-icon"/>
+    <link href="~/Content/logon.png" rel="shortcut icon" type="image/x-icon" />
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/fullcalendarcss")
     @Scripts.Render("~/bundles/modernizr")
@@ -23,11 +23,7 @@
                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-
-
-                  
-                </ul>
+                <ul class="nav navbar-nav"></ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -35,15 +31,23 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Grupp 2</p>
-        </footer>
+      
     </div>
-   
-    
-    
+
+
+
     @Scripts.Render("~/bundles/fullcalendarjs")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+
 </html>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" style="background-color:#0d0d0d;">
+    <div class="container">
+        <div class="navbar-header">
+            <span style="color: white; align-content:center;">@DateTime.Now.Year - Grupp 2</></span>
+        </div>
+       
+    </div>
+</nav>
