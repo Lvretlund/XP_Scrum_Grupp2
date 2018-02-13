@@ -1,0 +1,33 @@
+﻿@model XP_Scrum_Grupp2.Models.MeetTimeInvModelForSent
+
+@foreach (var time in Model.ListOfTimes)
+{
+    using (Html.BeginForm("ChooseTime", "Meeting", new { Id = time.FakeId }, FormMethod.Post))
+    {
+        <ul class="list-group" style="margin-bottom:-5px; max-width: 50%">
+            <li class="list-group-item" style="background-color:whitesmoke; text-align:center">
+                <p style="text-align:center">
+                    @time.Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
+
+                    <input style="text-align:center" type="submit" data-id="@time.FakeId" value="Choose" id="vote" class="btn btn-default" />
+                </p>
+            </li>
+        </ul>
+        @Html.HiddenFor(m => time.Id);
+        @Html.HiddenFor(m => time.FakeId);
+        @Html.HiddenFor(m => time.MeetingId);
+    }
+}
+
+@foreach (var listvotes in Model.ListOfChosenTimes)
+{
+    <p>@listvotes.Count</p>
+
+}
+<script>
+    $(document).ready(function () {
+        $("#vote").on('click', function () {
+            var postId = $(this).attr('data-id');
+        });
+    });
+</script>

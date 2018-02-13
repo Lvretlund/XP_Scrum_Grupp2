@@ -1,34 +1,33 @@
-﻿@model XP_Scrum_Grupp2.Controllers.MeetingInvitedModelTest
+﻿@model IEnumerable<XP_Scrum_Grupp2.Models.Meeting>
 <br />
 <div id="center" style="margin-left:31%">
-    <h4 style="margin-left:12%">Received meeting requests</h4>
+    <h4 style="margin-left:12%">Sent meeting requests</h4>
     <br />
 
-    @if (Model.Metinv.Any())
+    @if (Model.Any())
     {
-        foreach (var meetreq in Model.Metinv)
+        foreach (var meeting in Model)
         {
             <ul class="list-group" style="margin-bottom:-5px; max-width: 50%;">
                 <li class="list-group-item" style="background-color: lightgrey; text-align:center">
-                    <p style="text-align:center"><b>Meeting:</b> @meetreq.Meeting.Title</p><br /><p style="text-align:center"> <b>Creator:</b> @meetreq.Meeting.Creator.Firstname @meetreq.Meeting.Creator.Lastname</p>
+                    <p style="text-align:center"><b>Meeting:</b> @meeting.Title</p><br /><p style="text-align:center">
                 </li>
             </ul>
-            <div style="text-align:center" id="@string.Format("{0}_{1}", "timesBlock", meetreq.Id)">
+            <div style="text-align:center" id="@string.Format("{0}_{1}", "timesBlock", meeting.Id)">
             </div>
         }
     }
     else
     {
         <br />
-        <p> You haven't received any meeting requests.</p>
+        <p> You haven't sent any meeting requests.</p>
     }
 </div>
-
 <script>
     $(document).ready(function () {
         var i;
         var id;
-        for (i = 1; i <@Model.Metinv.Count + 1; i++) {
+        for (i = 1; i < 2; i++) {
             id = i;
             fetch(id);
         }
@@ -36,7 +35,7 @@
             var allTimesArea = $('<div>').addClass('allTimes_' + id);
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("RequestedTimes", "Meeting")',
+                url: '@Url.Action("SentTimes", "Meeting")',
                 data: { meetreq: id },
                 success: function (response) {
                     if ($('div').hasClass('allComments_' + id + '')) {
@@ -50,7 +49,7 @@
                 }
             });
         }
-
     });
-
 </script>
+
+
