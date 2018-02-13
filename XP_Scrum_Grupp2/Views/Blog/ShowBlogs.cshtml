@@ -4,8 +4,8 @@
 
 <h2>Formal blog</h2>
 <br />
-<div style="float: right; width: 580px; clear:right">
-@Html.ActionLink("Search blog files", "SearchFiles", "Blog")
+<div style="float: right; width: 10%; clear:right; color:gray">
+@Html.ActionLink("Search blog files", "SearchFiles", "Blog", new { @style = "Color:black; font-size:110%;" }/*new { id = "123" }, null*/)
     </div>
 
 @Html.Partial("CreatePartial", Model)

@@ -20,10 +20,11 @@
                 <p>
                     <span style="font-size: 100%"> <b>@Html.DisplayFor(modelItem => item.Author.Firstname) @Html.DisplayFor(modelItem => item.Author.Lastname): </b> </span>
                     <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => item.Date) <br /> Category: @Html.DisplayFor(modelItem => item.CategoryN.Type) </span>
-                   <br />
+                    <br />
                     @Html.DisplayFor(modelItem => item.Text)
                     <br />
-                    @Html.ActionLink("View post", "ShowBlogs", "Blog")
+                    @Html.ActionLink("View post", "RedirectToPost", "Home", new { @style = "color:blue;" })
+
                 </p>
               
                 <a href="Download?id=@item.Id" download="@item.Filename">@Html.DisplayFor(modelItem => item.Filename)</a>

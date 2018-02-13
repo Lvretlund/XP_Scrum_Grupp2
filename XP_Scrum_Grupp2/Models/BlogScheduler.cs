@@ -19,13 +19,13 @@ namespace XP_Scrum_Grupp2
             ITrigger trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
                   (s =>
-                     s.WithIntervalInSeconds(30)
+                     s.WithIntervalInSeconds(24)
                     .OnEveryDay()
                   )
                  .ForJob(emailJob)
                  .WithIdentity("trigger1")
                  .StartNow()
-                 .WithCronSchedule("0 27 11 * * ?") // Time : Every 1 Minutes job execute
+                .WithCronSchedule("0 45 14 * * ?") // Time : Every 1 Minutes job execute
                  .Build();
 
             ISchedulerFactory sf = new StdSchedulerFactory();
