@@ -14,7 +14,7 @@ namespace XP_Scrum_Grupp2.Models
         public DateTime Time { get; set; }
         public bool ChosenTime { get; set; }
         public int Votes { get; set; }
-
+        public int FakeId { get; set; }
         public Meeting Meeting { get; set; }
     }
 }
