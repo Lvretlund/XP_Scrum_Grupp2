@@ -52,7 +52,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 <script>
-    $("#lbx").click(function () {
-        $('#txt').text("HEEEEJ");
+    $("#lbx").on("click", function () {
+        $('#txt').val($(this).text());
     });
 </script>
