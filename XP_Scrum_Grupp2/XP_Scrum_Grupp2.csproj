@@ -227,6 +227,7 @@
     <Compile Include="Models\FormalBlog.cs" />
     <Compile Include="Models\MeetingInvited.cs" />
     <Compile Include="Models\MeetingPeopleViewModel.cs" />
+    <Compile Include="Models\MeetingTimeInvited.cs" />
     <Compile Include="Models\MeetingTimes.cs" />
     <Compile Include="Models\ResearchBlog.cs" />
     <Compile Include="Models\IdentityModels.cs" />

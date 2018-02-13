@@ -54,6 +54,7 @@ namespace XP_Scrum_Grupp2.Models
         public DbSet<MeetingInvited> MeetingInvitees { get; set; }
         public DbSet<MeetingTimes> MeetingTimes { get; set; }
         public DbSet<UEvent> UserEvents { get; set; }
+        public DbSet<MeetingTimeInvited> MetTimInvs { get; set; }
 
         public DbSet<EducationBlog> EducationBlogs { get; set; }
         public DbSet<ResearchBlog> ResearchBlogs { get; set; }
