@@ -8,7 +8,7 @@ namespace XP_Scrum_Grupp2.Models
         public int Id { get; set; }
         public string InvitedId { get; set; }
         public int TimesId { get; set; }
-        public bool Voted { get; set; }
+        public int MeetingId { get; set; }
 
         public virtual MeetingInvited Invited { get; set; }
         public virtual MeetingTimes Times { get; set; }

@@ -90,7 +90,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
             var newMetTimInv = new MeetingTimeInvited
             {
-                Voted = true,
+                MeetingId = time.MeetingId,
                 InvitedId = user,
                 TimesId = Id
             };
