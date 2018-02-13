@@ -23,12 +23,7 @@
         <p> You haven't received any meeting requests.</p>
     }
 </div>
-<div>
-    @*@Html.Partial("_SentMeetingRequests")*@
-    <div style="text-align:center" id="sentBlock">
-    </div>
 
-</div>
 <script>
     $(document).ready(function () {
         var i;
@@ -55,18 +50,7 @@
                 }
             });
         }
-        var sentTimesArea = $('<div>').addClass('allSent_');
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("_SentMeetingRequests", "Meeting")',
-            success: function (response) {
-                sentTimesArea.html(response);
-                sentTimesArea.prependTo('#sentBlock_' + id);
-            },
-            error: function (response) {
-                alert("failed");
-            }
-        });
+
     });
 
 </script>

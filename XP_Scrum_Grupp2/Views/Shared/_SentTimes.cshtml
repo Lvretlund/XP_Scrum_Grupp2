@@ -1,4 +1,4 @@
-﻿@model XP_Scrum_Grupp2.Models.MeetTimeInvModel
+﻿@model XP_Scrum_Grupp2.Models.MeetTimeInvModelForSent
 
 @foreach (var time in Model.ListOfTimes)
 {
@@ -16,6 +16,14 @@
         @Html.HiddenFor(m => time.Id);
         @Html.HiddenFor(m => time.FakeId);
         @Html.HiddenFor(m => time.MeetingId);
+    }
+}
+
+@foreach(var listvotes in Model.ListOfChosenTimes)
+{
+    foreach(var votes in listvotes)
+    {
+        <p>Mötestid-ID: @votes.TimesId MötesID: @votes.MeetingId Id på den som röstade: @votes.InvitedId Id på röstning: @votes.Id</p>
     }
 }
 <script>
