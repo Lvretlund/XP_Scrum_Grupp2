@@ -1,16 +1,23 @@
 ﻿@model XP_Scrum_Grupp2.Models.MeetTimeInvModelForSent
-
-@foreach (var time in Model.ListOfTimes)
-{
-    using (Html.BeginForm("ChooseTime", "Meeting", new { Id = time.FakeId }, FormMethod.Post))
+@for (int i = 0; i < Model.ListOfTimes.Count + 1; i++) { 
+@*@foreach (var time in Model.ListOfTimes)
+{*@
+    using (Html.BeginForm("SaveMeeting", "Meeting", new { meet = @Model.ListOfTimes[i] }, FormMethod.Post))
     {
+        @Html.HiddenFor(m => @Model.ListOfTimes[i].Id);
+        @Html.HiddenFor(m => @Model.ListOfTimes[i].FakeId);
+        @Html.HiddenFor(m => @Model.ListOfTimes[i].MeetingId);
+        @Html.HiddenFor(m => @Model.ListOfTimes[i].Votes);
+        @Html.HiddenFor(m => @Model.ListOfTimes[i].ChosenTime);
+
         <ul class="list-group" style="margin-bottom:-5px; max-width: 50%">
             <li class="list-group-item" style="background-color:whitesmoke; text-align:center">
                 <p style="text-align:center">
-                    @time.Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
-                    <input style="text-align:center" type="submit" data-id="@time.FakeId" value="Choose" id="vote" class="btn btn-default" />
-                </p><p> @time.ListofVotes.Count votes </p>
-                <ul>Invited who has voted for this time: @foreach (var vote in time.ListofVotes)
+                   @Model.ListOfTimes[i].Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
+                    <input style="text-align:center" type="submit" data-id="@Model.ListOfTimes[i].FakeId" value="Choose and save meeting" id="vote" class="btn btn-default" />
+                </p><p> @Model.ListOfTimes[i].ListofVotes.Count votes </p>
+                <ul>Invited who has voted for this time:
+                @foreach (var vote in @Model.ListOfTimes[i].ListofVotes)
                 {
                     <li>
                         @vote.InvitedName
@@ -19,12 +26,9 @@
                 </ul>
             </li>
         </ul>
-        @Html.HiddenFor(m => time.Id);
-        @Html.HiddenFor(m => time.FakeId);
-        @Html.HiddenFor(m => time.MeetingId);
+
     }
 }
-
 <script>
     $(document).ready(function () {
         $("#vote").on('click', function () {
