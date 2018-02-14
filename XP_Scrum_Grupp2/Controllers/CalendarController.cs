@@ -15,7 +15,7 @@ namespace XP_Scrum_Grupp2.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var userId = User.Identity.GetUserId();
-                var events = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
+                var events = db.UserEvents.Where(u => u.CreatorId == userId).ToList();
                 var me = db.Meetings.Where(m => m.CreatorId == userId).ToList();
                 var model = new PersonalCalendarViewModel
                 {
@@ -45,7 +45,8 @@ namespace XP_Scrum_Grupp2.Controllers
                     Start = e.Start,
                     End = e.End,
                     AllDay = e.AllDay,
-                    Creator = curr
+                    Creator = curr,
+                    CreatorId = curr.Id
                 };
                 db.UserEvents.Add(v);
                 db.SaveChanges();
@@ -76,7 +77,7 @@ namespace XP_Scrum_Grupp2.Controllers
             var userId = User.Identity.GetUserId();
             ApplicationDbContext db = new ApplicationDbContext();
             var ue = db.UserEvents.Where(u => u.Creator.Id == userId).ToList();
-            var me = db.Meetings.Where(m => m.Creator.Id == userId).ToList();
+            var me = db.Meetings.Where(m => m.CreatorId == userId).ToList();
             var model = new PersonalCalendarViewModel
             {
                 PersonalEvents = ue,
@@ -89,14 +90,14 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var me = db.Meetings.ToList();
+                var me = db.Meetings.Where(m=>m.Approved == true).ToList();
                 return new JsonResult { Data = me, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
         public ActionResult ShowCalendar()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var meetings = db.Meetings.ToList();
+            var meetings = db.Meetings.Where(m => m.Approved == true).ToList();
             var inviteds = new List<List<MeetingInvited>>
             {
                 new List<MeetingInvited>()
