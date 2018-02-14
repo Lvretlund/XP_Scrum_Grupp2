@@ -24,9 +24,18 @@ namespace XP_Scrum_Grupp2.Controllers
             var userId = User.Identity.GetUserId();
             var currUser = db.Users.Where(u => u.Id == userId).FirstOrDefault();
             var meetingReqs = db.MeetingInvitees.Where(m => m.UserId == userId).ToList();
+            var meetingReqsNotApproved = new List<MeetingInvited>();
             var listOfMeet = new List<MeetingInvited>();
             var i = 1;
-            foreach (var meet in meetingReqs)
+            foreach(var meet in meetingReqs)
+            {
+                var meeting = db.Meetings.Where(m => m.Id == meet.MeetingId).FirstOrDefault();
+                if (!meeting.Approved)
+                {
+                    meetingReqsNotApproved.Add(meet);
+                }
+            }
+            foreach (var meet in meetingReqsNotApproved)
             {
                 var meetInv = new MeetingInvited
                 {
