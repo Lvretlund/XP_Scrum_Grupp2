@@ -1,12 +1,12 @@
-﻿@model IEnumerable<XP_Scrum_Grupp2.Models.Meeting>
+﻿@model XP_Scrum_Grupp2.Controllers.SentMeeting
 <br />
 <div id="center" style="margin-left:31%">
     <h4 style="margin-left:12%">Sent meeting requests</h4>
     <br />
 
-    @if (Model.Any())
+    @if (Model.SentMeetings.Any())
     {
-        foreach (var meeting in Model)
+        foreach (var meeting in Model.SentMeetings)
         {
             <ul class="list-group" style="margin-bottom:-5px; max-width: 50%;">
                 <li class="list-group-item" style="background-color: lightgrey; text-align:center">
@@ -27,7 +27,7 @@
     $(document).ready(function () {
         var i;
         var id;
-        for (i = 1; i < 2; i++) {
+        for (i = 1; i < @Model.SentMeetings.Count + 1; i++) {
             id = i;
             fetch(id);
         }

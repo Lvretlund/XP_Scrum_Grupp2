@@ -8,9 +8,15 @@
             <li class="list-group-item" style="background-color:whitesmoke; text-align:center">
                 <p style="text-align:center">
                     @time.Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
-
                     <input style="text-align:center" type="submit" data-id="@time.FakeId" value="Choose" id="vote" class="btn btn-default" />
-                </p>
+                </p><p> @time.ListofVotes.Count votes </p>
+                <ul>Invited who has voted for this time: @foreach (var vote in time.ListofVotes)
+                {
+                    <li>
+                        @vote.InvitedName
+                    </li>
+                }
+                </ul>
             </li>
         </ul>
         @Html.HiddenFor(m => time.Id);
@@ -19,15 +25,10 @@
     }
 }
 
-@foreach (var listvotes in Model.ListOfChosenTimes)
-{
-    <p>@listvotes.Count</p>
-
-}
 <script>
     $(document).ready(function () {
         $("#vote").on('click', function () {
             var postId = $(this).attr('data-id');
         });
-    });
+       });
 </script>
