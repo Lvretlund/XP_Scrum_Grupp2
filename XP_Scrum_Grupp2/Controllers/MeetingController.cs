@@ -18,9 +18,9 @@ namespace XP_Scrum_Grupp2.Controllers
         public static List<DateTime> TempStart = new List<DateTime>();
         public static List<DateTime> TempEnd = new List<DateTime>();
 
-     
-            public ActionResult MeetingRequests()
-            {
+
+        public ActionResult MeetingRequests()
+        {
             var userId = User.Identity.GetUserId();
             var currUser = db.Users.Where(u => u.Id == userId).FirstOrDefault();
             var meetingReqs = db.MeetingInvitees.Where(m => m.UserId == userId).ToList();
@@ -47,13 +47,26 @@ namespace XP_Scrum_Grupp2.Controllers
                 Metinv = listOfMeet
             };
             return View(model);
-            }
-    
+        }
+
+        public ActionResult SetTime(int id)
+        {
+            var meetTime = db.MeetingTimes.Where(mt => mt.Id == id).FirstOrDefault();
+            var meeting = db.Meetings.Where(m => m.Id == meetTime.MeetingId).FirstOrDefault();
+
+            meeting.Start = meetTime.Time;
+            meeting.End = meetTime.Time.AddMinutes(meeting.Minutes);
+            meeting.Approved = true;
+            db.SaveChanges();
+
+            return RedirectToAction("ShowCalendar", "Calendar");
+        }
+
         public ActionResult RequestedTimes(int meetreq)
         {
             var userId = User.Identity.GetUserId();
             var meetTime = db.MeetingTimes.Where(mt => mt.MeetingId == meetreq).ToList();
-            var meeting = db.Meetings.Where(m=>m.Id == meetreq).FirstOrDefault();
+            var meeting = db.Meetings.Where(m => m.Id == meetreq).FirstOrDefault();
             var meetingId = meeting.Id;
             var listOfTimes = new List<MeetingTimes>();
             var i = 1;
@@ -72,12 +85,13 @@ namespace XP_Scrum_Grupp2.Controllers
             }
 
             var chosen = db.MetTimInvs.Where(m => m.InvitedId == userId).ToList();
-            var model = new MeetTimeInvModel {
+            var model = new MeetTimeInvModel
+            {
 
                 ListOfTimes = listOfTimes,
                 ListOfChosenTimes = chosen
             };
-            
+
             return PartialView("_RequestedTimes", model);
         }
 
@@ -142,12 +156,13 @@ namespace XP_Scrum_Grupp2.Controllers
         {
             return View();
         }
-        
+
         // GET: Meeting
         public ActionResult CreateMeeting()
         {
             TempStart.Clear();
-            var model = new Meeting {
+            var model = new Meeting
+            {
                 Start = DateTime.Now
             };
             return View(model);
@@ -243,7 +258,7 @@ namespace XP_Scrum_Grupp2.Controllers
                 return RedirectToAction("CreateMeeting");
             }
         }
-        
+
         public async Task<ActionResult> AddPeople(MeetingInvited us)
         {
             var invited = db.Users.Where(u => u.Id == us.UserId).FirstOrDefault();
@@ -264,7 +279,7 @@ namespace XP_Scrum_Grupp2.Controllers
             }
             var invitees = db.MeetingInvitees.Where(m => m.MeetingId == us.MeetingId).ToList();
             var listaInv = new List<ApplicationUser>();
-            foreach(var inv in invitees)
+            foreach (var inv in invitees)
             {
                 listaInv.Add(db.Users.Where(u => u.Id == inv.UserId).FirstOrDefault());
             }
@@ -279,7 +294,7 @@ namespace XP_Scrum_Grupp2.Controllers
             foreach (var u in all)
             {
                 bool exists = db.MeetingInvitees.Where(m => m.UserId == u.Id).Where(m => m.MeetingId == us.MeetingId).Any();
-                    if (u.Id != us.UserId)
+                if (u.Id != us.UserId)
                 {
                     if (!exists)
                     {
@@ -308,7 +323,7 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return View(models);
         }
-    
+
         public ApplicationSignInManager SignInManager
         {
             get
@@ -339,7 +354,7 @@ namespace XP_Scrum_Grupp2.Controllers
         public List<MeetingInvited> Metinv { get; set; }
     }
 
-    public class SentMeeting 
+    public class SentMeeting
     {
         public List<Meeting> SentMeetings { get; set; }
     }

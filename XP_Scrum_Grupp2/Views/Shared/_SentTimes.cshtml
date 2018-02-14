@@ -1,15 +1,9 @@
 ﻿@model XP_Scrum_Grupp2.Models.MeetTimeInvModelForSent
-@for (int i = 0; i < Model.ListOfTimes.Count + 1; i++) { 
-@*@foreach (var time in Model.ListOfTimes)
-{*@
-    using (Html.BeginForm("SaveMeeting", "Meeting", new { meet = @Model.ListOfTimes[i] }, FormMethod.Post))
-    {
-        @Html.HiddenFor(m => @Model.ListOfTimes[i].Id);
-        @Html.HiddenFor(m => @Model.ListOfTimes[i].FakeId);
-        @Html.HiddenFor(m => @Model.ListOfTimes[i].MeetingId);
-        @Html.HiddenFor(m => @Model.ListOfTimes[i].Votes);
-        @Html.HiddenFor(m => @Model.ListOfTimes[i].ChosenTime);
 
+@foreach (var time in Model.ListOfTimes)
+{
+    using (Html.BeginForm("SetTime", "Meeting", new { Id = time.FakeId }, FormMethod.Post))
+    {
         <ul class="list-group" style="margin-bottom:-5px; max-width: 50%">
             <li class="list-group-item" style="background-color:whitesmoke; text-align:center">
                 <p style="text-align:center">
