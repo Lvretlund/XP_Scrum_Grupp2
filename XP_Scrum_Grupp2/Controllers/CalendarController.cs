@@ -16,7 +16,7 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 var events = db.UserEvents.Where(u => u.CreatorId == userId).ToList();
-                var me = db.Meetings.Where(m => m.CreatorId == userId).ToList();
+                var me = db.Meetings.Where(m => m.CreatorId == userId || m.Approved == true).ToList();
                 var model = new PersonalCalendarViewModel
                 {
                     PersonalEvents = events,
