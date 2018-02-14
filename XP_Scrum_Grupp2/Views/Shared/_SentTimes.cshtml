@@ -7,11 +7,11 @@
         <ul class="list-group" style="margin-bottom:-5px; max-width: 50%">
             <li class="list-group-item" style="background-color:whitesmoke; text-align:center">
                 <p style="text-align:center">
-                   @Model.ListOfTimes[i].Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
-                    <input style="text-align:center" type="submit" data-id="@Model.ListOfTimes[i].FakeId" value="Choose and save meeting" id="vote" class="btn btn-default" />
-                </p><p> @Model.ListOfTimes[i].ListofVotes.Count votes </p>
+                  @time.Time @*@Html.CheckBoxFor(m => time.ChosenTime)*@
+                    <input style="text-align:center" type="submit" data-id="@time.FakeId" value="Choose and save meeting" id="vote" class="btn btn-default" />
+                </p><p> @time.ListofVotes.Count votes </p>
                 <ul>Invited who has voted for this time:
-                @foreach (var vote in @Model.ListOfTimes[i].ListofVotes)
+                @foreach (var vote in @time.ListofVotes)
                 {
                     <li>
                         @vote.InvitedName

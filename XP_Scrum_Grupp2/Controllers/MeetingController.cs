@@ -177,26 +177,6 @@ namespace XP_Scrum_Grupp2.Controllers
             return View(model);
         }
 
-        public ActionResult SaveMeeting(MeetingTimes meet)
-        {
-            var meeting = db.Meetings.Where(m => m.Id == meet.MeetingId).FirstOrDefault();
-            var newMeet = new Meeting
-            {
-                Start = meet.Time,
-                End = meeting.End,
-                AllDay = meeting.AllDay,
-                CreatorId = meeting.CreatorId,
-                Id = meet.MeetingId,
-                Minutes = meeting.Minutes,
-                Approved = true,
-                Title = meeting.Title
-            };
-            db.Meetings.Remove(meeting);
-            db.Meetings.Add(newMeet);
-            db.SaveChanges();
-            return RedirectToAction("Voted");
-        }
-
         [HttpPost]
         public ActionResult AddTempTime(Meeting m)
         {
