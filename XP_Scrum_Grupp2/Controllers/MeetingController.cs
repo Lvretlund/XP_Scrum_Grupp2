@@ -135,7 +135,12 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             db.MetTimInvs.Add(newMetTimInv);
             db.SaveChanges();
-            return RedirectToAction("MeetingRequests", "Meeting");
+            return RedirectToAction("Voted", "Meeting");
+        }
+
+        public ActionResult Voted()
+        {
+            return View();
         }
         
         // GET: Meeting
@@ -149,15 +154,15 @@ namespace XP_Scrum_Grupp2.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTempTime(DateTime m)
+        public ActionResult AddTempTime(Meeting m)
         {
-            if (m.Year != 1 && m.Year != 1)
+            if (m.Start.Year != 1 && m.Start.Year != 1)
             {
-                TempStart.Add(m);
+                TempStart.Add(m.Start);
             }
             var nm = new Meeting
             {
-                Start = m,
+                Start = m.Start,
                 Times = TempStart
             };
             return View("CreateMeeting", nm);
@@ -265,7 +270,6 @@ namespace XP_Scrum_Grupp2.Controllers
             bool isfalse = false;
             if (isfalse == true)
             {
-                //var userN = new ApplicationUser { Id = invited.Id, UserName = invited.Email, Email = invited.Email };
                 await SignInManager.SignInAsync(us.User, isPersistent: false, rememberBrowser: false);
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(us.UserId);
                 await UserManager.SendEmailAsync(us.UserId, "You have received a new meeting request", "Please visit the site to see meeting invitation.");
