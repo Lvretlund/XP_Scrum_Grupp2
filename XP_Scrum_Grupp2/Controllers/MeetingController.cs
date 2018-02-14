@@ -178,15 +178,15 @@ namespace XP_Scrum_Grupp2.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTempTime(Meeting m)
+        public ActionResult AddTempTime(DateTime m)
         {
-            if(m.Start.Year != 1 && m.End.Year != 1)
+            if (m.Year != 1 && m.Year != 1)
             {
-                TempStart.Add(m.Start);
+                TempStart.Add(m);
             }
             var nm = new Meeting
             {
-                Start = m.Start,
+                Start = m,
                 Times = TempStart
             };
             return View("CreateMeeting", nm);
