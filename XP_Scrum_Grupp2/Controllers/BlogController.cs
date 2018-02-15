@@ -184,7 +184,9 @@ namespace XP_Scrum_Grupp2.Controllers
                 DateTime startDate = new DateTime(startYear.Value, startMonth.Value, 1);
                 DateTime endDate = new DateTime(endYear.Value, endMonth.Value + 1, 1);
 
-                var files = db.FormalBlogs.Where(f => f.Date >= startDate && f.Date <= endDate).ToList();
+                var files = db.FormalBlogs.Where(f => f.Date >= startDate && f.Date <= endDate).Where(f => f.Filename != null).ToList();
+
+
 
                 return View("SearchFiles", files);
 
