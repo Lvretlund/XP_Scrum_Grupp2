@@ -6,9 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
-using System.ComponentModel.DataAnnotations;
 
 namespace XP_Scrum_Grupp2.Controllers
 {
@@ -46,8 +44,6 @@ namespace XP_Scrum_Grupp2.Controllers
             return items;
         }
 
-     
-        // GET: Blog
         [Authorize]
         public ActionResult ShowBlogs()
         {
@@ -63,8 +59,7 @@ namespace XP_Scrum_Grupp2.Controllers
             };
             return View(postIndex);
         }
-
-        //post
+        
         [HttpPost]
         public ActionResult CreatePartial(PostIndexViewModel model, HttpPostedFileBase upload)
         {
@@ -93,15 +88,6 @@ namespace XP_Scrum_Grupp2.Controllers
                 Visible = true
             };
 
-            //if (model.NewCategory.Type == null)
-            //{
-            //    IEnumerable<SelectListItem> selectedItems = model.SelectedCategories.Where(c => model.CategoryIds.Contains(int.Parse(c.Value))).ToList();
-            //    foreach (var selectedItem in selectedItems)
-            //    {
-            //        selectedItem.Selected = true;
-            //        newPost.CategoryN = db.Categories.Where(c => c.Type == selectedItem.Text).FirstOrDefault();
-            //    }
-            //}
             var exists = db.Categories.Where(c => c.Type == model.NewCategory.Type).FirstOrDefault();
             if (exists != null)
             {
@@ -111,11 +97,6 @@ namespace XP_Scrum_Grupp2.Controllers
             {
                 newPost.CategoryN = model.NewCategory; 
             }
-            //else
-            //{
-                
-            //}
-            
 
             db.FormalBlogs.Add(newPost);
             db.SaveChanges();
