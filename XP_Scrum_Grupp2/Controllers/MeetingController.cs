@@ -291,13 +291,11 @@ namespace XP_Scrum_Grupp2.Controllers
                     }
                 }
             }
-            bool isfalse = false;
-            if (isfalse == true)
-            {
+
                 await SignInManager.SignInAsync(us.User, isPersistent: false, rememberBrowser: false);
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(us.UserId);
                 await UserManager.SendEmailAsync(us.UserId, "You have received a new meeting request", "Please visit the site to see meeting invitation.");
-            }
+      
             return View("AddToMeeting", nm);
         }
 

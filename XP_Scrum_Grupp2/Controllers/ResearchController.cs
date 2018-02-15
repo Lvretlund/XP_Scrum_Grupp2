@@ -28,7 +28,7 @@ namespace XP_Scrum_Grupp2.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(ResearchIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult ResearchPartial(ResearchIndexViewModel model, HttpPostedFileBase upload)
         {
             ResearchBlog newPost = new ResearchBlog();
             var userName = User.Identity.Name;
