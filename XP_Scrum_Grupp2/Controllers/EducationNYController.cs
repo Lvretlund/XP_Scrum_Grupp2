@@ -25,7 +25,7 @@ namespace XP_Scrum_Grupp2.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult Create(EducationIndexViewModel model, HttpPostedFileBase upload)
+        public ActionResult EducationNYPartial(EducationIndexViewModel model, HttpPostedFileBase upload)
         {
             EducationBlog newPost = new EducationBlog();
             var userName = User.Identity.Name;
