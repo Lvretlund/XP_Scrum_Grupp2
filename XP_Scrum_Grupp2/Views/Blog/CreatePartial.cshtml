@@ -5,8 +5,11 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
+
     <h4>Post something below!</h4>
+
     <hr />
+
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -40,13 +43,7 @@
 
     <br />
     <br />
-    <hr style="height:2px;border:none;color:#333;background-color:#333;" />
     <br />
-
-
-
-
-
 }
 
 @Scripts.Render("~/bundles/jqueryval")

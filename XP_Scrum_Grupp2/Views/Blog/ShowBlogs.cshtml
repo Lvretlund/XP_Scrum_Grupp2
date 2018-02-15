@@ -3,42 +3,43 @@
 
 
 <h2>Formal blog</h2>
+<div style=" width: 15%; clear:right; color:gray">
+    <button class="btn btn-default"> @Html.ActionLink("Search blog files", "SearchFiles", "Blog", new { @style = "Color:black; font-size:110%;" })</button>
+</div>
 <br />
-<div style="float: right; width: 10%; clear:right; color:gray">
-@Html.ActionLink("Search blog files", "SearchFiles", "Blog", new { @style = "Color:black; font-size:110%;" }/*new { id = "123" }, null*/)
-    </div>
 
-@Html.Partial("CreatePartial", Model)
-
+<div style="float: left;width: 40%;overflow: hidden">
+    @Html.Partial("CreatePartial", Model)
+</div>
+<div style="margin-top:-10%">
 @foreach (var post in Model.FormalBlogs.Reverse())
 {
     using (Html.BeginForm("HidePost", "Blog", new { postId = post.Id, status = post.Visible }, FormMethod.Post))
     {
         if (post.Author.Id == User.Identity.GetUserId()) { 
-                 <span style="display:none">    @Html.CheckBoxFor(modelItem => post.Visible, new { @class = "check" })</span>
+                 <span style="display:none"> @Html.CheckBoxFor(modelItem => post.Visible, new { @class = "check" })</span>
             if (post.Visible == true)
             {
-        <input type="submit" value="Hide" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
+        <input type="submit" style="margin-left:39%"value="Hide" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
             }
             else
             {
-        <input type="submit" value="Show" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
+        <input type="submit" style="margin-left:39%" value="Show" data-id="@post.Id, @post.Visible" id="hidden" class="btn btn-default" />
             }
         }
     }
  
     if (post.Visible == true)
     {
-    <div class="visiblePost" data-id="@post.Id">
-        <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
+    <div class="visiblePost" data-id="@post.Id" style="overflow: hidden; ">
+        <div class="row" style="width: 70%;margin-left: 5%;border-radius:4px; border-style: double; border-color: darkblue; padding: 1em;">
             <script async defer id="geo" src="" type="text/javascript"></script>
             <p>
                 <span style="font-size: 160%"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span>
                 <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
             </p>
-            <p style="font-size: 135%">
-                @Html.DisplayFor(modelItem => post.Text)
-            </p>
+            <textarea rows="1"  readonly style="font-size: 135%; border-color:lightgray; resize:none; border-radius: 4px">
+                @Html.DisplayFor(modelItem => post.Text) </textarea>
             @if (post.Filename != null)
             {
                 <a href="Download?id=@post.Id" download="@post.Filename">@Html.DisplayFor(modelItem => post.Filename)</a>
@@ -56,7 +57,7 @@
                 <img src="~/Content/vitbild.jpg" />
             }
         </div>
-        <div id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
+        <div style="max-width: 66%;margin-left: 10%"margin-left: 5%" id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
             <div class="AddComment" style="margin-left: 5%; padding: 1em">
 
                 <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" style="display: inline;" class="form-control" placeholder="Add a Comment ..." />
@@ -68,10 +69,11 @@
     }
     else if (post.Visible == false && post.Author.Id == User.Identity.GetUserId())
     {
-            <div class="row" style="width: 100.3%; border-radius:4px; border-style: double; border-color: gray; padding: 1em;">
+        <div class="HiddenPost" style="overflow:hidden">
+            <div class="row" style="width:70%; margin-left:5%;border-radius:4px; border-style: double; border-color: gray; padding: 1em;">
 
                 <p>
-                    <span style="font-size: 160%; color: gray" > <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span>
+                    <span style="font-size: 160%; color: gray"> <b>@Html.DisplayFor(modelItem => post.Author.Firstname) @Html.DisplayFor(modelItem => post.Author.Lastname): </b> </span>
                     <span style="float: right; color: gray"> @Html.DisplayFor(modelItem => post.Date) <br /> Category: @Html.DisplayFor(modelItem => post.CategoryN.Type) </span>
                 </p>
                 <p style="font-size: 135%; color: gray">
@@ -94,15 +96,17 @@
                     <img src="~/Content/vitbild.jpg" />
                 }
             </div>
-            <div id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
+            <div style="max-width: 66%;margin-left:10%; color: gray" id="@string.Format("{0}_{1}", "commentsBlock", post.Id)">
                 <div class="AddComment" style="margin-left: 5%; padding: 1em; color: gray">
                     <input type="text" id="@string.Format("{0}_{1}", "comment", post.Id)" style="display: inline; color: gray" class="form-control" placeholder="Add a Comment ..." />
                     <button style="color: gray" type="button" class="btn btn-default addComment" data-id="@post.Id"><span style="color: gray" class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
                     <br />
                 </div>
             </div>
+        </div>
     }
 }
+    </div>
 <script>
     $(document).ready(function () {
     var i;
@@ -110,6 +114,13 @@
         id = i;
         fetch(id);
     }
+    $(function () {
+        $('textarea').each(function () {
+            $(this).height($(this).prop('scrollHeight'));
+
+        });
+    });
+  
 
         function fetch(id) {
             var allCommentsArea = $('<div>').addClass('allComments_' + id);

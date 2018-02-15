@@ -16,5 +16,6 @@ namespace XP_Scrum_Grupp2.Models
         public int Votes { get; set; }
         public int FakeId { get; set; }
         public Meeting Meeting { get; set; }
+        public List<MeetingTimeInvited> ListofVotes { get; set; }
     }
 }

@@ -1,20 +1,23 @@
-﻿@model IEnumerable<XP_Scrum_Grupp2.Models.Meeting>
+﻿@model XP_Scrum_Grupp2.Controllers.SentMeeting
 <br />
 <div id="center" style="margin-left:31%">
     <h4 style="margin-left:12%">Sent meeting requests</h4>
     <br />
 
-    @if (Model.Any())
+    @if (Model.SentMeetings.Any())
     {
-        foreach (var meeting in Model)
+        foreach (var meeting in Model.SentMeetings)
         {
-            <ul class="list-group" style="margin-bottom:-5px; max-width: 50%;">
-                <li class="list-group-item" style="background-color: lightgrey; text-align:center">
-                    <p style="text-align:center"><b>Meeting:</b> @meeting.Title</p><br /><p style="text-align:center">
-                </li>
-            </ul>
-            <div style="text-align:center" id="@string.Format("{0}_{1}", "timesBlock", meeting.Id)">
-            </div>
+            if (!meeting.Approved)
+            {
+                <ul class="list-group" style="margin-bottom:-5px; max-width: 50%;">
+                    <li class="list-group-item" style="background-color: lightgrey; text-align:center">
+                        <p style="text-align:center"><b>Meeting:</b> @meeting.Title</p><br /><p style="text-align:center">
+                    </li>
+                </ul>
+                <div style="text-align:center" id="@string.Format("{0}_{1}", "timesBlock", meeting.Id)">
+                </div>
+            }
         }
     }
     else
@@ -25,20 +28,20 @@
 </div>
 <script>
     $(document).ready(function () {
-        var i;
-        var id;
-        for (i = 1; i < 2; i++) {
-            id = i;
-            fetch(id);
-        }
-        function fetch(id) {
-            var allTimesArea = $('<div>').addClass('allTimes_' + id);
+                    var i;
+                    var id;
+                    for (i = 1; i < @Model.SentMeetings.Count + 1; i++) {
+                        id = i;
+                        fetch(id);
+                    }
+                    function fetch(id) {
+                        var allTimesArea = $('<div>').addClass('allTimes_' + id);
             $.ajax({
-                type: 'GET',
+                            type: 'GET',
                 url: '@Url.Action("SentTimes", "Meeting")',
                 data: { meetreq: id },
                 success: function (response) {
-                    if ($('div').hasClass('allComments_' + id + '')) {
+                                if ($('div').hasClass('allComments_' + id + '')) {
                         $('div[class=allTimes_' + id + ']').remove();
                     }
                     allTimesArea.html(response);
