@@ -1,7 +1,7 @@
 ﻿@model XP_Scrum_Grupp2.Controllers.ResearchIndexViewModel
 
 
-@using (Html.BeginForm("Create", "Research", new { formal = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("ResearchPartial", "Research", new { formal = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
